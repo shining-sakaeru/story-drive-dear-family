@@ -1,0 +1,8 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-feature android:name="android.hardware.type.automotive" android:required="false" />
+    <application android:theme="@style/Theme.DearFamily" android:label="Story Drive · Dear Family" android:icon="@mipmap/ic_dearfamily" android:roundIcon="@mipmap/ic_dearfamily_round" android:allowBackup="false" android:usesCleartextTraffic="false">
+        <uses-library android:name="android.car" android:required="false" />
+        <activity android:name=".MainActivity" android:exported="true"><intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter></activity>
+    </application>
+    <queries><intent><action android:name="android.intent.action.TTS_SERVICE" /></intent></queries>
+</manifest>

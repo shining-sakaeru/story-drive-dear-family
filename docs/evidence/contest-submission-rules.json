@@ -1,0 +1,47 @@
+{
+  "checkedAtUtc": "2026-11-08T10:10:54.933523+00:00",
+  "sources": [
+    {
+      "url": "https://appdevchallenge.auto-hmg.io/guide/submission",
+      "section": "제출물/이메일 지원 절차"
+    },
+    {
+      "url": "https://appdevchallenge.auto-hmg.io/guide/schedule",
+      "section": "전체 일정"
+    },
+    {
+      "url": "https://appdevchallenge.auto-hmg.io/faq",
+      "section": "접수·제출물/심사·시상"
+    }
+  ],
+  "applicationDeadlineDateKst": "2026-11-15",
+  "deadlineTime": "23:59 KST; confirmed in the official application DOCX, 제출 안내",
+  "required": [
+    "작성한 접수양식(기획서)",
+    "개인 또는 대표자·팀원 전원의 개인정보 동의·서명·날짜"
+  ],
+  "optionalForBonus": [
+    "시연 영상",
+    "소스 코드와 실행 가능한 release APK를 포함한 GitHub 저장소"
+  ],
+  "shortForm": "선택 사항이며 본상 가산점은 없음; 현재 목표 범위에서 제외",
+  "submissionMethod": "email",
+  "recipient": "appdevchallenge@hyundai-partners.com",
+  "subject": "[차량용 앱 개발 공모전] 팀명(개인은 성명)_대표자명",
+  "teamCcRequired": true,
+  "maxTeamMembers": 5,
+  "apkPath": "apk/",
+  "apkName": "팀명_앱이름_release.apk",
+  "privateRepoAllowed": true,
+  "privateRepoRequiresReviewerAccess": true,
+  "scheduleKst": {
+    "firstRoundResults": "2026-11-23",
+    "finalPtStart": "2026-12-03",
+    "finalPtEnd": "2026-12-04",
+    "finalSelection": "2026-12-18"
+  },
+  "scopeNotice": "공모전 접수와 Pleos App Market 정식 등록/배포는 서로 다른 절차다. 실제 송부·공개·초대는 별도 사용자 승인이 필요하다.",
+  "applicationDeadlineKst": "2026-11-15T23:59:00+09:00",
+  "officialTemplateSource": "https://appdevchallenge.auto-hmg.io/downloads/contest-application-consent.docx",
+  "blindJudgingRule": "Section 02 and its shared links/attachments must not expose participant names, contacts, affiliations or account information"
+}

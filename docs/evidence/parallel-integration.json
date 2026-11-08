@@ -1,0 +1,117 @@
+{
+  "workerCount": 3,
+  "exclusiveOwnedFilesRetrieved": 10,
+  "sourceArchiveSha256": "1a0107fd6920ac0db4dbf697aa87d80eae251a1a26017bdd3b45b2437bb4afb0",
+  "sourceArchive": "artifacts/native-build-source-1a0107fd.zip",
+  "instrumentation": {
+    "discovered": 15,
+    "passed": 14,
+    "assumptionSkipped": 1,
+    "failed": 0,
+    "error": 0
+  },
+  "unitTests": [
+    {
+      "suite": "testPleosDebugUnitTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "testDemoDebugUnitTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "lint": [
+    {
+      "variant": "pleosRelease",
+      "errors": 0,
+      "warnings": 14,
+      "issueIds": [
+        "DataExtractionRules",
+        "GradleDependency",
+        "MonochromeLauncherIcon",
+        "ObsoleteLintCustomCheck",
+        "ObsoleteSdkInt",
+        "PrivateApi"
+      ]
+    },
+    {
+      "variant": "pleosDebug",
+      "errors": 0,
+      "warnings": 14,
+      "issueIds": [
+        "DataExtractionRules",
+        "GradleDependency",
+        "MonochromeLauncherIcon",
+        "ObsoleteLintCustomCheck",
+        "ObsoleteSdkInt",
+        "PrivateApi"
+      ]
+    },
+    {
+      "variant": "demoRelease",
+      "errors": 0,
+      "warnings": 12,
+      "issueIds": [
+        "DataExtractionRules",
+        "GradleDependency",
+        "ObsoleteLintCustomCheck",
+        "ObsoleteSdkInt",
+        "PrivateApi"
+      ]
+    },
+    {
+      "variant": "demoDebug",
+      "errors": 0,
+      "warnings": 12,
+      "issueIds": [
+        "DataExtractionRules",
+        "GradleDependency",
+        "ObsoleteLintCustomCheck",
+        "ObsoleteSdkInt",
+        "PrivateApi"
+      ]
+    }
+  ],
+  "apks": [
+    {
+      "name": "app-demo-debug.apk",
+      "sha256": "bfa7d71ddc7477b514848a7c8ce61eec2b13efe754d560a6017f11f7d213e107",
+      "bytes": 22670471
+    },
+    {
+      "name": "app-pleos-debug.apk",
+      "sha256": "e9b49201aed01cbe48ec6c9c819cabc12cacb6bb294f5df5f34a1398a96640da",
+      "bytes": 26905809
+    },
+    {
+      "name": "app-demo-release-unsigned.apk",
+      "sha256": "d42ba6329c2104239740058181ca1c93a1079c7736a9f0407b9bb4dfb9fb7e67",
+      "bytes": 16798421
+    },
+    {
+      "name": "app-pleos-release-unsigned.apk",
+      "sha256": "682d9bdf3aa8329e6c7f41bc40ba83b3fc608ab8cac0c114954ada101f771a6c",
+      "bytes": 20339850
+    }
+  ],
+  "ttsProbe": {
+    "initializationResult": -1,
+    "initializationSucceeded": false,
+    "engine": null,
+    "koreanVoiceCount": 0,
+    "offlineInstalledKoreanVoiceCount": 0,
+    "voices": []
+  },
+  "voiceLimitation": "Foreground user 10: Android TTS initialization failed (-1), default engine null. UI caption fallback confirmed; actual Korean speech was not verified. Do not infer permanent voice absence from failed initialization.",
+  "fullRuntimeAcceptancePassed": false,
+  "releaseSigned": false,
+  "publicRepoPushed": false,
+  "nativeEvidenceOperationId": "20261108T113622Z-exercise-parallel-integrated-native-suite-845ab1",
+  "buildEvidenceOperationId": "20261108T113147Z-verify-three-worker-integrated-build-b8a956"
+}

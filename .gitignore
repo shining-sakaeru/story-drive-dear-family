@@ -1,0 +1,25 @@
+.gradle/
+**/build/
+local.properties
+.idea/
+*.iml
+.tools/
+*.jks
+*.keystore
+.env
+.env.*
+__pycache__/
+*.pyc
+*.p12
+*.pfx
+*.pem
+*.key
+
+# Private application drafts, consent/signatures and local build deliveries.
+submission/
+artifacts/
+
+# Never commit account/device credentials or local signing material.
+credentials*.json
+client-secret*
+signing.properties

@@ -1,0 +1,26 @@
+{
+  "sourceArchiveSha256": "53488b95fcad9b98e40c9a333fb6f289d9f8ef5323675cf9c19ec4e2836070c4",
+  "testClass": "com.pleos.dearfamily.FamilyCareUiTest",
+  "testsDiscovered": 5,
+  "passed": 4,
+  "assumptionSkipped": 1,
+  "failed": 0,
+  "error": 0,
+  "officialPleosImage": true,
+  "physicalAudioVerified": false,
+  "fullAcceptancePassed": false,
+  "evidenceReceipt": "/opt/data/workspace/orchestration/dearfamily-mac-history/20261108T105458Z-native-ui-baseline-all-five-79718f/receipt.json",
+  "scope": [
+    "초기 4 zone/Mock 경계",
+    "소란→수면 무음 메시지/취소/초기화",
+    "Fun/호두과자 선택/대화 종료 70% 복원",
+    "투어 수동 취소/부모님 휴게소 모의 응답"
+  ],
+  "notVerified": [
+    "음성 발음/실제 독립 음장",
+    "Car UX 미확인 상태: 이 이미지에서는 이미 상태 확인되어 조건부 1개 skip",
+    "SDK 상태 변경 왕복",
+    "슬라이더 실기",
+    "30초 투어 완료/전체성능"
+  ]
+}

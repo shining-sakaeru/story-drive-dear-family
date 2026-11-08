@@ -1,0 +1,4 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Read-only API checked against Vehicle 2.3.2 @RequiresPermission. No CONTROL_* permissions. -->
+    <uses-permission android:name="pleos.car.permission.CAR_SEATS" />
+</manifest>

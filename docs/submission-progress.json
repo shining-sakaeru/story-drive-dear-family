@@ -1,0 +1,652 @@
+{
+  "schemaVersion": 1,
+  "baselineVersion": "submission-v1",
+  "updatedAtUtc": "2026-11-08T12:15:40.415210+00:00",
+  "project": "Story Drive : Dear Family",
+  "scope": "1차 공모전 접수까지의 필수 준비 + 목표 가산점 개발 패키지/품질 체크리스트; 2차 PT/전시/앱마켓 정식 배포는 별도",
+  "countingPolicy": "40개 기준선, 동일 가중치, 완료만 1점·진행 중/미검증/승인 대기는 0점. 공수나 남은 시간 비율이 아님. 구현 완료와 실기 검증은 별도 태스크. 범위 변경 시 기준선 버전/분모/사유를 기록함.",
+  "sourceNotes": "공식 요강의 필수 제출물과 프로젝트가 자체 목표로 정한 개발/QA 태스크를 구분한다. 선택 개발 산출물을 준비하지 않아도 필수 서류 접수는 가능하다.",
+  "officialRules": "docs/evidence/contest-submission-rules.json",
+  "evidenceAliases": {
+    "ops": "/opt/data/workspace/orchestration/dearfamily-mac-history"
+  },
+  "stats": {
+    "totalTasks": 40,
+    "completedTasks": 27,
+    "remainingTasks": 13,
+    "percent": 67.5,
+    "statusCounts": {
+      "done": 27,
+      "in_progress": 5,
+      "todo": 5,
+      "blocked": 3
+    },
+    "completedMilestones": 4,
+    "totalMilestones": 8,
+    "minimumRequiredSubmission": {
+      "taskIds": [
+        "M1.5",
+        "M7.1",
+        "M7.2",
+        "M7.3",
+        "M7.4",
+        "M7.5",
+        "M8.4",
+        "M8.5"
+      ],
+      "total": 8,
+      "completed": 4,
+      "percent": 50.0
+    }
+  },
+  "milestones": [
+    {
+      "id": "M1",
+      "title": "요구사항·공식 정책·접수 요건",
+      "tasks": [
+        {
+          "id": "M1.1",
+          "title": "요구사항·Mock I-P-O 범위 확정",
+          "status": "done",
+          "acceptance": "원문 요구사항과 Mock/실제 제어 경계가 문서화됨",
+          "evidence": [
+            "docs/pleos-development-guidelines.md#3"
+          ],
+          "countsAs": "verification-or-deliverable",
+          "owner": "Hermes 주관(제안)"
+        },
+        {
+          "id": "M1.2",
+          "title": "MVVM·StateFlow·도메인 계약 확정",
+          "status": "done",
+          "acceptance": "모델/엔진/ViewModel 계약이 구현·소스 컴파일됨",
+          "evidence": [
+            "app/src/main/java/com/pleos/dearfamily",
+            "docs/evidence/compile-demo.log"
+          ],
+          "countsAs": "verification-or-deliverable",
+          "owner": "Hermes 주관(제안)"
+        },
+        {
+          "id": "M1.3",
+          "title": "주행 안전·화면·오디오 정책 반영",
+          "status": "done",
+          "acceptance": "정책과 설계 충돌을 기록하고 안전 경로를 구현함; 실기 검증은 M6",
+          "evidence": [
+            "AGENTS.md",
+            "docs/pleos-development-guidelines.md"
+          ],
+          "countsAs": "verification-or-deliverable",
+          "owner": "Hermes 주관(제안)"
+        },
+        {
+          "id": "M1.4",
+          "title": "공식 SDK 읽기 경로와 Mock 출력 분리",
+          "status": "done",
+          "acceptance": "실제 SDK와 모의 센서/제어 출처가 분리됨",
+          "evidence": [
+            "app/src/pleos/java/com/pleos/dearfamily/platform/GatewayFactory.kt",
+            "README.md"
+          ],
+          "countsAs": "verification-or-deliverable",
+          "owner": "Hermes 주관(제안)"
+        },
+        {
+          "id": "M1.5",
+          "title": "공식 일정·제출물·방법 확인",
+          "status": "done",
+          "acceptance": "필수 양식/동의서, 선택 개발 산출물, release 요건과 접수 날짜를 공식 안내에서 확인함",
+          "evidence": [
+            "docs/evidence/contest-submission-rules.json"
+          ],
+          "countsAs": "verification-or-deliverable",
+          "owner": "Hermes 주관(제안)"
+        }
+      ],
+      "total": 5,
+      "completed": 5,
+      "percent": 100.0
+    },
+    {
+      "id": "M2",
+      "title": "5대 시나리오 엔진 구현",
+      "tasks": [
+        {
+          "id": "M2.1",
+          "title": "소란 감지·Magic Whisper",
+          "status": "done",
+          "acceptance": "도메인 조건과 모의 출력 구현/단위 검증; 실제 UI 실행은 M5",
+          "evidence": [
+            "docs/evidence/unit.log"
+          ],
+          "countsAs": "implementation",
+          "owner": "Hermes 주관(제안)"
+        },
+        {
+          "id": "M2.2",
+          "title": "수면·Sleep Landing",
+          "status": "done",
+          "acceptance": "수면 무음·조명·22.5°C·풍량·잠금 모의 상태 구현/단위 검증",
+          "evidence": [
+            "docs/evidence/unit.log"
+          ],
+          "countsAs": "implementation",
+          "owner": "Hermes 주관(제안)"
+        },
+        {
+          "id": "M2.3",
+          "title": "부모님 피로·효 버틀러",
+          "status": "done",
+          "acceptance": "시간/체압 모의 조건, 케어 및 휴게소 제안 상태 구현/단위 검증",
+          "evidence": [
+            "docs/evidence/unit.log"
+          ],
+          "countsAs": "implementation",
+          "owner": "Hermes 주관(제안)"
+        },
+        {
+          "id": "M2.4",
+          "title": "조수석 Cozy/Fun·덕킹 상태",
+          "status": "done",
+          "acceptance": "조수석 대화·덕킹/복원·게임 상태 구현/단위 검증; 실제 음악 재생 검증 아님",
+          "evidence": [
+            "docs/evidence/unit.log"
+          ],
+          "countsAs": "implementation",
+          "owner": "Hermes 주관(제안)"
+        },
+        {
+          "id": "M2.5",
+          "title": "30초 Auto-Tour·수동 취소",
+          "status": "done",
+          "acceptance": "0/7/14/21/30초 진행과 취소/초기화 단위 검증",
+          "evidence": [
+            "docs/evidence/unit.log"
+          ],
+          "countsAs": "implementation",
+          "owner": "Hermes 주관(제안)"
+        }
+      ],
+      "total": 5,
+      "completed": 5,
+      "percent": 100.0
+    },
+    {
+      "id": "M3",
+      "title": "화면·오프라인 오디오 구현",
+      "tasks": [
+        {
+          "id": "M3.1",
+          "title": "Warm Dark·좌석 디지털 트윈·Peace Shield",
+          "status": "done",
+          "acceptance": "관련 Compose 컴포넌트 구현/컴파일 및 초기 화면 렌더 확인",
+          "evidence": [
+            "app/src/main/java/com/pleos/dearfamily/ui/components",
+            "ops:pleos-environment/pleos-app-screen.png"
+          ],
+          "countsAs": "implementation",
+          "owner": "Hermes 주관(제안)"
+        },
+        {
+          "id": "M3.2",
+          "title": "I-P-O 모니터·출처 구분·애니메이션",
+          "status": "done",
+          "acceptance": "패널/규칙·출력·패킷 애니메이션 코드 구현 및 컴파일; 동작 실기 확인은 M5",
+          "evidence": [
+            "app/src/main/java/com/pleos/dearfamily/ui/components/IpoPipelineMonitor.kt"
+          ],
+          "countsAs": "implementation",
+          "owner": "Hermes 주관(제안)"
+        },
+        {
+          "id": "M3.3",
+          "title": "멀티존 라우팅·Fun/휴게소 컨트롤 UI",
+          "status": "done",
+          "acceptance": "컨트롤러와 상호작용 코드 구현/컴파일; 물리적 독립 음장 구현 아님",
+          "evidence": [
+            "app/src/main/java/com/pleos/dearfamily/ui/components/MultiZoneControllerPanel.kt"
+          ],
+          "countsAs": "implementation",
+          "owner": "Hermes 주관(제안)"
+        },
+        {
+          "id": "M3.4",
+          "title": "시나리오 독·센서 슬라이더",
+          "status": "done",
+          "acceptance": "프리셋/소음·시간 슬라이더 구현 및 임계 재무장 단위 검증",
+          "evidence": [
+            "app/src/main/java/com/pleos/dearfamily/ui/components/ScenarioInjectorDock.kt",
+            "docs/evidence/unit.log"
+          ],
+          "countsAs": "implementation",
+          "owner": "Hermes 주관(제안)"
+        },
+        {
+          "id": "M3.5",
+          "title": "로컬 TTS·PCM·오디오 세션 구현",
+          "status": "done",
+          "acceptance": "Android TTS backend와 175ms PCM/포커스 정책 구현 및 로직 테스트; 실제 발음 검증은 M5/M6",
+          "evidence": [
+            "docs/evidence/unit.log",
+            "app/src/main/java/com/pleos/dearfamily/platform/AudioNarrator.kt"
+          ],
+          "countsAs": "implementation",
+          "owner": "Hermes 주관(제안)"
+        }
+      ],
+      "total": 5,
+      "completed": 5,
+      "percent": 100.0
+    },
+    {
+      "id": "M4",
+      "title": "네이티브 빌드·공식 Pleos 구동",
+      "tasks": [
+        {
+          "id": "M4.1",
+          "title": "Mac 연결·JDK/SDK 도구 준비",
+          "status": "done",
+          "acceptance": "프로젝트 키 SSH 인증, JDK17 및 SDK34/build-tools34 준비",
+          "evidence": [
+            "ops:STATUS.md"
+          ],
+          "countsAs": "verification-or-deliverable",
+          "owner": "Hermes 주관(제안)"
+        },
+        {
+          "id": "M4.2",
+          "title": "재현 가능한 소스 패키지 검증",
+          "status": "done",
+          "acceptance": "필수 빌드 입력 누락 회귀 검증과 5개 Python 테스트 통과",
+          "evidence": [
+            "scripts/package_source.py",
+            "scripts/test_source_archive.py",
+            "ops:STATUS.md"
+          ],
+          "countsAs": "verification-or-deliverable",
+          "owner": "Hermes 주관(제안)"
+        },
+        {
+          "id": "M4.3",
+          "title": "두 flavor APK 빌드·서명 확인",
+          "status": "done",
+          "acceptance": "assembleDebug, flavor별 단위 6회 및 apksigner 검증; 현재 debug 빌드",
+          "evidence": [
+            "artifacts/app-demo-debug.apk",
+            "artifacts/app-pleos-debug.apk",
+            "ops:STATUS.md"
+          ],
+          "countsAs": "verification-or-deliverable",
+          "owner": "Hermes 주관(제안)"
+        },
+        {
+          "id": "M4.4",
+          "title": "공식 ARM64 이미지·AVD cold boot",
+          "status": "done",
+          "acceptance": "공식 API34 이미지 검증·설치, 4GB AVD cold boot 및 실제 fingerprint 확인",
+          "evidence": [
+            "ops:pleos-environment/installed.json",
+            "ops:pleos-environment/boot-verified.json"
+          ],
+          "countsAs": "verification-or-deliverable",
+          "owner": "Hermes 주관(제안)"
+        },
+        {
+          "id": "M4.5",
+          "title": "공식 환경 APK 설치·초기 실행 확인",
+          "status": "done",
+          "acceptance": "Vehicle 2.3.22 및 APK 설치, RESUMED/프로세스/화면 확인; 전체 SDK 통합 테스트는 M5",
+          "evidence": [
+            "ops:pleos-environment/runtime-smoke.json",
+            "ops:pleos-environment/pleos-app-screen.png"
+          ],
+          "countsAs": "verification-or-deliverable",
+          "owner": "Hermes 주관(제안)"
+        }
+      ],
+      "total": 5,
+      "completed": 5,
+      "percent": 100.0
+    },
+    {
+      "id": "M5",
+      "title": "Pleos 통합·실행 기능 검증",
+      "tasks": [
+        {
+          "id": "M5.1",
+          "title": "Virtual Console ↔ 좌석 SDK 왕복 검증",
+          "status": "in_progress",
+          "acceptance": "공식 콘솔의 탑승값 변경이 SDK 콜백과 화면 변경에 반영됨",
+          "evidence": [
+            "docs/device-verification.md#실제 SDK / Virtual Console"
+          ],
+          "countsAs": "verification-or-deliverable",
+          "owner": "Hermes 주관(제안)"
+        },
+        {
+          "id": "M5.2",
+          "title": "5대 프리셋 실제 UI 시연 검증",
+          "status": "done",
+          "acceptance": "각 버튼을 눌러 대상 좌석·I-P-O·모의 출력/취소가 맞는지 기록",
+          "evidence": [
+            "docs/evidence/parallel-integration.json"
+          ],
+          "countsAs": "verification-or-deliverable",
+          "owner": "Hermes 주관(제안)"
+        },
+        {
+          "id": "M5.3",
+          "title": "실제 슬라이더 임계값·재무장 검증",
+          "status": "done",
+          "acceptance": "75dB/50분 상승 경계와 같은 대역 변경/중복 재발화를 실기 확인",
+          "evidence": [
+            "docs/evidence/parallel-integration.json"
+          ],
+          "countsAs": "verification-or-deliverable",
+          "owner": "Hermes 주관(제안)"
+        },
+        {
+          "id": "M5.4",
+          "title": "게임·대화 복원·휴게소 카드 조작 검증",
+          "status": "done",
+          "acceptance": "Fun/간식 선택·음량 상태 복원·휴게소 응답이 실제 UI에서 확인됨",
+          "evidence": [
+            "docs/evidence/pleos-ui-baseline.json"
+          ],
+          "countsAs": "verification-or-deliverable",
+          "owner": "Hermes 주관(제안)"
+        },
+        {
+          "id": "M5.5",
+          "title": "오프라인 한국어 음성·수면 무음 검증",
+          "status": "done",
+          "acceptance": "네트워크 없는 한국어 voice/실제 출력·수면 취소를 확인하거나 미지원 조건을 명시함",
+          "evidence": [
+            "docs/evidence/parallel-integration.json"
+          ],
+          "countsAs": "verification-or-deliverable",
+          "owner": "Hermes 주관(제안)",
+          "outcome": "TTS initialization failed in current emulator user; unsupported condition documented, caption fallback only; physical audio not verified"
+        }
+      ],
+      "total": 5,
+      "completed": 4,
+      "percent": 80.0
+    },
+    {
+      "id": "M6",
+      "title": "안전성·성능·호환 QA",
+      "tasks": [
+        {
+          "id": "M6.1",
+          "title": "정차/주행/미확인 Car UX 제한 검증",
+          "status": "todo",
+          "acceptance": "실제 규제 전환에 조작·게임·예약 음성이 제한되고 미확인 시 우회되지 않음",
+          "evidence": [
+            "docs/device-verification.md"
+          ],
+          "countsAs": "verification-or-deliverable",
+          "owner": "Hermes 주관(제안)"
+        },
+        {
+          "id": "M6.2",
+          "title": "AudioFocus 거절·손실·duck 실기 검증",
+          "status": "todo",
+          "acceptance": "플랫폼 내비/통화 등 시험에서 포커스 정책이 실제 출력과 일치함",
+          "evidence": [
+            "docs/device-verification.md"
+          ],
+          "countsAs": "verification-or-deliverable",
+          "owner": "Hermes 주관(제안)"
+        },
+        {
+          "id": "M6.3",
+          "title": "백그라운드·재생성·Suspend/Resume 검증",
+          "status": "in_progress",
+          "acceptance": "작업/구독 정리·복귀·자동 재생 금지를 검증하며 실제 OEM 미검증을 구분함",
+          "evidence": [
+            "docs/device-verification.md"
+          ],
+          "countsAs": "verification-or-deliverable",
+          "owner": "Hermes 주관(제안)",
+          "progressNote": "Activity recreate stops tour and does not restart it: verified. Real OEM Suspend/Resume and physical audio cleanup are not verified."
+        },
+        {
+          "id": "M6.4",
+          "title": "가로·세로·좁은 창·접근성 검증",
+          "status": "todo",
+          "acceptance": "주요 컨트롤/좌석·폰트·터치 영역이 보이고 시스템 Driving view를 침범하지 않음",
+          "evidence": [
+            "docs/device-verification.md"
+          ],
+          "countsAs": "verification-or-deliverable",
+          "owner": "Hermes 주관(제안)"
+        },
+        {
+          "id": "M6.5",
+          "title": "최종 품질 게이트·성능·lint 정리",
+          "status": "in_progress",
+          "acceptance": "CPU/RAM·크래시/ANR·모든 대상 variant lint·권한·앱 아이콘을 점검하고 예외를 기록함",
+          "evidence": [
+            "docs/pleos-development-guidelines.md#8",
+            "ops:STATUS.md"
+          ],
+          "countsAs": "verification-or-deliverable",
+          "owner": "Hermes 주관(제안)",
+          "progressNote": "All four variant lint tasks succeeded with zero lint errors and retained warnings; adaptive icon packaged. CPU/RAM and final release runtime remain."
+        }
+      ],
+      "total": 5,
+      "completed": 0,
+      "percent": 0.0
+    },
+    {
+      "id": "M7",
+      "title": "필수 기획서·개인정보 동의서",
+      "tasks": [
+        {
+          "id": "M7.1",
+          "title": "공식 양식 확보·문제/타깃 초안 작성",
+          "status": "done",
+          "acceptance": "공식 DOCX의 서비스 개요/사용자 문제를 출품 문서로 작성함",
+          "evidence": [
+            "private:submission/StoryDrive_DearFamily_application_DRAFT.docx",
+            "private:submission/proposal-draft.md",
+            "private:submission/draft-validation.json"
+          ],
+          "countsAs": "verification-or-deliverable",
+          "owner": "Hermes 주관(제안)"
+        },
+        {
+          "id": "M7.2",
+          "title": "차량특화성·창의성·사업성 작성",
+          "status": "done",
+          "acceptance": "평가 항목별 가치·차별화·활용 시나리오·근거를 설명함",
+          "evidence": [
+            "private:submission/StoryDrive_DearFamily_application_DRAFT.docx",
+            "private:submission/proposal-draft.md",
+            "private:submission/draft-validation.json"
+          ],
+          "countsAs": "verification-or-deliverable",
+          "owner": "Hermes 주관(제안)"
+        },
+        {
+          "id": "M7.3",
+          "title": "개발 계획·SDK 활용·구현 한계 작성",
+          "status": "done",
+          "acceptance": "실제 SDK/Mock 및 현재 검증 수준과 후속 개발 범위를 정확히 작성함",
+          "evidence": [
+            "private:submission/StoryDrive_DearFamily_application_DRAFT.docx",
+            "private:submission/proposal-draft.md",
+            "private:submission/draft-validation.json"
+          ],
+          "countsAs": "verification-or-deliverable",
+          "owner": "Hermes 주관(제안)"
+        },
+        {
+          "id": "M7.4",
+          "title": "개인 참가 정보·본인 동의/서명/날짜 확정",
+          "status": "blocked",
+          "acceptance": "개인 1인 참가자의 참가 부문·성명/연락처를 확정하고, 공식 양식 대표자란에 본인이 직접 동의·서명·날짜를 작성함",
+          "evidence": [
+            "docs/evidence/contest-submission-rules.json"
+          ],
+          "countsAs": "verification-or-deliverable",
+          "owner": "사용자 직접 확인/승인 필요",
+          "progressNote": "개인 참가·1명 확정. 팀원 정보와 팀원 CC 불필요. 공식 양식 04항에 따라 본인 동의/서명/서명일은 여전히 필요하며 임의 작성하지 않음."
+        },
+        {
+          "id": "M7.5",
+          "title": "필수 서류·형식·제목·CC 검수",
+          "status": "todo",
+          "acceptance": "양식 누락·서명·날짜·첨부·메일 제목과 팀원 CC를 최종 검사함",
+          "evidence": [
+            "docs/evidence/contest-submission-rules.json"
+          ],
+          "countsAs": "verification-or-deliverable",
+          "owner": "Hermes 주관(제안)",
+          "progressNote": "개인 참가이므로 팀원 CC는 해당 없음. 본인 정보·동의·서명·날짜와 최종 첨부/제목 검수는 필요."
+        }
+      ],
+      "total": 5,
+      "completed": 3,
+      "percent": 60.0
+    },
+    {
+      "id": "M8",
+      "title": "가산점 패키지·최종 접수",
+      "tasks": [
+        {
+          "id": "M8.1",
+          "title": "release APK·최종 소스 패키지 준비",
+          "status": "in_progress",
+          "acceptance": "정식 release 구성/서명/설치 검증과 파일명·apk/ 경로·README·민감정보 제외를 확인함; debug 파일 이름만 바꾸지 않음",
+          "evidence": [
+            "docs/evidence/contest-submission-rules.json"
+          ],
+          "countsAs": "verification-or-deliverable",
+          "owner": "Hermes 주관(제안)",
+          "progressNote": "demo/pleos release builds produced unsigned APKs; signing/installation gate remains."
+        },
+        {
+          "id": "M8.2",
+          "title": "시연 영상·스크린샷 완성",
+          "status": "in_progress",
+          "acceptance": "실제 작동·I-P-O·좌석 케어·운전자 안전·Mock 경계를 보여주는 제출용 영상을 확인함",
+          "evidence": [
+            "artifacts/dearfamily-tour-raw-1a0107fd.mp4",
+            "docs/demo-script.md",
+            "docs/demo-captions.srt"
+          ],
+          "countsAs": "verification-or-deliverable",
+          "owner": "Hermes 주관(제안)",
+          "progressNote": "Actual silent tour raw MP4 produced. Editing, subtitles and final video review remain."
+        },
+        {
+          "id": "M8.3",
+          "title": "GitHub 업로드·심사자 접근 확인",
+          "status": "blocked",
+          "acceptance": "소스+release APK 업로드와 필요한 심사자 초대/접근을 사용자 승인 후 검증함",
+          "evidence": [
+            "docs/evidence/contest-submission-rules.json"
+          ],
+          "countsAs": "verification-or-deliverable",
+          "owner": "사용자 직접 확인/승인 필요",
+          "progressNote": "origin 연결 및 fetch 검증 완료. 원격 ref 0개. commit/push·심사자 초대는 수행하지 않음."
+        },
+        {
+          "id": "M8.4",
+          "title": "최종 사용자 승인·접수 메일 송부",
+          "status": "blocked",
+          "acceptance": "최종 첨부/수신자/CC/제목을 사용자 승인받고 마감 전 실제 송부함",
+          "evidence": [
+            "docs/evidence/contest-submission-rules.json"
+          ],
+          "countsAs": "verification-or-deliverable",
+          "owner": "사용자 직접 확인/승인 필요"
+        },
+        {
+          "id": "M8.5",
+          "title": "접수 결과 확인·제출본 동결",
+          "status": "todo",
+          "acceptance": "송신/수신 또는 운영사 접수 확인 근거와 제출 첨부·링크·버전을 보관함",
+          "evidence": [
+            "docs/evidence/contest-submission-rules.json"
+          ],
+          "countsAs": "verification-or-deliverable",
+          "owner": "Hermes 주관(제안)"
+        }
+      ],
+      "total": 5,
+      "completed": 0,
+      "percent": 0.0
+    }
+  ],
+  "executionPriority": [
+    "M7.1",
+    "M7.2",
+    "M7.3",
+    "M7.4",
+    "M7.5",
+    "M8.4",
+    "M8.5"
+  ],
+  "parallelBonusAndQa": [
+    "M5",
+    "M6",
+    "M8.1",
+    "M8.2",
+    "M8.3"
+  ],
+  "authority": "계획 작성은 제출/서명/commit/push/저장소 생성/심사자 초대 권한 부여가 아니다. 실제 외부 작업은 사용자 승인 후 수행한다.",
+  "scopeChangeLog": [],
+  "executionPolicy": {
+    "mode": "autonomous-until-owner-intervention",
+    "userInstruction": "내 개입이 필요한 시점이 생기지 않으면 task를 끊기지 않게 이어해줘",
+    "approvalBoundariesUnchanged": true,
+    "continueOtherReadyTasksWhenOneIsBlocked": true
+  },
+  "repositoryConnection": {
+    "origin": "https://github.com/shining-sakaeru/story-drive-dear-family.git",
+    "fetchVerified": true,
+    "committed": false,
+    "pushed": false
+  },
+  "productGaps": [
+    "Android offline Korean TTS initialization failure in foreground emulator user; caption fallback, not speech success",
+    "Virtual Console DDS bridge not yet connected; SDK roundtrip unverified",
+    "No real driving transition/physical AudioFocus/OEM Suspend verification",
+    "Release APKs unsigned; commit/push and actual submission not performed"
+  ],
+  "reportingPolicy": {
+    "activeConversationMaxIntervalMinutes": 15,
+    "reportOn": [
+      "milestone-completed",
+      "failed-or-blocked"
+    ],
+    "format": [
+      "completed-count",
+      "actually-running",
+      "blockers",
+      "next-priorities"
+    ],
+    "doNotEquateBoardInProgressWithActiveProcess": true
+  },
+  "lastRuntimeSnapshot": {
+    "recordingCompleted": true,
+    "ownedEmulatorStopped": true,
+    "parallelWorkerBatchesCompleted": true,
+    "trackedRecordingProcessRunning": false,
+    "rawVideoFinalReviewed": false
+  },
+  "participation": {
+    "unit": "individual",
+    "participantCount": 1,
+    "teamMemberInformationRequired": false,
+    "teamMemberCcRequired": false,
+    "ownConsentSignatureAndDateRequired": true,
+    "officialFormSection": "04 대표자·팀원 별 동의 확인 및 서명",
+    "officialFormRequirement": "개인 참가 시 본인(대표자)란을, 팀 참가 시 대표자 및 모든 팀원란을 각각 작성합니다.",
+    "officialFormSha256": "07be893d58b0e96ab7788f0d189d6829f0e59a2cee4bc18cb90ec37eeda2f5fd"
+  }
+}

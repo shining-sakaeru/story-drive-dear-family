@@ -1,0 +1,68 @@
+{
+  "recordedAtUtc": "2026-11-08T10:12:41.488905+00:00",
+  "verificationScope": "official-pleos-basic-startup-only",
+  "fullAcceptancePassed": false,
+  "apkProduced": true,
+  "buildType": "debug",
+  "apkSha256": {
+    "artifacts/app-pleos-debug.apk": "3c6acb4ee9e4cc5db438275a80332b995cd68c0b69a32af11bfcabe80f1918fd",
+    "artifacts/app-demo-debug.apk": "594511ee32c5c622746470d1c8e9a0cd0e812f58a4145e514038e4977ebc58d3"
+  },
+  "assembleDebug": "PASS",
+  "apkSignatures": "Both APK Signature Scheme v2 verified; Android Debug signing",
+  "unitTestModules": [
+    {
+      "module": "testPleosDebugUnitTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "module": "testDemoDebugUnitTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "unitTestExecutions": 6,
+  "unitTestFailures": 0,
+  "unitTestSkipped": 0,
+  "lintScope": "demoDebug only; warnings and incompatible/skipped Compose custom checks remain",
+  "officialImage": {
+    "name": "Pleos Connect v2.1.0",
+    "api": 34,
+    "abi": "arm64-v8a",
+    "avd": "DearFamily_Pleos_API34",
+    "coldBootVerified": true,
+    "vehicleServiceVersion": "2.3.22",
+    "vehicleServiceVersionCode": 74
+  },
+  "apkInstallVerified": true,
+  "apkLaunchVerified": true,
+  "baselineSeatValuesVisuallyObserved": {
+    "ROW_2_LEFT": "탑승",
+    "ROW_2_RIGHT": "탑승",
+    "ROW_2_CENTER": "탑승",
+    "ROW_1_LEFT": "비어 있음",
+    "ROW_1_RIGHT": "탑승"
+  },
+  "sdkStateChangeRoundTripVerified": false,
+  "automatedUiDumpVerified": false,
+  "physicalAudioVerified": false,
+  "testEmulatorStoppedAfterVerification": true,
+  "remaining": [
+    "5-scenario native UI checks",
+    "Virtual Console SDK state-change round trip",
+    "Korean offline audible TTS and AudioFocus",
+    "Driving restrictions, layout, lifecycle and OEM Suspend",
+    "CPU/RAM and remaining lint/release checks"
+  ],
+  "evidenceOperations": [
+    "20261108T083940Z-verify-build-and-storage-capacity-91a6d8",
+    "20261108T084054Z-verify-apk-signatures-and-lint-6a6769",
+    "20261108T092314Z-verify-pleos-cold-boot-and-services-e60a31",
+    "20261108T092413Z-install-and-launch-apk-on-official-pleos-a85ba4"
+  ]
+}
