@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "baselineVersion": "submission-v1",
-  "updatedAtUtc": "2026-11-08T12:15:40.415210+00:00",
+  "updatedAtUtc": "2026-11-08T22:20:55.341203+00:00",
   "project": "Story Drive : Dear Family",
   "scope": "1차 공모전 접수까지의 필수 준비 + 목표 가산점 개발 패키지/품질 체크리스트; 2차 PT/전시/앱마켓 정식 배포는 별도",
   "countingPolicy": "40개 기준선, 동일 가중치, 완료만 1점·진행 중/미검증/승인 대기는 0점. 공수나 남은 시간 비율이 아님. 구현 완료와 실기 검증은 별도 태스크. 범위 변경 시 기준선 버전/분모/사유를 기록함.",
@@ -12,12 +12,12 @@
   },
   "stats": {
     "totalTasks": 40,
-    "completedTasks": 27,
-    "remainingTasks": 13,
-    "percent": 67.5,
+    "completedTasks": 28,
+    "remainingTasks": 12,
+    "percent": 70.0,
     "statusCounts": {
-      "done": 27,
-      "in_progress": 5,
+      "done": 28,
+      "in_progress": 4,
       "todo": 5,
       "blocked": 3
     },
@@ -257,11 +257,13 @@
           "id": "M4.2",
           "title": "재현 가능한 소스 패키지 검증",
           "status": "done",
-          "acceptance": "필수 빌드 입력 누락 회귀 검증과 5개 Python 테스트 통과",
+          "acceptance": "필수 빌드 입력 누락·클린 체크아웃·경로/metadata/개인문서 제외 회귀와 Python 사전검사가 통과함",
           "evidence": [
             "scripts/package_source.py",
             "scripts/test_source_archive.py",
-            "ops:STATUS.md"
+            "ops:STATUS.md",
+            "docs/evidence/server-only-work.json",
+            "docs/evidence/server-python-tests.log"
           ],
           "countsAs": "verification-or-deliverable",
           "owner": "Hermes 주관(제안)"
@@ -478,7 +480,9 @@
           "evidence": [
             "private:submission/StoryDrive_DearFamily_application_DRAFT.docx",
             "private:submission/proposal-draft.md",
-            "private:submission/draft-validation.json"
+            "private:submission/draft-validation.json",
+            "private:submission/StoryDrive_DearFamily_application_SERVER_REVIEW.docx",
+            "private:submission/server-review-validation.json"
           ],
           "countsAs": "verification-or-deliverable",
           "owner": "Hermes 주관(제안)"
@@ -531,16 +535,16 @@
         {
           "id": "M8.2",
           "title": "시연 영상·스크린샷 완성",
-          "status": "in_progress",
+          "status": "done",
           "acceptance": "실제 작동·I-P-O·좌석 케어·운전자 안전·Mock 경계를 보여주는 제출용 영상을 확인함",
           "evidence": [
-            "artifacts/dearfamily-tour-raw-1a0107fd.mp4",
-            "docs/demo-script.md",
-            "docs/demo-captions.srt"
+            "media/StoryDrive_DearFamily_demo_captioned.mp4",
+            "media/frames",
+            "docs/evidence/video-editing.json"
           ],
           "countsAs": "verification-or-deliverable",
           "owner": "Hermes 주관(제안)",
-          "progressNote": "Actual silent tour raw MP4 produced. Editing, subtitles and final video review remain."
+          "progressNote": "Actual raw recording edited to 28.5s captioned silent highlight; 855 frames and full H.264 decode verified; four phases visually reviewed. Mock/read-only/failed TTS labels retained. Not the full 30s tour end transition."
         },
         {
           "id": "M8.3",
@@ -552,7 +556,7 @@
           ],
           "countsAs": "verification-or-deliverable",
           "owner": "사용자 직접 확인/승인 필요",
-          "progressNote": "origin 연결 및 fetch 검증 완료. 원격 ref 0개. commit/push·심사자 초대는 수행하지 않음."
+          "progressNote": "Source and debug APK checkpoint pushed; remote main verified at 897386ec45d5fed63ca89aa60e53f0dc3c81866f. Deploy-key authentication is working. Final signed release and any needed reviewer access/invitation remain; no visibility change or invitation performed."
         },
         {
           "id": "M8.4",
@@ -578,8 +582,8 @@
         }
       ],
       "total": 5,
-      "completed": 0,
-      "percent": 0.0
+      "completed": 1,
+      "percent": 20.0
     }
   ],
   "executionPriority": [
@@ -604,19 +608,24 @@
     "mode": "autonomous-until-owner-intervention",
     "userInstruction": "내 개입이 필요한 시점이 생기지 않으면 task를 끊기지 않게 이어해줘",
     "approvalBoundariesUnchanged": true,
-    "continueOtherReadyTasksWhenOneIsBlocked": true
+    "continueOtherReadyTasksWhenOneIsBlocked": true,
+    "activeScope": "OCI-server-only",
+    "macOperationsPausedUntilOwnerAvailable": true
   },
   "repositoryConnection": {
     "origin": "https://github.com/shining-sakaeru/story-drive-dear-family.git",
     "fetchVerified": true,
-    "committed": false,
-    "pushed": false
+    "committed": true,
+    "pushed": true,
+    "checkpointIncludesRelease": false,
+    "serverOnlyFollowupChanges": "Verified checkpoint prepared; actual publication SHA is recorded by external Git readback receipt",
+    "baselineVerifiedRemoteCommit": "897386ec45d5fed63ca89aa60e53f0dc3c81866f"
   },
   "productGaps": [
     "Android offline Korean TTS initialization failure in foreground emulator user; caption fallback, not speech success",
     "Virtual Console DDS bridge not yet connected; SDK roundtrip unverified",
     "No real driving transition/physical AudioFocus/OEM Suspend verification",
-    "Release APKs unsigned; commit/push and actual submission not performed"
+    "Release APKs unsigned; source/debug checkpoint pushed but final reviewer access and actual submission not performed"
   ],
   "reportingPolicy": {
     "activeConversationMaxIntervalMinutes": 15,
@@ -637,7 +646,13 @@
     "ownedEmulatorStopped": true,
     "parallelWorkerBatchesCompleted": true,
     "trackedRecordingProcessRunning": false,
-    "rawVideoFinalReviewed": false
+    "rawVideoFinalReviewed": false,
+    "editedVideoFinalReviewed": true,
+    "serverJvmRerun": "passed",
+    "serverJvmProcess": "proc_eebb72c81950",
+    "serverWorkers": "All implementation, fix and independent review sessions finished",
+    "serverJvmProcessExited": true,
+    "activeServerProcesses": 0
   },
   "participation": {
     "unit": "individual",
@@ -648,5 +663,17 @@
     "officialFormSection": "04 대표자·팀원 별 동의 확인 및 서명",
     "officialFormRequirement": "개인 참가 시 본인(대표자)란을, 팀 참가 시 대표자 및 모든 팀원란을 각각 작성합니다.",
     "officialFormSha256": "07be893d58b0e96ab7788f0d189d6829f0e59a2cee4bc18cb90ec37eeda2f5fd"
+  },
+  "serverVerification": {
+    "jvmEvidence": "docs/evidence/server-jvm-rerun.json",
+    "uniqueTests": 37,
+    "testExecutions": 58,
+    "flavorSourceCompile": [
+      "demo",
+      "pleos"
+    ],
+    "macAccessPerformed": false,
+    "pythonTests": 42,
+    "independentReview": "passed"
   }
 }

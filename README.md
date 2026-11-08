@@ -4,6 +4,13 @@ Kotlin / Jetpack Compose로 작성한 가족 케어 차량용 앱입니다. **de
 
 제출까지의 40개 태스크와 진척률은 `docs/SUBMISSION_MILESTONES.md`, 기계 판독용 현황은 `docs/submission-progress.json`을 확인하세요. 최신 통합 결과는 `docs/evidence/parallel-integration.json`입니다. 공식 Pleos 계측은 15개 중 14개 통과·조건부 1개 제외이며, 4개 variant lint는 오류 0개/경고 유지 상태입니다. `docs/evidence/verification-result.json`은 이전 Linux 검증 기록입니다. 다음 작업 인계는 `docs/SESSION_HANDOFF.md`를 참고하세요.
 
+## 시연 영상과 현재 APK
+
+- 실제 녹화 편집본: `media/StoryDrive_DearFamily_demo_captioned.mp4` — **28.5초 무음·한국어 자막**. 네 단계 실제 UI와 Mock/SDK 읽기 경계, TTS 초기화 실패를 명시했습니다. 전체 30초 투어 종료 전환이나 실제 음성 성공을 보여 주는 영상은 아닙니다.
+- 실제 프레임·영상 해시/검수: `media/README.md`, `docs/evidence/video-editing.json`.
+- 테스트 전용 APK: `apk/StoryDrive_DearFamily_demo_debug.apk`, `apk/StoryDrive_DearFamily_pleos_debug.apk`. **공모전 제출용 서명 release는 아직 없습니다.**
+- 서버 전용 작업/사용자 확인 사항: `docs/SESSION_HANDOFF.md`, `docs/OWNER_DECISIONS.md`. Mac은 소유자 재개 통보 전까지 연결하지 않습니다.
+
 ## 두 실행 경로
 
 | Flavor | Application ID | 역할 |
@@ -62,3 +69,13 @@ Mac의 검증된 빌드에서 생성한 APK 사본은 `artifacts/app-demo-debug.
 - 프로세스 재생성 시 Cozy/Fun과 간식 선택만 SavedStateHandle로 복원합니다. 모의 정차 동의, 진행 중 투어와 음성은 자동 복원하지 않습니다.
 
 실행 시나리오와 증거 수집 순서는 `docs/device-verification.md`를 따릅니다. SDK 승인·공식 이미지 실행·실제 출력·성능 측정·App Market 심사는 모두 독립 gate입니다.
+
+## SDK 없이 가능한 서버 사전검사
+
+```sh
+python3 scripts/package_source.py
+python3 -m unittest discover -s scripts -p 'test_*.py' -v
+python3 scripts/submission_preflight.py --plan submission/submission-plan.DRAFT.json
+```
+
+소스 ZIP 생성은 ignored legacy artifact 없이 클린 체크아웃에서 동작합니다. 마지막 명령의 로컬 계획 파일은 Git에 포함하지 않으며, 필수 본인 동의·서명·메일 정보가 미확정인 초안은 의도적으로 실패합니다. CLI 통과는 서명 진위·실제 이메일 접수·APK 설치·GitHub 접근을 대신 검증한 것이 아닙니다. 상세 입력/한계는 `docs/SUBMISSION_CHECKLIST.md`, source spec/metadata는 `docs/portable-source.md`를 참고하세요.

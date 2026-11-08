@@ -1,0 +1,47 @@
+{
+  "baselineCommit": "897386ec45d5fed63ca89aa60e53f0dc3c81866f",
+  "baselineCleanCheckout": {
+    "testsRun": 5,
+    "errors": 1,
+    "reason": "Original source archive test assumed ignored artifacts/source ZIP existed"
+  },
+  "currentPython": {
+    "testsRun": 42,
+    "failures": 0,
+    "errors": 0,
+    "log": "docs/evidence/server-python-tests.log"
+  },
+  "cleanIndexCheckout": {
+    "passed": true,
+    "packagerExitCode": 0,
+    "pythonTestsRun": 42,
+    "legacyArtifactMetadataRequired": false
+  },
+  "jvm": {
+    "evidence": "docs/evidence/server-jvm-rerun.json",
+    "uniqueTests": 37,
+    "executions": 58,
+    "allFourChecksPassed": true,
+    "bothFlavorsSourceCompiled": true,
+    "newApkProduced": false
+  },
+  "video": {
+    "evidence": "docs/evidence/video-editing.json",
+    "seconds": 28.5,
+    "audioTrack": false
+  },
+  "macOperationsPerformed": false,
+  "physicalAudioOrVehicleWriteVerified": false,
+  "independentReview": {
+    "passed": true,
+    "securityConcerns": 0,
+    "logicErrors": 0,
+    "evidence": "docs/evidence/server-code-review.json"
+  },
+  "realSubmissionSent": false,
+  "parentReproducedNewReviewRegressionsBeforeFix": {
+    "testsRun": 42,
+    "failures": 12,
+    "errors": 4
+  }
+}

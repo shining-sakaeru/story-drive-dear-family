@@ -1,0 +1,24 @@
+[Script Info]
+Title: Story Drive Dear Family - actual emulator highlight
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1336
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Header,Noto Sans CJK KR,34,&H00B8E500,&H000000FF,&H0016120F,&H0016120F,-1,0,0,0,100,100,0,0,1,1,0,8,40,40,25,1
+Style: Phase,Noto Sans CJK KR,34,&H00FAF7F5,&H000000FF,&H0016120F,&H0016120F,-1,0,0,0,100,100,0,0,1,1,0,2,40,40,108,1
+Style: Note,Noto Sans CJK KR,23,&H00B4A59B,&H000000FF,&H0016120F,&H0016120F,0,0,0,0,100,100,0,0,1,1,0,2,40,40,53,1
+Style: AudioNote,Noto Sans CJK KR,23,&H0047B3FF,&H000000FF,&H0016120F,&H0016120F,0,0,0,0,100,100,0,0,1,1,0,2,40,40,17,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 1,0:00:00.00,0:00:28.50,Header,,0,0,0,,STORY DRIVE · DEAR FAMILY | 실제 Pleos 앱 동작 하이라이트
+Dialogue: 1,0:00:00.00,0:00:06.50,Phase,,0,0,0,,2열 아이 소란 → 이야기·공조 케어 상태를 시각화 (Mock)
+Dialogue: 1,0:00:07.00,0:00:13.50,Phase,,0,0,0,,3열 부모님 → 온열·요추·휴게소 제안 상태 (Mock)
+Dialogue: 1,0:00:14.00,0:00:20.50,Phase,,0,0,0,,조수석 → Cozy 대화·음량 감쇠 상태 (Mock)
+Dialogue: 1,0:00:21.00,0:00:28.50,Phase,,0,0,0,,운전석 → 가족 케어 무음 리포트 (Mock)
+Dialogue: 1,0:00:00.00,0:00:28.50,Note,,0,0,0,,실제 SDK: 좌석 탑승 조회 / 센서·공조·온열·독립 음장: Mock
+Dialogue: 1,0:00:00.00,0:00:28.50,AudioNote,,0,0,0,,현재 한국어 TTS 초기화 실패 — 실제 음성 없이 자막으로 시연합니다.

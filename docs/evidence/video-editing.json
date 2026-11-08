@@ -1,0 +1,72 @@
+{
+  "verifiedAtUtc": "2026-11-08T21:33:34.107033+00:00",
+  "kind": "server-edited-actual-emulator-recording",
+  "output": {
+    "path": "media/StoryDrive_DearFamily_demo_captioned.mp4",
+    "sha256": "c8ff275906d2be473e7feb631b69cd2c594eca65e14b0d81a5bdb62585dd99b1",
+    "bytes": 609734,
+    "probe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "codec_type": "video",
+          "width": 1920,
+          "height": 1336,
+          "r_frame_rate": "30/1",
+          "nb_read_frames": "855"
+        }
+      ],
+      "format": {
+        "duration": "28.500000",
+        "size": "609734"
+      }
+    },
+    "localOriginal": "artifacts/StoryDrive_DearFamily_demo_captioned.mp4"
+  },
+  "source": {
+    "path": "artifacts/dearfamily-tour-raw-1a0107fd.mp4",
+    "sha256": "ae129dcd94a847261f8f61b3459cc99fbcfd7320bfbbc85ceece9637c56d2842",
+    "nativeBuildInputSha256": "1a0107fd6920ac0db4dbf697aa87d80eae251a1a26017bdd3b45b2437bb4afb0",
+    "trimStartSeconds": 11.0,
+    "trimDurationSeconds": 28.5,
+    "excludedFromGit": true
+  },
+  "edits": [
+    "Trim initial setup frames; preserve actual playback speed",
+    "Retain full Driving View and app frame; pad for annotation bars",
+    "Mask top-right system profile/clock region x1550,y0,w370,h65",
+    "Burn Korean phase captions and constant Mock/read-only/TTS initialization failure notices",
+    "No soundtrack or narration added"
+  ],
+  "checks": {
+    "fullVideoDecode": "pass",
+    "videoFrames": 855,
+    "audioStreamPresent": false,
+    "visualReviewSeconds": [
+      2,
+      9,
+      16,
+      24
+    ],
+    "fourPhasesVisible": true,
+    "koreanGlyphsReadable": true,
+    "drivingViewPreserved": true,
+    "profileMaskPresent": true
+  },
+  "limits": [
+    "Highlight excerpt, not the complete 30-second tour including its end transition",
+    "Vehicle climate, thermal care, cabin sensor and independent audio-zone control are Mock state only",
+    "SDK subscription value-change round trip is still unverified",
+    "Korean TTS initialization failed in the recorded environment; no actual speech is demonstrated",
+    "This edit does not add new Mac/device validation; no Mac access performed"
+  ],
+  "font": {
+    "family": "Noto Sans CJK KR Regular",
+    "license": "SIL Open Font License 1.1",
+    "licenseCopy": "media/OFL-NotoSansCJK.txt",
+    "sha256": "6bcb2a0703aa137e874fc2dffa85f6c21ba9a67fa329e81b8c801663af7e992a",
+    "source": "https://raw.githubusercontent.com/notofonts/noto-cjk/main/Sans/OTF/Korean/NotoSansCJKkr-Regular.otf"
+  }
+}
