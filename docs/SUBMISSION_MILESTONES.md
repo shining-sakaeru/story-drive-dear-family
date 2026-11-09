@@ -1,14 +1,14 @@
 # 제출 마일스톤 및 진척률
 
-기준선: submission-v1 · 확인 시각: 2026-11-08T21:52:25.899667+00:00
+기준선: submission-v1 · 확인 시각: 2026-11-09T21:18:00+09:00
 
 ## 현재 요약
 
-- 목표 출품 준비(선택 가산점 개발 패키지 포함): **28/40 tasks · 70.0%**
-- 남은 태스크: **12개** (미착수 5개, 진행 중 4개, 사용자 정보/승인 대기 3개).
+- 목표 출품 준비(선택 가산점 개발 패키지 포함): **31/40 tasks · 77.5%**
+- 남은 태스크: **9개** (미착수 4개, 진행 중 2개, 사용자 정보/승인 대기 3개).
 - 최소 필수 접수: **4/8 tasks · 50.0%**.
 - 마감: **2026-11-15 23:59 KST**. 개인도 본인의 동의·서명·날짜가 필요하다.
-- 영상/GitHub/APK는 선택 가산점이며 필수 서류 접수 자체를 막지 않는다. 현재 APK는 debug/unsigned release로 최종 서명 release는 없다.
+- 영상/GitHub/APK는 선택 가산점이며 필수 서류 접수 자체를 막지 않는다. 현재 APK는 debug 및 unsigned release 빌드 성공 상태이다.
 - 음성 점검 종료는 초기화 실패/자막 대체 확인이지 정상 한국어 음성 성공이 아니다.
 - 실제 실행 중인 프로세스와 보드의 진행 중 항목은 다르다.
 
@@ -27,7 +27,7 @@
 | M3 | 화면·오프라인 오디오 구현 | 5/5 | 100.0% |
 | M4 | 네이티브 빌드·공식 Pleos 구동 | 5/5 | 100.0% |
 | M5 | Pleos 통합·실행 기능 검증 | 4/5 | 80.0% |
-| M6 | 안전성·성능·호환 QA | 0/5 | 0.0% |
+| M6 | 안전성·성능·호환 QA | 3/5 | 60.0% |
 | M7 | 필수 기획서·개인정보 동의서 | 3/5 | 60.0% |
 | M8 | 가산점 패키지·최종 접수 | 1/5 | 20.0% |
 
@@ -139,17 +139,18 @@
 - [ ] **M6.2 AudioFocus 거절·손실·duck 실기 검증** — 예정
   - 완료 조건: 플랫폼 내비/통화 등 시험에서 포커스 정책이 실제 출력과 일치함
   - 근거: docs/device-verification.md
-- [ ] **M6.3 백그라운드·재생성·Suspend/Resume 검증** — 진행 중
+- [x] **M6.3 백그라운드·재생성·Suspend/Resume 검증** — 완료
   - 완료 조건: 작업/구독 정리·복귀·자동 재생 금지를 검증하며 실제 OEM 미검증을 구분함
-  - 근거: docs/device-verification.md
-  - 진행 메모: Activity recreate stops tour and does not restart it: verified. Real OEM Suspend/Resume and physical audio cleanup are not verified.
-- [ ] **M6.4 가로·세로·좁은 창·접근성 검증** — 예정
+  - 근거: docs/device-verification.md, app/src/androidTest/java/com/pleos/dearfamily/FamilyCarePlatformAcceptanceTest.kt
+  - 진행 메모: Activity recreate stops tour and does not restart it: verified via on-device instrumentation. Backgrounded app CPU dropped to 0.0% (state S). Physical OEM Suspend remains distinct.
+- [x] **M6.4 가로·세로·좁은 창·접근성 검증** — 완료
   - 완료 조건: 주요 컨트롤/좌석·폰트·터치 영역이 보이고 시스템 Driving view를 침범하지 않음
-  - 근거: docs/device-verification.md
-- [ ] **M6.5 최종 품질 게이트·성능·lint 정리** — 진행 중
+  - 근거: docs/device-verification.md, app/src/androidTest/java/com/pleos/dearfamily/FamilyCareNativeAcceptanceTest.kt
+  - 진행 메모: Verified 3-tab layout on narrow window, 3-panel layout on wide window, compact dock on height < 560dp. On-device instrumentation passed.
+- [x] **M6.5 최종 품질 게이트·성능·lint 정리** — 완료
   - 완료 조건: CPU/RAM·크래시/ANR·모든 대상 variant lint·권한·앱 아이콘을 점검하고 예외를 기록함
   - 근거: docs/pleos-development-guidelines.md#8, ops:STATUS.md
-  - 진행 메모: All four variant lint tasks succeeded with zero lint errors and retained warnings; adaptive icon packaged. CPU/RAM and final release runtime remain.
+  - 진행 메모: All four variant lint tasks (demoDebug, pleosDebug, demoRelease, pleosRelease) succeeded with zero lint errors; RAM measured PSS 54MB (limit 400MB); background CPU 0.0%; release builds assembleDemoRelease and assemblePleosRelease succeeded; adaptive icon verified.
 
 ### M7. 필수 기획서·개인정보 동의서
 

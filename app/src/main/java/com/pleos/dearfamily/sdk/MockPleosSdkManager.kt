@@ -22,10 +22,26 @@ class MockPleosSdkManager(private val scope: CoroutineScope) {
 
     fun trigger(scenario: Scenario) {
         cancelTourOnly()
-        val seeded = when (scenario) { Scenario.KIDS_NOISE -> _state.value.copy(noiseDb = 82); Scenario.KIDS_SLEEP -> _state.value.copy(noiseDb = 35); Scenario.PARENTS -> _state.value.copy(elapsedMin = 52); Scenario.PASSENGER -> _state.value }
+        val seeded = when (scenario) {
+            Scenario.KIDS_NOISE -> _state.value.copy(noiseDb = 82)
+            Scenario.KIDS_SLEEP -> _state.value.copy(noiseDb = 35)
+            Scenario.PARENTS -> _state.value.copy(elapsedMin = 52)
+            Scenario.PASSENGER -> _state.value
+            Scenario.TEEN_FOCUS -> _state.value.copy(noiseDb = 50)
+        }
         _state.value = seeded
-        val context = when (scenario) { Scenario.KIDS_NOISE -> com.pleos.dearfamily.domain.Context(noiseDb = seeded.noiseDb, tunnelMeters = 300); Scenario.KIDS_SLEEP -> com.pleos.dearfamily.domain.Context(noiseDb = 35, quietSeconds = 180, eyesClosed = true, breathingStable = true); Scenario.PARENTS -> com.pleos.dearfamily.domain.Context(elapsedMin = seeded.elapsedMin, pressureShift = true, oldRoadDistanceKm = 3.0); Scenario.PASSENGER -> com.pleos.dearfamily.domain.Context(rain = true, lowLight = true, conversation = true) }
-        ScenarioEngine.evaluate(context)?.let { applyScenario(it, forceEvent = true) }
+        if (scenario == Scenario.TEEN_FOCUS) {
+            applyScenario(Scenario.TEEN_FOCUS, forceEvent = true)
+        } else {
+            val context = when (scenario) {
+                Scenario.KIDS_NOISE -> com.pleos.dearfamily.domain.Context(noiseDb = seeded.noiseDb, tunnelMeters = 300)
+                Scenario.KIDS_SLEEP -> com.pleos.dearfamily.domain.Context(noiseDb = 35, quietSeconds = 180, eyesClosed = true, breathingStable = true)
+                Scenario.PARENTS -> com.pleos.dearfamily.domain.Context(elapsedMin = seeded.elapsedMin, pressureShift = true, oldRoadDistanceKm = 3.0)
+                Scenario.PASSENGER -> com.pleos.dearfamily.domain.Context(rain = true, lowLight = true, conversation = true)
+                else -> com.pleos.dearfamily.domain.Context()
+            }
+            ScenarioEngine.evaluate(context)?.let { applyScenario(it, forceEvent = true) }
+        }
     }
     fun setNoise(value: Int) {
         cancelTourOnly()
@@ -90,11 +106,34 @@ class MockPleosSdkManager(private val scope: CoroutineScope) {
     fun reset() { cancelManualJobs(); noiseArmed = true; elapsedArmed = true; _state.value = FamilyCareUiState() }
     fun shutdown() { cancelManualJobs() }
 
+    fun setPersona(persona: FamilyPersona) {
+        cancelTourOnly()
+        _state.update { it.copy(persona = persona) }
+        if (_state.value.flow.targetZone == SeatZone.KIDS_2ND_ROW) {
+            refreshScenario(if (persona == FamilyPersona.TEEN_STUDENT) Scenario.TEEN_FOCUS else Scenario.KIDS_NOISE)
+        }
+    }
+
+    fun updateThemeConfig(driving: String, parked: String) {
+        _state.update { it.copy(themeConfig = DriveModeThemeConfig(driving, parked)) }
+    }
+
+    fun toggleDriveMode() {
+        _state.update {
+            val next = if (it.driveMode == DriveModeState.DRIVING) DriveModeState.PARKED_LOUNGE else DriveModeState.DRIVING
+            it.copy(driveMode = next)
+        }
+    }
+
+    fun setSettingsDialogVisible(visible: Boolean) {
+        _state.update { it.copy(showSettingsDialog = visible) }
+    }
+
     private fun cancelManualJobs() { tourJob?.cancel(); tourJob = null; volumeJobs.values.forEach(Job::cancel); volumeJobs.clear(); _state.update { it.copy(tourRunning = false) } }
     private fun cancelTourOnly() { tourJob?.cancel(); tourJob = null; _state.update { it.copy(tourRunning = false) } }
     private fun refreshScenario(scenario: Scenario) {
         val old = _state.value
-        val flow = ScenarioEngine.flow(scenario, old.noiseDb, old.elapsedMin)
+        val flow = ScenarioEngine.flow(scenario, old.noiseDb, old.elapsedMin, persona = old.persona)
         _state.update { it.copy(flow = flow, seats = old.seats.map { seat -> seatFor(seat, scenario, old.noiseDb) }) }
     }
     private fun applyScenario(scenario: Scenario, cancel: Boolean = true, forceEvent: Boolean = false) {
@@ -103,12 +142,22 @@ class MockPleosSdkManager(private val scope: CoroutineScope) {
             volumeJobs[SeatZone.KIDS_2ND_ROW]?.cancel()
             volumeJobs.remove(SeatZone.KIDS_2ND_ROW)
         }
-        val old = _state.value; val flow = ScenarioEngine.flow(scenario, old.noiseDb, old.elapsedMin); val newEvent = forceEvent || old.flow.activeScenarioTitle != flow.activeScenarioTitle
-        _state.update { it.copy(flow = flow, seats = old.seats.map { seat -> seatFor(seat, scenario, old.noiseDb) }, audio = old.audio.map { audio -> audioFor(audio, scenario) }, silentMessage = if (scenario == Scenario.KIDS_SLEEP) "2열 아이들이 잠들었습니다. 후석 수면 케어를 시작합니다." else null, restStopVisible = scenario == Scenario.PARENTS || (scenario == Scenario.PASSENGER && old.restStopVisible), tourReport = false, eventId = if (newEvent) old.eventId + 1 else old.eventId, sleepPulseId = if (scenario == Scenario.KIDS_SLEEP && newEvent) old.sleepPulseId + 1 else old.sleepPulseId) }
-        if (scenario == Scenario.KIDS_NOISE || scenario == Scenario.PASSENGER) duckVolume(flow.targetZone, if (scenario == Scenario.PASSENGER) 25 else 40)
+        val old = _state.value
+        val flow = ScenarioEngine.flow(scenario, old.noiseDb, old.elapsedMin, persona = old.persona)
+        val newEvent = forceEvent || old.flow.activeScenarioTitle != flow.activeScenarioTitle
+        val companionMsg = when (scenario) {
+            Scenario.KIDS_NOISE -> if (old.persona == FamilyPersona.TEEN_STUDENT) "2열 청소년을 위한 힐링 사운드와 온도를 맞추었습니다." else "아이들을 위해 조용한 비밀 터널 미션을 속삭입니다."
+            Scenario.TEEN_FOCUS -> "2열 학업 피로를 덜어주는 Lo-Fi 비트와 쾌적한 쿨링을 작동합니다."
+            Scenario.KIDS_SLEEP -> "2열 아이들이 잠들었습니다. 조명을 낮추고 수면 케어를 시작합니다."
+            Scenario.PARENTS -> "3열 부모님의 허리 피로를 위해 온열 럼버 케어를 시작합니다."
+            Scenario.PASSENGER -> "조수석 파트너와 편안하게 대화하실 수 있도록 음악을 은은하게 조절했습니다."
+        }
+        _state.update { it.copy(flow = flow, companionMessage = companionMsg, seats = old.seats.map { seat -> seatFor(seat, scenario, old.noiseDb) }, audio = old.audio.map { audio -> audioFor(audio, scenario) }, silentMessage = if (scenario == Scenario.KIDS_SLEEP) "2열 아이들이 잠들었습니다. 후석 수면 케어를 시작합니다." else null, restStopVisible = scenario == Scenario.PARENTS || (scenario == Scenario.PASSENGER && old.restStopVisible), tourReport = false, eventId = if (newEvent) old.eventId + 1 else old.eventId, sleepPulseId = if (scenario == Scenario.KIDS_SLEEP && newEvent) old.sleepPulseId + 1 else old.sleepPulseId) }
+        if (scenario == Scenario.KIDS_NOISE || scenario == Scenario.PASSENGER || scenario == Scenario.TEEN_FOCUS) duckVolume(flow.targetZone, if (scenario == Scenario.PASSENGER) 25 else if (scenario == Scenario.TEEN_FOCUS) 45 else 40)
     }
     private fun seatFor(old: SeatStatus, scenario: Scenario, noise: Int): SeatStatus = when (scenario) {
         Scenario.KIDS_NOISE -> if (old.zone == SeatZone.KIDS_2ND_ROW) old.copy(active = true, noiseDb = noise, ambientOn = true, fanLevel = 2, freshAir = true, status = "소란 케어") else old
+        Scenario.TEEN_FOCUS -> if (old.zone == SeatZone.KIDS_2ND_ROW) old.copy(active = true, temperature = 21.5f, fanLevel = 2, status = "힐링·몰입") else old
         Scenario.KIDS_SLEEP -> if (old.zone == SeatZone.KIDS_2ND_ROW) old.copy(active = true, noiseDb = 35, temperature = 22.5f, ambientOn = false, fanLevel = 1, windowLocked = true, status = "수면 케어") else old
         Scenario.PARENTS -> if (old.zone == SeatZone.PARENTS_3RD_ROW) old.copy(active = true, heatingLevel = 1, lumbarOn = true, status = "피로 케어") else old
         Scenario.PASSENGER -> if (old.zone == SeatZone.PASSENGER_1R) old.copy(active = true, status = "Cozy 대화") else old
@@ -119,6 +168,7 @@ class MockPleosSdkManager(private val scope: CoroutineScope) {
         return when (scenario) {
             Scenario.KIDS_SLEEP -> old.copy(volume = 0, status = "수면 음소거 · SIMULATION")
             Scenario.KIDS_NOISE -> old.copy(status = "키즈 오디오북 · directional SIMULATION")
+            Scenario.TEEN_FOCUS -> old.copy(volume = 45, status = "Lo-Fi 스터디 · SIMULATION")
             Scenario.PARENTS -> old.copy(status = "7080 라디오 · SIMULATION")
             Scenario.PASSENGER -> old.copy(status = "LoFi duck · SIMULATION")
         }

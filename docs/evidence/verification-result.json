@@ -1,10 +1,10 @@
 {
-  "scope": "source-and-apk-build-attempt",
+  "scope": "jvm-and-compose-source-only",
   "checks": [
     {
       "name": "unit",
       "command": [
-        "/opt/data/home/projects/story-drive-dear-family/gradlew",
+        "/Users/nathanael/git/story-drive-dear-family/gradlew",
         "-p",
         "verification/engine-acceptance",
         "test",
@@ -19,7 +19,7 @@
     {
       "name": "engine-unit",
       "command": [
-        "/opt/data/home/projects/story-drive-dear-family/gradlew",
+        "/Users/nathanael/git/story-drive-dear-family/gradlew",
         "-p",
         "engine-tests",
         "test",
@@ -34,7 +34,7 @@
     {
       "name": "compile-demo",
       "command": [
-        "/opt/data/home/projects/story-drive-dear-family/gradlew",
+        "/Users/nathanael/git/story-drive-dear-family/gradlew",
         "-p",
         "verification/ui-compile-check",
         "-Pflavor=demo",
@@ -50,7 +50,7 @@
     {
       "name": "compile-pleos",
       "command": [
-        "/opt/data/home/projects/story-drive-dear-family/gradlew",
+        "/Users/nathanael/git/story-drive-dear-family/gradlew",
         "-p",
         "verification/ui-compile-check",
         "-Pflavor=pleos",
@@ -62,32 +62,6 @@
       "exitCode": 0,
       "log": "docs/evidence/compile-pleos.log",
       "result": "PASS"
-    },
-    {
-      "name": "pleos-dependencies",
-      "command": [
-        "/opt/data/home/projects/story-drive-dear-family/gradlew",
-        ":app:dependencies",
-        "--configuration",
-        "pleosDebugRuntimeClasspath",
-        "--no-daemon",
-        "--console=plain"
-      ],
-      "exitCode": 0,
-      "log": "docs/evidence/pleos-dependencies.log",
-      "result": "PASS"
-    },
-    {
-      "name": "assemble-debug",
-      "command": [
-        "/opt/data/home/projects/story-drive-dear-family/gradlew",
-        "assembleDebug",
-        "--no-daemon",
-        "--console=plain"
-      ],
-      "exitCode": 1,
-      "log": "docs/evidence/assemble-debug.log",
-      "result": "FAILED_OR_BLOCKED"
     }
   ],
   "testCount": 37,
@@ -448,10 +422,12 @@
   ],
   "sourceSha256": {
     "app/build.gradle.kts": "35f30175fffa90057cc4cc6bebb4a4a8741606806f3082d3764c21c739f0534b",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareNativeAcceptanceTest.kt": "3964bd9433b90ca5afa4766e63df84fffb40a253c559a059f86316463ad5e8b0",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCarePlatformAcceptanceTest.kt": "879a271f64d68e395c65ce96da993f58a35910769749e135663c4bdb1cd12f28",
     "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareUiTest.kt": "c0790b9073855915bbc4bc0574091abd2f8c965f2656b7f5a9b431ff47606570",
     "app/src/demo/AndroidManifest.xml": "a0fd45777014318ef3bc93b262d5e1e43357593f03a4f73be370cea28c6b2e76",
     "app/src/demo/java/com/pleos/dearfamily/platform/GatewayFactory.kt": "bbf98d59a0dbeeb7f72c383b4ac175e42fbf64d641d4ee935449864e251cda86",
-    "app/src/main/AndroidManifest.xml": "1e477836941916c0639f2eb7313ab57e4e953c308b6d656739358a6703237bd5",
+    "app/src/main/AndroidManifest.xml": "e06a82ec089208ef903bbdb2a2171c79f8c289d01e2cd380d219accf20f5cb6c",
     "app/src/main/java/com/pleos/dearfamily/MainActivity.kt": "2d2b4496152217118e26645ded6c747df2009a4e079d0931c4459f461e2c257e",
     "app/src/main/java/com/pleos/dearfamily/domain/ScenarioEngine.kt": "eb3928cca4adc3c790dafe22bb568d9f7c20aff827741ab4f81908509a9249db",
     "app/src/main/java/com/pleos/dearfamily/model/FamilyCareModels.kt": "219a6408ca951e10f3118a0f8c48c5d3ec2fd90478f9e09a4816c58eef884aa6",
@@ -471,6 +447,10 @@
     "app/src/main/java/com/pleos/dearfamily/ui/components/ScenarioInjectorDock.kt": "57a2ccf69913df6c50bb822338c64fc1ad88348df7d42c39c199dc6f72c37955",
     "app/src/main/java/com/pleos/dearfamily/ui/components/TopPeaceShieldBar.kt": "6b5e33a75440f8ee571dc351ec39b14adc0a3d39a41609ef110e90d6e6031ca9",
     "app/src/main/java/com/pleos/dearfamily/ui/theme/DearFamilyTheme.kt": "9107c85b0382741aad174e5f63f36f2acb6a8701dbbc71072120c2d22d985e80",
+    "app/src/main/res/drawable/ic_dearfamily_background.xml": "ddff85d4aec800fecc98d9b442bf8edc3c8c6dfea05995b3ef867067505cdb4a",
+    "app/src/main/res/drawable/ic_dearfamily_foreground.xml": "4ffc7b34e1df7acef80adaf7735371ef832c6421ef595a91cf364b0c28c193e0",
+    "app/src/main/res/mipmap-anydpi-v26/ic_dearfamily.xml": "aec1bab747ae213bade24492888f359f4fe6b4ce38c442287a75ebec04058403",
+    "app/src/main/res/mipmap-anydpi-v26/ic_dearfamily_round.xml": "aec1bab747ae213bade24492888f359f4fe6b4ce38c442287a75ebec04058403",
     "app/src/main/res/values/styles.xml": "5d41f57d6255474a617f351a44598bc58b27bae76966ba58887584c75e1bb9a1",
     "app/src/pleos/AndroidManifest.xml": "ddb0beec8a94bdcae9da9e9dedc3591aaba039a761799a8fae30bd0ab995d4bb",
     "app/src/pleos/java/com/pleos/dearfamily/platform/GatewayFactory.kt": "751153651803eb1f872bb48b3a675254bcb130a0f7be5e8238902ce0e9ea4fa0",

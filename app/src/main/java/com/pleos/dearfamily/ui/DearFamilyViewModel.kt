@@ -35,6 +35,9 @@ class DearFamilyViewModel(application: Application, private val saved: SavedStat
         // Restore harmless UI preferences only. Never restore demo consent, a tour, or audio playback.
         if (saved.get<Boolean>("cozyMode") == false) sdk.toggleMode()
         saved.get<String>("snackChoice")?.let { sdk.chooseSnack(it) }
+        saved.get<String>("persona")?.let { name ->
+            runCatching { com.pleos.dearfamily.model.FamilyPersona.valueOf(name) }.getOrNull()?.let { sdk.setPersona(it) }
+        }
     }
     private fun guarded(action: () -> Unit) { if (safety.value.canInteract) action() }
     fun enterDemo() {
@@ -63,6 +66,17 @@ class DearFamilyViewModel(application: Application, private val saved: SavedStat
     fun endConversation() = guarded { sdk.endConversation() }
     fun startTour() = guarded { sdk.startTour() }
     fun stopTour() = sdk.stopTour()
+    fun setPersona(persona: com.pleos.dearfamily.model.FamilyPersona) = guarded {
+        sdk.setPersona(persona)
+        saved["persona"] = persona.name
+    }
+    fun updateThemeConfig(driving: String, parked: String) = guarded {
+        sdk.updateThemeConfig(driving, parked)
+        saved["drivingTheme"] = driving
+        saved["parkedTheme"] = parked
+    }
+    fun toggleDriveMode() = guarded { sdk.toggleDriveMode() }
+    fun setSettingsDialogVisible(visible: Boolean) = guarded { sdk.setSettingsDialogVisible(visible) }
     fun reset() = guarded { sdk.reset(); saved.remove<Boolean>("cozyMode"); saved.remove<String>("snackChoice") }
     override fun onCleared() { stopper.stop(); super.onCleared() }
 }

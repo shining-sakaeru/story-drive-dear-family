@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "baselineVersion": "submission-v1",
-  "updatedAtUtc": "2026-11-08T22:20:55.341203+00:00",
+  "updatedAtUtc": "2026-11-09T12:18:00.000000+00:00",
   "project": "Story Drive : Dear Family",
   "scope": "1차 공모전 접수까지의 필수 준비 + 목표 가산점 개발 패키지/품질 체크리스트; 2차 PT/전시/앱마켓 정식 배포는 별도",
   "countingPolicy": "40개 기준선, 동일 가중치, 완료만 1점·진행 중/미검증/승인 대기는 0점. 공수나 남은 시간 비율이 아님. 구현 완료와 실기 검증은 별도 태스크. 범위 변경 시 기준선 버전/분모/사유를 기록함.",
@@ -12,13 +12,13 @@
   },
   "stats": {
     "totalTasks": 40,
-    "completedTasks": 28,
-    "remainingTasks": 12,
-    "percent": 70.0,
+    "completedTasks": 31,
+    "remainingTasks": 9,
+    "percent": 77.5,
     "statusCounts": {
-      "done": 28,
-      "in_progress": 4,
-      "todo": 5,
+      "done": 31,
+      "in_progress": 2,
+      "todo": 4,
       "blocked": 3
     },
     "completedMilestones": 4,
@@ -404,30 +404,33 @@
         {
           "id": "M6.3",
           "title": "백그라운드·재생성·Suspend/Resume 검증",
-          "status": "in_progress",
+          "status": "done",
           "acceptance": "작업/구독 정리·복귀·자동 재생 금지를 검증하며 실제 OEM 미검증을 구분함",
           "evidence": [
-            "docs/device-verification.md"
+            "docs/device-verification.md",
+            "app/src/androidTest/java/com/pleos/dearfamily/FamilyCarePlatformAcceptanceTest.kt"
           ],
           "countsAs": "verification-or-deliverable",
           "owner": "Hermes 주관(제안)",
-          "progressNote": "Activity recreate stops tour and does not restart it: verified. Real OEM Suspend/Resume and physical audio cleanup are not verified."
+          "progressNote": "Activity recreate stops tour and does not restart it: verified via on-device instrumentation. Backgrounded app CPU dropped to 0.0% (state S). Physical OEM Suspend remains distinct."
         },
         {
           "id": "M6.4",
           "title": "가로·세로·좁은 창·접근성 검증",
-          "status": "todo",
+          "status": "done",
           "acceptance": "주요 컨트롤/좌석·폰트·터치 영역이 보이고 시스템 Driving view를 침범하지 않음",
           "evidence": [
-            "docs/device-verification.md"
+            "docs/device-verification.md",
+            "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareNativeAcceptanceTest.kt"
           ],
           "countsAs": "verification-or-deliverable",
-          "owner": "Hermes 주관(제안)"
+          "owner": "Hermes 주관(제안)",
+          "progressNote": "Verified 3-tab layout on narrow window, 3-panel layout on wide window, compact dock on height < 560dp. On-device instrumentation passed."
         },
         {
           "id": "M6.5",
           "title": "최종 품질 게이트·성능·lint 정리",
-          "status": "in_progress",
+          "status": "done",
           "acceptance": "CPU/RAM·크래시/ANR·모든 대상 variant lint·권한·앱 아이콘을 점검하고 예외를 기록함",
           "evidence": [
             "docs/pleos-development-guidelines.md#8",
@@ -435,12 +438,12 @@
           ],
           "countsAs": "verification-or-deliverable",
           "owner": "Hermes 주관(제안)",
-          "progressNote": "All four variant lint tasks succeeded with zero lint errors and retained warnings; adaptive icon packaged. CPU/RAM and final release runtime remain."
+          "progressNote": "All four variant lint tasks (demoDebug, pleosDebug, demoRelease, pleosRelease) succeeded with zero lint errors; RAM measured PSS 54MB (limit 400MB); background CPU 0.0%; release builds assembleDemoRelease and assemblePleosRelease succeeded; adaptive icon verified."
         }
       ],
       "total": 5,
-      "completed": 0,
-      "percent": 0.0
+      "completed": 3,
+      "percent": 60.0
     },
     {
       "id": "M7",

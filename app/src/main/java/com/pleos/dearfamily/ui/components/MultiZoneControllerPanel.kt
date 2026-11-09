@@ -41,11 +41,13 @@ import kotlin.math.sin
                     Text(if (voice.muted) "음성 켜기" else "음소거")
                 }
             }
+            val amberColor = Amber
+            val borderCol = CardBorder
             Canvas(Modifier.fillMaxWidth().height(32.dp)) {
                 repeat(30) { i ->
                     val x = size.width * (i + .5f) / 30f
                     val height = if (voice.speaking) (abs(sin(i * .8f + phase)) * .8f + .1f) * size.height else 2.dp.toPx()
-                    drawLine(if (voice.speaking) Amber else CardBorder, Offset(x, (size.height - height) / 2),
+                    drawLine(if (voice.speaking) amberColor else borderCol, Offset(x, (size.height - height) / 2),
                         Offset(x, (size.height + height) / 2), 3.dp.toPx())
                 }
             }

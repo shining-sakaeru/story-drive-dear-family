@@ -30,6 +30,9 @@ import kotlin.math.sin
 @Composable fun CabinDigitalTwinView(state: FamilyCareUiState, modifier: Modifier = Modifier) {
     val pulse by rememberInfiniteTransition(label = "cabin").animateFloat(0f, 1f,
         infiniteRepeatable(tween(2300, easing = LinearEasing)), label = "heat rings")
+    val cardBorder = CardBorder
+    val emerald = Emerald
+    val violet = Violet
     CarePanel(modifier) {
         PanelHeading("01", "우리 가족의 작은 우주", "CABIN DIGITAL TWIN · 6 SEATS")
         Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -38,8 +41,8 @@ import kotlin.math.sin
                     val w = size.width
                     val h = size.height
                     drawRoundRect(Color(0xFF10161C), Offset(w * .045f, 0f), Size(w * .91f, h), CornerRadius(w * .24f, w * .24f))
-                    drawRoundRect(CardBorder, Offset(w * .045f, 1f), Size(w * .91f, h - 2f), CornerRadius(w * .24f, w * .24f), style = Stroke(2.dp.toPx()))
-                    drawRoundRect(Emerald.copy(alpha = .10f), Offset(w * .20f, 13.dp.toPx()), Size(w * .60f, 17.dp.toPx()), CornerRadius(7.dp.toPx()))
+                    drawRoundRect(cardBorder, Offset(w * .045f, 1f), Size(w * .91f, h - 2f), CornerRadius(w * .24f, w * .24f), style = Stroke(2.dp.toPx()))
+                    drawRoundRect(emerald.copy(alpha = .10f), Offset(w * .20f, 13.dp.toPx()), Size(w * .60f, 17.dp.toPx()), CornerRadius(7.dp.toPx()))
                     state.seats.forEach { seat ->
                         val y = when (seat.zone) {
                             SeatZone.DRIVER_1L, SeatZone.PASSENGER_1R -> h * .24f
@@ -82,7 +85,7 @@ import kotlin.math.sin
                     val py = size.height / 2 + sin(x * .24 + pulse * 2 * PI).toFloat() * amplitude * sin(x * .07).toFloat()
                     if (x == 0) p.moveTo(px, py) else p.lineTo(px, py)
                 }
-                drawPath(p, Violet.copy(alpha = .8f), style = Stroke(1.6.dp.toPx()))
+                drawPath(p, violet.copy(alpha = .8f), style = Stroke(1.6.dp.toPx()))
             }
             Text("온기와 소리는 가족에게만. 운전석은 평온하게.", color = SecondaryText, style = MaterialTheme.typography.bodySmall)
         }

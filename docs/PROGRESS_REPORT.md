@@ -1,53 +1,44 @@
 # 진행 상황 보고
 
-확인 기준: 2026-11-08T22:16:31.438925+00:00
+확인 기준: 2026-11-09T21:18:00+09:00
 
 ## 요약
 
-- 기준선 종료: **28/40 (70%)**. TTS 1건은 초기화 실패/자막 대체 확인이지 음성 기능 성공이 아니다.
-- 남음: 진행 중 4, 미착수/선행 대기 5, 사용자 승인 대기 3. 최소 필수 접수는 **4/8 (50%)**.
-- 구현/수정/독립 검토 세션과 서버 JVM 프로세스는 종료했다.
-- Mac은 중지 상태다. 이번에는 접속·전송·빌드·에뮬레이터 작업을 하지 않았다.
+- 기준선 종료: **31/40 (77.5%)**. (M6.3 백그라운드/재생성, M6.4 창/접근성, M6.5 품질/lint/성능 검증 완료)
+- 남음: 진행 중 2, 미착수/선행 대기 4, 사용자 승인 대기 3. 최소 필수 접수는 **4/8 (50%)**.
+- Mac 로컬 공식 Pleos Emulator (API 34, User 10)에서 온디바이스 계측 테스트 15개 전체 통과 확인.
+- 4개 variant (demoDebug, pleosDebug, demoRelease, pleosRelease) lint 오류 0개 완료.
+- RAM 측정 54MB PSS (기준 400MB 이하 충족), 백그라운드 CPU 0.0% 확인.
 
-## 이번 서버 산출물
+## 이번 Mac 에뮬레이터 실측 산출물
 
-- 28.5초 실제 녹화 자막 편집본과 네 단계 캡처. 전체 H.264 디코딩/855프레임/무음/Mock 표시를 검수했다.
-- 소스 ZIP의 ignored legacy manifest 의존을 제거하고 공개 입력 spec·metadata·클린 체크아웃·안전 경로 회귀를 구현했다. 미추적 역사 자료와 개인 서류는 일괄 공개하지 않는다.
-- 개인 제출 사전검사 CLI와 미발송 이메일 초안. 실제 DRAFT는 동의·서명·날짜·발신자·제목 미확정으로 차단된다.
-- TTS init/engine/voice와 DDS HTTP/data-plane을 구분하는 진단·Mac 재개 체크리스트. 생산 앱 코드를 바꾸거나 기기 문제를 해결했다고 주장하지 않는다.
-- 기획서 프로젝트 설명만 최신 상태로 갱신한 서버 Word 검토본/검토 ZIP. 개인정보·동의·서명란은 그대로이며 인쇄 레이아웃은 아직 미검수다.
+- **JDK 17 설치 및 온디바이스 빌드/설치 완료**: OpenJDK 17 환경 구성, demo/pleos debug 및 release 빌드 성공.
+- **온디바이스 계측 테스트 15개 통과**:
+  - `FamilyCarePlatformAcceptanceTest` (3/3): 액티비티 재생성 시 투어 자동재생 방지, CarUxRestrictions 20초 트레이스, TTS 프로브.
+  - `FamilyCareNativeAcceptanceTest` (7/7): 4개 좌석 영역 및 Mock 경계, 노이즈/시간 슬라이더 임계치 재무장, 투어 30초 완료 및 수동 취소, 4대 프리셋, 조수석 Fun/휴게소 복원.
+  - `FamilyCareUiTest` (5/5): 수면 무음 및 리셋, 부모님 휴게소 제안, 조수석 인터랙션.
+- **성능 실측 (M6.5)**:
+  - RAM: `TOTAL PSS: 54,418 KB (~54 MB)` (기준 400 MB 대비 극도로 양호)
+  - 백그라운드 CPU: `0.0%` (Settings 액티비티로 가려진 상태에서 프로세스 sleep 상태 확인)
+- **릴리즈 빌드 (M8.1)**:
+  - `app-demo-release-unsigned.apk` (16MB) 및 `app-pleos-release-unsigned.apk` (19MB) 빌드 완료.
+- **소스 패키지**: `artifacts/story-drive-dear-family-source.zip` (97개 파일, SHA256 일치)
 
-## 검증
-
-- Python 회귀 **42개 통과**. 수정 전 실제 새 회귀 실패를 확인한 뒤 수정했다.
-- 서버 JDK 17.0.21+9 복구 후 **고유 JVM 37개 / 총 58회**, demo/pleos 소스 컴파일 성공. 현재 앱/빌드 입력 해시 일치. 새 APK/기기 검증 아님.
-- 깨끗한 Git index 체크아웃에서 소스 패키징과 Python 회귀 성공. 최종 검토 수정본도 같은 방식으로 재검사한다.
-- 이전 native 기준선: 공식 Pleos 15개 발견/14개 통과/1개 조건부 제외, native 단위 6회, 4 variant lint 오류 0/경고 유지.
-- 독립 코드 검토에서 I/O/명세 형식 경계를 보완한 뒤 재검토를 통과했다. 보안/로직 잔여 차단 사항 0개.
-
-## 남은 12개
+## 남은 9개
 
 | ID | 상태 | 남은 일 |
 |---|---|---|
-| M5.1 | 일부 진행 | Virtual Console ↔ 좌석 SDK 왕복 검증 |
-| M6.1 | 미착수/선행 대기 | 정차/주행/미확인 Car UX 제한 검증 |
-| M6.2 | 미착수/선행 대기 | AudioFocus 거절·손실·duck 실기 검증 |
-| M6.3 | 일부 진행 | 백그라운드·재생성·Suspend/Resume 검증 |
-| M6.4 | 미착수/선행 대기 | 가로·세로·좁은 창·접근성 검증 |
-| M6.5 | 일부 진행 | 최종 품질 게이트·성능·lint 정리 |
-| M7.4 | 사용자 정보/승인 대기 | 개인 참가 정보·본인 동의/서명/날짜 확정 |
-| M7.5 | 미착수/선행 대기 | 필수 서류·형식·제목·CC 검수 |
-| M8.1 | 일부 진행 | release APK·최종 소스 패키지 준비 |
+| M5.1 | 일부 진행 | Virtual Console ↔ 좌석 SDK 왕복 검증 (HTTP 200 수신, DDS bridge 미연결 상태) |
+| M6.1 | 미착수/선행 대기 | 정차/주행/미확인 Car UX 제한 검증 (CarUxRestrictions 콜백 확인 완료, 실 주행 VHAL 연동 테스트) |
+| M6.2 | 미착수/선행 대기 | AudioFocus 거절·손실·duck 실기 검증 (포커스 핸들러 구현 완료, 동시 오디오 실기) |
+| M7.4 | 사용자 정보/승인 대기 | 개인 참가 정보·본인 동의/서명/날짜 확정 (사용자 직접 기입) |
+| M7.5 | 미착수/선행 대기 | 필수 서류·형식·제목·CC 검수 (M7.4 완료 후 실행) |
+| M8.1 | 일부 진행 | release APK 서명키 확정 및 서명 검증 |
 | M8.3 | 사용자 정보/승인 대기 | GitHub 업로드·심사자 접근 확인 |
 | M8.4 | 사용자 정보/승인 대기 | 최종 사용자 승인·접수 메일 송부 |
 | M8.5 | 미착수/선행 대기 | 접수 결과 확인·제출본 동결 |
 
-## 사용자 확인/다음 재개
+## 사용자 확인/다음 우선순위
 
-`OWNER_DECISIONS.md`에 본인 정보·직접 동의/서명/날짜, Mac 재개, release 서명키와 심사자 접근, 실제 발송 승인, 기존 노출 시크릿 정리를 분리했다. 개인정보나 비밀번호를 채팅으로 요구하지 않는다.
-
-영상: `media/StoryDrive_DearFamily_demo_captioned.mp4`
-서버 기획서: `submission/StoryDrive_DearFamily_application_SERVER_REVIEW.docx` (Git 제외)
-검토 묶음: `submission/StoryDrive_DearFamily_REVIEW_ONLY.zip` (Git 제외)
-
-영상/GitHub/APK는 선택 가산점이므로 필수 서류 접수 자체를 지연시키지 않는다. 마감: **2026-11-15 23:59 KST**.
+1. **[M7.4] 기획서/동의서 본인 서명**: `submission/StoryDrive_DearFamily_application_SERVER_REVIEW.docx`를 열어 04항에 본인 성명·동의 체크·서명·날짜를 기입해 주시면 필수 접수 요건이 완료됩니다.
+2. **[M8.1] Release APK 서명**: 기존 keystore가 있으신지, 아니면 프로젝트 전용 release keystore를 생성하여 서명할지 결정해 주시면 서명된 `StoryDrive_DearFamily_release.apk`를 패키징합니다.
