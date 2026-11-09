@@ -1,0 +1,10 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.2/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :checkKotlinGradlePluginConfigurationErrors
+> Task :extractAars
+
+> Task :compileKotlin
+w: file:///Users/nathanael/git/story-drive-dear-family/app/src/main/java/com/pleos/dearfamily/ui/components/WarmFamilyStoryView.kt:57:9 Variable 'palette' is never used
+
+BUILD SUCCESSFUL in 25s
+3 actionable tasks: 3 executed

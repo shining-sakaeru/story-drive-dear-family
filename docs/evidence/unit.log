@@ -1,0 +1,90 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.2/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :checkKotlinGradlePluginConfigurationErrors
+> Task :processResources NO-SOURCE
+> Task :processTestResources NO-SOURCE
+> Task :compileKotlin
+> Task :compileJava NO-SOURCE
+> Task :classes UP-TO-DATE
+> Task :compileTestKotlin
+> Task :compileTestJava NO-SOURCE
+> Task :testClasses UP-TO-DATE
+
+> Task :test
+
+com.pleos.dearfamily.acceptance.FamilyAcceptanceTest > tourUsesExactTimelineAndReportInterruptsPriorVoice PASSED
+
+com.pleos.dearfamily.acceptance.FamilyAcceptanceTest > passengerDuckingRestoresWithoutChangingDriver PASSED
+
+com.pleos.dearfamily.acceptance.FamilyAcceptanceTest > thresholdsRequireAllCompanionConditions PASSED
+
+com.pleos.dearfamily.acceptance.FamilyAcceptanceTest > openingGameDoesNotCancelConversationDucking PASSED
+
+com.pleos.dearfamily.acceptance.FamilyAcceptanceTest > slidersClampAndRearmWithoutRepeatedHighBandEvents PASSED
+
+com.pleos.dearfamily.acceptance.FamilyAcceptanceTest > tourProgressAdvancesEverySecondAndManualClearsOldReport PASSED
+
+com.pleos.dearfamily.acceptance.FamilyAcceptanceTest > elapsedThresholdRearmsEvenWhenParentsSceneWasAlreadyActive PASSED
+
+com.pleos.dearfamily.acceptance.FamilyAcceptanceTest > resetCancelsPendingVolumeAndTourAndRestoresSnapshot PASSED
+
+com.pleos.dearfamily.acceptance.FamilyAcceptanceTest > parentCarePersistsDuringPassengerConversation PASSED
+
+com.pleos.dearfamily.acceptance.FamilyAcceptanceTest > sensorTriggerBadgeReflectsTheCurrentReadingNotOldEvent PASSED
+
+com.pleos.dearfamily.acceptance.FamilyAcceptanceTest > manualSliderCancelsPendingTourSteps PASSED
+
+com.pleos.dearfamily.acceptance.FamilyAcceptanceTest > replayingSamePresetCreatesNewNarrationEvent PASSED
+
+com.pleos.dearfamily.acceptance.FamilyAcceptanceTest > independentZonesCompleteDuckingWithoutCancellingEachOther PASSED
+
+com.pleos.dearfamily.acceptance.FamilyAcceptanceTest > sleepCancelsWhisperAndAppliesTypedControls PASSED
+
+com.pleos.dearfamily.acceptance.FamilyAcceptanceTest > initialStateHasFourIndependentZonesAndNavigationRoute PASSED
+
+com.pleos.dearfamily.acceptance.FamilyAcceptanceTest > movingNoiseWithinTriggeredBandUpdatesReadingsWithoutNewNarration PASSED
+
+com.pleos.dearfamily.acceptance.NarrationSessionTest > rejectedFocusNeverStartsPlayback PASSED
+
+com.pleos.dearfamily.acceptance.NarrationSessionTest > staleSynthesisCannotAcquireFocusOrReplayAfterReplacement PASSED
+
+com.pleos.dearfamily.acceptance.NarrationSessionTest > suspendInvalidatesAllCallbacksAndReleasesFocus PASSED
+
+com.pleos.dearfamily.acceptance.NarrationSessionTest > focusDuckRestoresAndLossStopsWithoutAutomaticResume PASSED
+
+com.pleos.dearfamily.acceptance.NarrationSessionTest > restrictedStateAndUnmuteDoNotStartHiddenPlayback PASSED
+
+com.pleos.dearfamily.acceptance.PcmWaveTest > unsignedEightBitPcmUsesNeutralMidpointNotZero PASSED
+
+com.pleos.dearfamily.acceptance.PcmWaveTest > malformedWavAndOutOfPolicyDelayAreRejected PASSED
+
+com.pleos.dearfamily.acceptance.PcmWaveTest > actualPcmSilencePrecedesUnchangedSpeechData PASSED
+
+com.pleos.dearfamily.acceptance.SafetyPolicyTest > unknownAutomotiveStateCannotBeUnlockedByDemoOptIn PASSED
+
+com.pleos.dearfamily.acceptance.SafetyPolicyTest > realFlavorCannotUseTabletDemoBypass PASSED
+
+com.pleos.dearfamily.acceptance.SafetyPolicyTest > knownParkedStateStillRequiresForegroundAndNoSuspend PASSED
+
+com.pleos.dearfamily.acceptance.SafetyPolicyTest > ordinaryDemoNeedsExplicitParkedOptIn PASSED
+
+com.pleos.dearfamily.acceptance.SessionStopperTest > everySubscriptionIsReleasedEvenWhenAnotherCleanupFails PASSED
+
+com.pleos.dearfamily.domain.ScenarioEngineTest > noiseThresholdUsesNoiseAndTunnelOnly PASSED
+
+com.pleos.dearfamily.domain.ScenarioEngineTest > sleepRequiresQuietEyesAndBreathing PASSED
+
+com.pleos.dearfamily.domain.ScenarioEngineTest > flowReflectsSliderInputAndExactScript PASSED
+
+com.pleos.dearfamily.sdk.MockPleosSdkManagerTest > sliderUpdatesRetainedScenarioWithoutNewEvent PASSED
+
+com.pleos.dearfamily.sdk.MockPleosSdkManagerTest > sleepAndParentsPopulateTypedOutputs PASSED
+
+com.pleos.dearfamily.sdk.MockPleosSdkManagerTest > tourHasRequiredTimelineAndNoSleep PASSED
+
+com.pleos.dearfamily.sdk.MockPleosSdkManagerTest > passengerRestoresVolumeAndSnackState PASSED
+
+com.pleos.dearfamily.sdk.MockPleosSdkManagerTest > noiseRisingEdgeRearmsAndDucks PASSED
+
+BUILD SUCCESSFUL in 13s
+4 actionable tasks: 4 executed
