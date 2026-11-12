@@ -1,0 +1,73 @@
+{
+  "kind": "manual-reference-pixel-survey-not-runtime-window-measurement",
+  "sceneRectPx": [
+    215,
+    142,
+    1161,
+    586
+  ],
+  "relativeSlots": {
+    "vehicle": [
+      195,
+      51,
+      567,
+      387
+    ],
+    "driver": [
+      45,
+      29,
+      238,
+      111
+    ],
+    "passenger": [
+      671,
+      28,
+      240,
+      172
+    ],
+    "kids": [
+      45,
+      268,
+      238,
+      150
+    ],
+    "rear": [
+      671,
+      268,
+      240,
+      150
+    ]
+  },
+  "realWindowBoundsVerified": true,
+  "referencePixelCalibrationComplete": false,
+  "runtimeMeasurement": {
+    "sourceArchiveSha256": "8a23de0555dc175d93265e7074f2969876df4c9e83ae2561f41c5128d98f7bac",
+    "screenBoundsPx": [
+      853,
+      90,
+      2535,
+      1300
+    ],
+    "appLocalBounds": {
+      "left": 0,
+      "top": 0,
+      "right": 1682,
+      "bottom": 1210,
+      "width": 1682,
+      "height": 1210
+    },
+    "themeLocalBounds": {
+      "left": 14,
+      "top": 72,
+      "right": 1668,
+      "bottom": 1196,
+      "width": 1654,
+      "height": 1124
+    },
+    "density": 1,
+    "fontScale": 1,
+    "locale": [
+      "ko-KR"
+    ]
+  }
+}

@@ -142,7 +142,7 @@ fun DearFamilySettingsDialog(
                                                 )
                                                 Text(
                                                     mode.subtitle,
-                                                    style = MaterialTheme.typography.labelSmall.copy(fontSize = 9.sp),
+                                                    style = MaterialTheme.typography.labelSmall.copy(fontSize = 14.sp, lineHeight = 20.sp),
                                                     color = palette.secondaryText
                                                 )
                                             }
@@ -192,7 +192,7 @@ fun DearFamilySettingsDialog(
                                                 )
                                                 Text(
                                                     mode.subtitle,
-                                                    style = MaterialTheme.typography.labelSmall.copy(fontSize = 9.sp),
+                                                    style = MaterialTheme.typography.labelSmall.copy(fontSize = 14.sp, lineHeight = 20.sp),
                                                     color = palette.secondaryText
                                                 )
                                             }

@@ -10,6 +10,18 @@ SPEC.loader.exec_module(runner)
 
 
 class VerificationRunnerTest(unittest.TestCase):
+    def test_instrumentation_sources_are_compiled_for_both_flavors(self):
+        checks = dict(runner.verification_plan(jvm_only=True))
+        for flavor in ["demo", "pleos"]:
+            command = checks.get("compile-ui-tests-" + flavor, [])
+            self.assertIn("-PincludeAndroidTests=true", command)
+            self.assertIn("-Pflavor=" + flavor, command)
+
+    def test_snapshot_includes_reference_bitmap_resources(self):
+        snapshot = runner.snapshot()
+        self.assertIn("app/src/main/res/drawable-nodpi/img_genesis_car_base.webp", snapshot)
+        self.assertIn("app/src/main/res/drawable-nodpi/img_warm_fox.webp", snapshot)
+
     def test_both_independent_jvm_modules_are_executed(self):
         checks = dict(runner.verification_plan(jvm_only=True))
         self.assertIn("unit", checks)

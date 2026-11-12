@@ -1,0 +1,579 @@
+{
+  "schemaVersion": 1,
+  "verifiedAtUtc": "2026-11-12T13:38:53.502459+00:00",
+  "baselineCommit": "ca302433b416b62617e13d0506ebf1256da760c2",
+  "buildSourceArchiveSha256": "8a23de0555dc175d93265e7074f2969876df4c9e83ae2561f41c5128d98f7bac",
+  "buildInputsSha256": {
+    "app/build.gradle.kts": "35f30175fffa90057cc4cc6bebb4a4a8741606806f3082d3764c21c739f0534b",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareDebugInteractionProbeTest.kt": "742cff3877e8bdbc8396a8299b1648cbbf907b3818e743e6adf7e4a8fed6ade0",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareDesignContractTest.kt": "fc1d42e5f6fb415f283fdf9dd2732d8a7c6984a69bf36d9e61e0bbc0257fad85",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareNativeAcceptanceTest.kt": "05e41432e6c8695f569241a2f7d613d8869d0980b112e363258c518b4006ef79",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCarePlatformAcceptanceTest.kt": "48d150a39f36c3082a7a23cdc61348d86846fe0c14597e637723235c5fa0f2d5",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareReferenceCaptureTest.kt": "59cea7b3749ac6080cedf81ddf10ac085dfa1e4dbab8d738ed6b6b0b5f9c6c42",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareSpatialActionsTest.kt": "dd38e41d1e244758eafcacd5461274f4d7e95441dd6de61bc3b281650a3d92f1",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareUiTest.kt": "37be678fb5b532a359db24cc420a79d051d4010cb26112121a57d9442504bf1b",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareVisualStructureTest.kt": "b617e99a50ee49e391873e352fd7e74086a5402d35064ba71ca6387a2630d35d",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareWarmActionsTest.kt": "92e51a6761488e8115622bbc6093d0c1be474550bc002c99c605bd7ca9c70db5",
+    "app/src/demo/AndroidManifest.xml": "a0fd45777014318ef3bc93b262d5e1e43357593f03a4f73be370cea28c6b2e76",
+    "app/src/demo/java/com/pleos/dearfamily/platform/GatewayFactory.kt": "bbf98d59a0dbeeb7f72c383b4ac175e42fbf64d641d4ee935449864e251cda86",
+    "app/src/main/AndroidManifest.xml": "e06a82ec089208ef903bbdb2a2171c79f8c289d01e2cd380d219accf20f5cb6c",
+    "app/src/main/java/com/pleos/dearfamily/MainActivity.kt": "2d2b4496152217118e26645ded6c747df2009a4e079d0931c4459f461e2c257e",
+    "app/src/main/java/com/pleos/dearfamily/domain/ScenarioEngine.kt": "d692e3b231610eaa4369374f11c6c4d1fe413c5ea619bd04c483c639f84efa0b",
+    "app/src/main/java/com/pleos/dearfamily/model/FamilyCareModels.kt": "369f36431bf07a24eae0a6b365d60005281e631c5eea548ea78f42e8e5d5cc8b",
+    "app/src/main/java/com/pleos/dearfamily/platform/AudioNarrator.kt": "14999dc7e2f5f5ee352222a04582a8f68f7dc55c68416f856dac194793fae689",
+    "app/src/main/java/com/pleos/dearfamily/platform/CarUxObserver.kt": "09d8f0b45cbfa04eb11636f7907993351d3be2086c239350819222bfab00aff8",
+    "app/src/main/java/com/pleos/dearfamily/platform/VehicleReadGateway.kt": "c55f171fce0960f39266d7adeadeabd5914626e73b9b32f2f1c447ad9e4a95e8",
+    "app/src/main/java/com/pleos/dearfamily/policy/SafetyState.kt": "ad218c21c5e314df0dc16068036efa2361b29ffba66b33e4a10e56f2ec595e9d",
+    "app/src/main/java/com/pleos/dearfamily/policy/SessionStopper.kt": "dd1397dd815da843b9eddbb34d70b38a41b5741b3ed8864489c68ed03773d2ad",
+    "app/src/main/java/com/pleos/dearfamily/policy/audio/NarrationSession.kt": "6e489a02a53eed4d02c5c081a47280d6814f6c6ceefb2348fad6dc9d0bf3646c",
+    "app/src/main/java/com/pleos/dearfamily/policy/audio/PcmWave.kt": "c2a007724aa0c11ba434c1d9468c4939cab4f5cbed18fb047b10ab03c479368a",
+    "app/src/main/java/com/pleos/dearfamily/sdk/MockPleosSdkManager.kt": "06b827e87dd4a2cfb126ed691862b326765569bda6562cd188028b0d59e28033",
+    "app/src/main/java/com/pleos/dearfamily/ui/DearFamilyMainScreen.kt": "14aa850e9fb6fd6c4af45251ce433b58642d56d451a791fa5f57bcf0145835e4",
+    "app/src/main/java/com/pleos/dearfamily/ui/DearFamilyViewModel.kt": "270cbea15ef135726221da7c02919c7dee434cc8d6f256e9df9114d809a775b7",
+    "app/src/main/java/com/pleos/dearfamily/ui/components/CabinDigitalTwinView.kt": "24959a96c271ac417652b706a5605addbd431588bb6360552dd782ec185ad8fa",
+    "app/src/main/java/com/pleos/dearfamily/ui/components/DearFamilySettingsDialog.kt": "5fa141675ea8aa74a23028902f1cefc22199d7a773b5efd3e138320375acf818",
+    "app/src/main/java/com/pleos/dearfamily/ui/components/GenesisLuxuryCockpitView.kt": "c08bc92c2ad055fdee1e43881996c82366884109bf75a9549e9b10600d28ccba",
+    "app/src/main/java/com/pleos/dearfamily/ui/components/IpoPipelineMonitor.kt": "b53936fadfa830511b46821507fe81842db045225be8366e0942f32329b65553",
+    "app/src/main/java/com/pleos/dearfamily/ui/components/MultiZoneControllerPanel.kt": "d05425b025464a6652e4a5afbb0c91601a74f1f3c918198900238f370ee934d1",
+    "app/src/main/java/com/pleos/dearfamily/ui/components/ScenarioInjectorDock.kt": "0b421d460d1202171e12617f79a242c77f717ea4a9b9f7997e924a6995a19901",
+    "app/src/main/java/com/pleos/dearfamily/ui/components/SpatialDynamicCardsView.kt": "b88e14f43922c3ad22340886244d32643d89f5aa2c219bae36a7ecc83cb2c571",
+    "app/src/main/java/com/pleos/dearfamily/ui/components/TopPeaceShieldBar.kt": "6b5e33a75440f8ee571dc351ec39b14adc0a3d39a41609ef110e90d6e6031ca9",
+    "app/src/main/java/com/pleos/dearfamily/ui/components/WarmFamilyStoryView.kt": "37fb0171f6b2fa9d97450eb911fb754238ec9eb35819b1cac8c65519ea8bd69e",
+    "app/src/main/java/com/pleos/dearfamily/ui/theme/DearFamilyTheme.kt": "b9e6c843c928c8b28b15514aecbc87ce7b63b623fe7bbcfe0b474c9b85718091",
+    "app/src/main/res/drawable-nodpi/img_genesis_album.webp": "78e768628a20b0d3c584d9569801b8dd2c8d3a3fd3288514e4b92989e658bc95",
+    "app/src/main/res/drawable-nodpi/img_genesis_car_base.webp": "8830c28d60d1f8d309d9904d9808f4f862116c41dfe34c0dba2a97353df9b82a",
+    "app/src/main/res/drawable-nodpi/img_genesis_seat_glow.webp": "65da21e5595dca3480398276c1e1e123a6905f8f4d5417316bd6d4e5366cbb65",
+    "app/src/main/res/drawable-nodpi/img_genesis_waveform.webp": "b1fb473a7732fa601710c8a655d0a4216878197ffdc11a6159707fafa1ffd69e",
+    "app/src/main/res/drawable-nodpi/img_spatial_album.webp": "b6c5d5ab1641947efe5cfb453864c89efb0fb842c6792f24c7376380e295aff1",
+    "app/src/main/res/drawable-nodpi/img_spatial_comfort_curve.webp": "ca79e2a5a1b251650537599773eee312d780a01f1721c4c22e966b4aa1358030",
+    "app/src/main/res/drawable-nodpi/img_spatial_story.webp": "89e2eb78141e2d66bf0603940020e27e609422a0c647929d3d7d554b903dea3a",
+    "app/src/main/res/drawable-nodpi/img_spatial_waveform.webp": "cdf1278170aae07a33b06e72913d6cfff79af6cf9920034218257aad5af098a9",
+    "app/src/main/res/drawable-nodpi/img_warm_cabin.webp": "cce8cbf09a142a34b6453781c525f9c6dccb8bb0f31d7b1b043de964e46b2652",
+    "app/src/main/res/drawable-nodpi/img_warm_fox.webp": "9ec83bf3296caf3af2358a27c6e771d707e042155c13eeb72c81acf7dda322f6",
+    "app/src/main/res/drawable-nodpi/img_warm_seat.webp": "e79c877e90b6b23100036904fbf4ce88e137e6556964bc5c34095790ce55a4f7",
+    "app/src/main/res/drawable/ic_dearfamily_background.xml": "ddff85d4aec800fecc98d9b442bf8edc3c8c6dfea05995b3ef867067505cdb4a",
+    "app/src/main/res/drawable/ic_dearfamily_foreground.xml": "4ffc7b34e1df7acef80adaf7735371ef832c6421ef595a91cf364b0c28c193e0",
+    "app/src/main/res/drawable/ic_spatial_fan.xml": "f7a6be9f2b3f00c0121669088053bc447f73f3d2683672174b65f695179063f0",
+    "app/src/main/res/drawable/ic_spatial_home.xml": "531b8c834bd702ba3f3dad6624b6ca888982bb520cc964767a48b82720b59b0c",
+    "app/src/main/res/drawable/ic_spatial_hvac.xml": "f4e7e9ee286d1ee574f8625874c7de3d0d4bf20f6c2afbdc42fa53735203436a",
+    "app/src/main/res/drawable/ic_spatial_media.xml": "d9e39014b735b211009525733a7962d4b369040e8bd35732d74b4be486bb41a4",
+    "app/src/main/res/drawable/ic_spatial_navigation.xml": "831ed93ca323e5dbf266a97a99e9deb803b60d64fbde3dcd40b91845bc6069ab",
+    "app/src/main/res/drawable/ic_spatial_quick_mute.xml": "fc39e45841f6e05110ded5d944a52636715c4cb135ab78779da5fe8facad8155",
+    "app/src/main/res/drawable/ic_spatial_seat_heating.xml": "a8b9f334eb29e8e9b7e3e52f937ea33b28b121c0d0671152401201b8f12cac61",
+    "app/src/main/res/drawable/ic_spatial_seat_ventilation.xml": "af59ec782b87fb1644a6067578f48e81bb1f262282455b8d493243efc72f1253",
+    "app/src/main/res/mipmap-anydpi-v26/ic_dearfamily.xml": "aec1bab747ae213bade24492888f359f4fe6b4ce38c442287a75ebec04058403",
+    "app/src/main/res/mipmap-anydpi-v26/ic_dearfamily_round.xml": "aec1bab747ae213bade24492888f359f4fe6b4ce38c442287a75ebec04058403",
+    "app/src/main/res/values/styles.xml": "5d41f57d6255474a617f351a44598bc58b27bae76966ba58887584c75e1bb9a1",
+    "app/src/pleos/AndroidManifest.xml": "ddb0beec8a94bdcae9da9e9dedc3591aaba039a761799a8fae30bd0ab995d4bb",
+    "app/src/pleos/java/com/pleos/dearfamily/platform/GatewayFactory.kt": "751153651803eb1f872bb48b3a675254bcb130a0f7be5e8238902ce0e9ea4fa0",
+    "app/src/test/java/com/pleos/dearfamily/domain/ScenarioEngineTest.kt": "aefa2b42b460ee796332c91f6f36f1a3330bfad31960c182ce69aa54c8073a40",
+    "app/src/test/java/com/pleos/dearfamily/sdk/SpatialActionTest.kt": "8007b89dcc11e5cb77a782af4e37928989738bb77285608c0ece60cc0bc17922",
+    "app/src/test/java/com/pleos/dearfamily/sdk/StoryActionTest.kt": "965fecb9588bd927c369d08e4d6eb2fdf15bad6090d459e30b2ad20890deddaa",
+    "build.gradle.kts": "d07a0c3c8e53069ea198460d615bb2607bc02299083d603c9db8e2e5d7923543",
+    "engine-tests/build.gradle.kts": "b8b1fc97740d299d0ca2793aae1fbb111c6dbfea877e007cf0e1bdff534d93be",
+    "engine-tests/settings.gradle.kts": "371d8986cf073ea3b5ce8ab20565ce6abcb88cc98e9465a240d09cb3c9407aa6",
+    "engine-tests/src/test/kotlin/com/pleos/dearfamily/acceptance/FamilyAcceptanceTest.kt": "0a98838424a8804ed43c51ddf3cbec112ef6471acbf827c2aeb8abd2c9b8ebe9",
+    "engine-tests/src/test/kotlin/com/pleos/dearfamily/sdk/MockCareControlsTest.kt": "b3a7906f721a2b6f1e8ad9f699d852a201a3de423bcb8ba38581b92bae61f0f4",
+    "engine-tests/src/test/kotlin/com/pleos/dearfamily/sdk/MockPleosSdkManagerTest.kt": "a3c1a229b960e29f84b2ae3fc1b154a0152b3dfcc5eaa57acdcc6701b9c812dd",
+    "engine-tests/src/test/kotlin/com/pleos/dearfamily/sdk/MockSpatialControlsTest.kt": "316ba560b8ddf16af2f3bb0bc11e364495a775ff6fc0a176b962537fe6ccc93a",
+    "gradle.properties": "fa078c27c9e4bde28a029d673875b028884505efa436b68cf60e1ac0be5b679b",
+    "gradle/wrapper/gradle-wrapper.jar": "a8451eeda314d0568b5340498b36edf147a8f0d692c5ff58082d477abe9146e4",
+    "gradle/wrapper/gradle-wrapper.properties": "7736481b5bba89d45b73a91aa7dd9f5d27f75e139c3be6209c9027662f63740d",
+    "gradlew": "e0108761fee312b7b373ee96c0870cab5c167e664ac507776814b1d59e9b3bad",
+    "settings.gradle.kts": "f9d77872fe891d06d6beba05d0cd8f607638c4aea02b9348b27a89eb26d67f19",
+    "verification/engine-acceptance/build.gradle.kts": "d10dd85093f5cf5936504c15772f4173993815d9e70507765e61cf1677b16991",
+    "verification/engine-acceptance/settings.gradle.kts": "57e132e38c0647b97ae933671cc0a88541c0610ca36f9aa0688400b4ba44b184",
+    "verification/engine-acceptance/src/test/kotlin/com/pleos/dearfamily/acceptance/FamilyAcceptanceTest.kt": "0a98838424a8804ed43c51ddf3cbec112ef6471acbf827c2aeb8abd2c9b8ebe9",
+    "verification/engine-acceptance/src/test/kotlin/com/pleos/dearfamily/acceptance/NarrationSessionTest.kt": "4481c6950669360caa92645e5af2983e9bef0a80dd69cbd0ffa676bf4a48392a",
+    "verification/engine-acceptance/src/test/kotlin/com/pleos/dearfamily/acceptance/PcmWaveTest.kt": "aebc6c4966d3519e8379814e2c54c234568a5779460d8f5dbc8301588b5e6d71",
+    "verification/engine-acceptance/src/test/kotlin/com/pleos/dearfamily/acceptance/SafetyPolicyTest.kt": "b57a7060f44593bd358f27ca9c9b2226fb6b402f8c7dd4b71c8b64e5cbf132a1",
+    "verification/engine-acceptance/src/test/kotlin/com/pleos/dearfamily/acceptance/SessionStopperTest.kt": "568b387da53a44e9e47c6f348bdc5b5bce7804b16077bc704febe14eea686006",
+    "verification/ui-compile-check/build.gradle.kts": "3f04b932d7895b8ad48acb7eabb4f69ef77f0d99351dde60c5fcc6c20a5c301c",
+    "verification/ui-compile-check/settings.gradle.kts": "4f7a6b1bc26c3e2076a21501e60d119a3258f2326eb1e63727148cb23221824d"
+  },
+  "buildInputsMatchWorkingTree": true,
+  "toolchain": {
+    "java": "Temurin 17.0.21+9",
+    "gradle": "8.2",
+    "compileSdk": 34,
+    "minSdk": 29
+  },
+  "nativeBuild": {
+    "exitCode": 0,
+    "debugApks": {
+      "demo": {
+        "path": "apk/StoryDrive_DearFamily_demo_debug.apk",
+        "sha256": "679d38dca35837dd8d2c6228883e811108854e22b65e090d667fd4b7ca4d72c2"
+      },
+      "pleos": {
+        "path": "apk/StoryDrive_DearFamily_pleos_debug.apk",
+        "sha256": "2f93b4f5afe0d737a6c204c18c282efb5884ca31c6b31555b6869da856ebf5e9"
+      }
+    },
+    "signatureVerification": "apksigner verify: both debug APKs passed",
+    "internetPermissionPresent": false,
+    "unitExecutions": 10,
+    "lint": {
+      "lint-results-demoDebug.xml": {
+        "counts": {
+          "Error": 0,
+          "Warning": 7,
+          "Fatal": 0
+        },
+        "issues": [
+          {
+            "id": "ObsoleteLintCustomCheck",
+            "severity": "Warning"
+          },
+          {
+            "id": "PrivateApi",
+            "severity": "Warning"
+          },
+          {
+            "id": "PrivateApi",
+            "severity": "Warning"
+          },
+          {
+            "id": "PrivateApi",
+            "severity": "Warning"
+          },
+          {
+            "id": "DataExtractionRules",
+            "severity": "Warning"
+          },
+          {
+            "id": "ObsoleteSdkInt",
+            "severity": "Warning"
+          },
+          {
+            "id": "UnusedResources",
+            "severity": "Warning"
+          }
+        ]
+      },
+      "lint-results-pleosDebug.xml": {
+        "counts": {
+          "Error": 0,
+          "Warning": 9,
+          "Fatal": 0
+        },
+        "issues": [
+          {
+            "id": "ObsoleteLintCustomCheck",
+            "severity": "Warning"
+          },
+          {
+            "id": "PrivateApi",
+            "severity": "Warning"
+          },
+          {
+            "id": "PrivateApi",
+            "severity": "Warning"
+          },
+          {
+            "id": "PrivateApi",
+            "severity": "Warning"
+          },
+          {
+            "id": "DataExtractionRules",
+            "severity": "Warning"
+          },
+          {
+            "id": "ObsoleteSdkInt",
+            "severity": "Warning"
+          },
+          {
+            "id": "UnusedResources",
+            "severity": "Warning"
+          },
+          {
+            "id": "MonochromeLauncherIcon",
+            "severity": "Warning"
+          },
+          {
+            "id": "MonochromeLauncherIcon",
+            "severity": "Warning"
+          }
+        ]
+      }
+    }
+  },
+  "instrumentation": {
+    "flavor": "pleos",
+    "discovered": 30,
+    "passed": 29,
+    "failed": 0,
+    "assumptionSkipped": 1,
+    "cases": [
+      {
+        "class": "com.pleos.dearfamily.FamilyCareDebugInteractionProbeTest",
+        "test": "probeNestedCarePanelInteractions",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareDesignContractTest",
+        "test": "themePickerSelectionControlsRemainReachable",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareDesignContractTest",
+        "test": "diagnosticsAreHiddenUntilDebugBadgeIsOpened",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareNativeAcceptanceTest",
+        "test": "passengerFunConversationAndRestStopRestoreState",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareNativeAcceptanceTest",
+        "test": "initialStateExposesExactlyFourSeatZonesAndMockBoundary",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareNativeAcceptanceTest",
+        "test": "tourCanBeCancelledWithoutLeavingRunningState",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareNativeAcceptanceTest",
+        "test": "tourRunsThirtyRealSecondsAndShowsDriverSilentReport",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareNativeAcceptanceTest",
+        "test": "elapsedSliderRearmsOnlyAfterDroppingBelowThreshold",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareNativeAcceptanceTest",
+        "test": "fourManualPresetsTargetTheirZonesAndExposeMockOutput",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareNativeAcceptanceTest",
+        "test": "noiseSliderRearmsOnlyAfterDroppingBelowThreshold",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCarePlatformAcceptanceTest",
+        "test": "tourStopsAcrossActivityRecreateWithoutAutomaticReplay",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCarePlatformAcceptanceTest",
+        "test": "probeNativeTtsCapabilitiesToFilesDir",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCarePlatformAcceptanceTest",
+        "test": "recordCarUxRestrictionsStateForTwentySeconds",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareReferenceCaptureTest",
+        "test": "captureThreeThemeReferencesAndMetadata",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareSpatialActionsTest",
+        "test": "passengerVentilationIsSetThroughProgressSemantics",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareSpatialActionsTest",
+        "test": "scenarioPillChangesScenarioAndTargetZone",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareSpatialActionsTest",
+        "test": "dockTabsUpdateRealViewModelSelection",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareSpatialActionsTest",
+        "test": "spatialStoryControlTogglesRealState",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareSpatialActionsTest",
+        "test": "parentSeatHeatingTogglesAndMuteUsesSelectedSemantics",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareUiTest",
+        "test": "sleepIsSilentAndResetRestoresBaseline",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareUiTest",
+        "test": "manualScenarioStopsTourAndParentsOfferRest",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareUiTest",
+        "test": "passengerGameAndConversationRestoreAreInteractive",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareUiTest",
+        "test": "unknownStateDoesNotExposeScenarioControls",
+        "code": -4
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareUiTest",
+        "test": "initialCabinShowsFourZonesAndMockBoundary",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareVisualStructureTest",
+        "test": "genesisArtworkAndSeatStructureFillTheRenderedLayout",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareVisualStructureTest",
+        "test": "diagnosticsRemainHiddenUntilDebugBadgeIsClicked",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareWarmActionsTest",
+        "test": "quietCabinStopsStoryAndPlayIsDisabledUntilQuietIsOff",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareWarmActionsTest",
+        "test": "storyIsDisabledDuringKidsSleep",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareWarmActionsTest",
+        "test": "storyPlaybackIsReversibleAndDoesNotChangeCozyMode",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareWarmActionsTest",
+        "test": "cabinWarmthIsIndependentOfCozyModeAndStoryPlayback",
+        "code": 0
+      }
+    ]
+  },
+  "demoInstallLaunchVerified": true,
+  "captures": {
+    "baseline": {
+      "sourceRevision": "8a23de0555dc175d93265e7074f2969876df4c9e83ae2561f41c5128d98f7bac",
+      "appBounds": {
+        "left": 0,
+        "top": 0,
+        "right": 1682,
+        "bottom": 1210,
+        "width": 1682,
+        "height": 1210
+      },
+      "density": 1,
+      "fontScale": 1,
+      "locale": [
+        "ko-KR"
+      ],
+      "captures": [
+        {
+          "theme": "GENESIS_LUXURY",
+          "rootFile": "genesis_luxury-root.png",
+          "themeFile": "genesis_luxury-content.png",
+          "rootBounds": {
+            "left": 0,
+            "top": 0,
+            "right": 1682,
+            "bottom": 1210,
+            "width": 1682,
+            "height": 1210
+          },
+          "themeBounds": {
+            "left": 14,
+            "top": 72,
+            "right": 1668,
+            "bottom": 1196,
+            "width": 1654,
+            "height": 1124
+          }
+        },
+        {
+          "theme": "SCANDINAVIAN_WARM",
+          "rootFile": "scandinavian_warm-root.png",
+          "themeFile": "scandinavian_warm-content.png",
+          "rootBounds": {
+            "left": 0,
+            "top": 0,
+            "right": 1682,
+            "bottom": 1210,
+            "width": 1682,
+            "height": 1210
+          },
+          "themeBounds": {
+            "left": 14,
+            "top": 72,
+            "right": 1668,
+            "bottom": 1196,
+            "width": 1654,
+            "height": 1124
+          }
+        },
+        {
+          "theme": "SPATIAL_WIDGET",
+          "rootFile": "spatial_widget-root.png",
+          "themeFile": "spatial_widget-content.png",
+          "rootBounds": {
+            "left": 0,
+            "top": 0,
+            "right": 1682,
+            "bottom": 1210,
+            "width": 1682,
+            "height": 1210
+          },
+          "themeBounds": {
+            "left": 14,
+            "top": 72,
+            "right": 1668,
+            "bottom": 1196,
+            "width": 1654,
+            "height": 1124
+          }
+        }
+      ]
+    },
+    "largeFont": {
+      "sourceRevision": "8a23de0555dc175d93265e7074f2969876df4c9e83ae2561f41c5128d98f7bac",
+      "appBounds": {
+        "left": 0,
+        "top": 0,
+        "right": 1682,
+        "bottom": 1210,
+        "width": 1682,
+        "height": 1210
+      },
+      "density": 1,
+      "fontScale": 1.5,
+      "locale": [
+        "ko-KR"
+      ],
+      "captures": [
+        {
+          "theme": "GENESIS_LUXURY",
+          "rootFile": "fontscale-1_5-genesis_luxury-root.png",
+          "themeFile": "fontscale-1_5-genesis_luxury-content.png",
+          "rootBounds": {
+            "left": 0,
+            "top": 0,
+            "right": 1682,
+            "bottom": 1210,
+            "width": 1682,
+            "height": 1210
+          },
+          "themeBounds": {
+            "left": 14,
+            "top": 134,
+            "right": 1668,
+            "bottom": 1196,
+            "width": 1654,
+            "height": 1062
+          }
+        },
+        {
+          "theme": "SCANDINAVIAN_WARM",
+          "rootFile": "fontscale-1_5-scandinavian_warm-root.png",
+          "themeFile": "fontscale-1_5-scandinavian_warm-content.png",
+          "rootBounds": {
+            "left": 0,
+            "top": 0,
+            "right": 1682,
+            "bottom": 1210,
+            "width": 1682,
+            "height": 1210
+          },
+          "themeBounds": {
+            "left": 14,
+            "top": 134,
+            "right": 1668,
+            "bottom": 1196,
+            "width": 1654,
+            "height": 1062
+          }
+        },
+        {
+          "theme": "SPATIAL_WIDGET",
+          "rootFile": "fontscale-1_5-spatial_widget-root.png",
+          "themeFile": "fontscale-1_5-spatial_widget-content.png",
+          "rootBounds": {
+            "left": 0,
+            "top": 0,
+            "right": 1682,
+            "bottom": 1210,
+            "width": 1682,
+            "height": 1210
+          },
+          "themeBounds": {
+            "left": 14,
+            "top": 134,
+            "right": 1668,
+            "bottom": 1196,
+            "width": 1654,
+            "height": 1062
+          }
+        }
+      ]
+    },
+    "physicalScreenBoundsPx": [
+      853,
+      90,
+      2535,
+      1300
+    ],
+    "comparisonIsCalibratedGolden": false,
+    "ownerVisualApprovalReceived": false,
+    "publishedImagesSha256": {
+      "genesis_luxury-content.png": "3670676e8047fdbc90a42877c0b629121ae40f0c8c3483e21f0181aeb56aa1f8",
+      "spatial_widget-content.png": "abc3ffefdcbf0c12cf722744f446dbd01180af828a231b5eb058f7c5352b9376",
+      "scandinavian_warm-root.png": "cad12913a4fe7ffce2f93cdada404e1f759283cf711b2570f374e3cb84e6df7a",
+      "fontscale-1_5-genesis_luxury-content.png": "10bb44e94daf18e06b47d38d682ff360c3ccc814eb8936d9f73da74fd2cd70ee",
+      "fontscale-1_5-scandinavian_warm-root.png": "fc2384b6970f84e4012484062c6e047758a3d03d14e463adb613ca7c84f04bd8",
+      "fontscale-1_5-genesis_luxury-root.png": "b1ac26bb777a901aeb82d183bb7b5035eb43ddf0b24a5d67ea7c24361d58fe94",
+      "genesis-comparison.png": "42a211ad8734760950dc73e2a6ff581adb2cae301545e9d4a4101690a286439e",
+      "genesis_luxury-root.png": "463569df3e2c6d15951c47996f67fd6f1fd775c1837222827d36e5890077f4de",
+      "fontscale-1_5-spatial_widget-root.png": "b37601456d06f3ca40e94b8bbe81947d6421c735a06c47c6799ef8ac7732eeec",
+      "fontscale-1_5-spatial_widget-content.png": "a4d19cbc517bf85a1fa69c7e8dff5971066feff22fa36919c25690c5362d6aa2",
+      "warm-comparison.png": "ab9b62049c338640c5b938dfd54bfb116a130278e42f6a0edb09abd0147747ed",
+      "spatial-comparison.png": "683184f16054d77426275ff064662e491279dda015d6fcb1ed2e3632e2bb4cf8",
+      "scandinavian_warm-content.png": "89d35c8bd477dc161f0747c2e41adda78b2eb49ad7d51343bfe183126c730e7b",
+      "spatial_widget-root.png": "beacc99628025b56368f752bd56169987b26ba1746badeb5e251e67130a75280",
+      "fontscale-1_5-scandinavian_warm-content.png": "8da365f0fc9dc246ebd1d081431b2dd41908ee3a963593850ade3b47184839eb"
+    }
+  },
+  "tts": {
+    "initializationResult": -1,
+    "initializationSucceeded": false,
+    "engine": null,
+    "koreanVoiceCount": 0,
+    "offlineInstalledKoreanVoiceCount": 0,
+    "voices": []
+  },
+  "ttsInterpretation": "Initialization failed. No successful Korean voice inventory or audible output proved; caption text is rendered and asserted in the native Warm story test.",
+  "carUx": {
+    "sampleCount": 80,
+    "knownCount": 80,
+    "scope": "parked emulator observation, not a driving/suspend acceptance test"
+  },
+  "failureHistory": [
+    "First lint failed: unused BoxWithConstraints scope; replaced with Box and both flavor lint reran successfully.",
+    "Existing installed app signing identity differed; owner explicitly approved removing only DearFamily before reinstall.",
+    "Five native failures exposed clipped nested debug scroll, merged seat semantics expectation and a 40dp scenario button; fixed and actual clicks/state changes passed.",
+    "One first cold-start Compose hierarchy lookup failed; individual class, subsequent full suite and two additional cold-start class runs passed.",
+    "One final instrumentation process failed to attach before discovery; owned app force-stop and bounded retry discovered all30,29pass1skip0fail."
+  ],
+  "limitations": [
+    "Physical audio/TTS success not verified.",
+    "Real vehicle write, ANC, separated seat sound, climate, navigation and massage are not implemented; care effects are Mock.",
+    "True narrow/portrait OS task-window resize, driving transitions, OEM suspend and performance profiling remain unverified.",
+    "Photographic reference perspective, missing original layers/fonts and limited crop resolution prevent a pixel-perfect claim.",
+    "Debug signing is not submission release signing; 7 demo and9 pleos lint warnings remain."
+  ],
+  "fullProductAcceptance": false
+}

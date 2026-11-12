@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.*
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -28,6 +29,8 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.pleos.dearfamily.model.DriveModeState
@@ -40,7 +43,10 @@ import com.pleos.dearfamily.ui.components.*
 import com.pleos.dearfamily.ui.theme.*
 
 @Composable
-fun DearFamilyMainScreen(narrator: AudioNarrator, vm: DearFamilyViewModel = viewModel()) {
+fun DearFamilyMainScreen(
+    narrator: AudioNarrator,
+    vm: DearFamilyViewModel = viewModel()
+) {
     val state by vm.state.collectAsStateWithLifecycle()
     val safety by vm.safety.collectAsStateWithLifecycle()
     val vehicle by vm.vehicle.collectAsStateWithLifecycle()
@@ -59,9 +65,9 @@ fun DearFamilyMainScreen(narrator: AudioNarrator, vm: DearFamilyViewModel = view
     var showSettingsDialog by rememberSaveable { mutableStateOf(false) }
 
     var lastHandledEvent by rememberSaveable { mutableLongStateOf(-1L) }
-    LaunchedEffect(state.eventId, safety.canPlayAudio) {
-        narrator.setAllowed(safety.canPlayAudio)
-        if (!safety.canPlayAudio) {
+    LaunchedEffect(state.eventId, safety.canPlayAudio, state.quietCabin) {
+        narrator.setAllowed(safety.canPlayAudio && !state.quietCabin)
+        if (!safety.canPlayAudio || state.quietCabin) {
             lastHandledEvent = state.eventId
             narrator.stop()
         } else if (lastHandledEvent != state.eventId) {
@@ -110,7 +116,7 @@ fun DearFamilyMainScreen(narrator: AudioNarrator, vm: DearFamilyViewModel = view
                     )
                 }
                 Text(
-                    "모든 가족 케어 제어는 시뮬레이션입니다.",
+                    "가족 케어는 MOCK · 차량 조회는 READ-ONLY입니다.",
                     color = SecondaryText,
                     modifier = Modifier.testTag("simulationNotice")
                 )
@@ -119,7 +125,6 @@ fun DearFamilyMainScreen(narrator: AudioNarrator, vm: DearFamilyViewModel = view
                         Text("정차 모의 시연 시작")
                     }
                 }
-                VehicleReadout(vehicle, null)
             }
         }
     }
@@ -160,7 +165,7 @@ private fun DemoDashboard(
     val sleeping = state.seats.any { it.zone == SeatZone.KIDS_2ND_ROW && !it.ambientOn }
     val edge = if (sleepFlash.value > 0f) sleepFlash.value else if (sleeping) .22f else if (rearActive) breathing else .1f
 
-    var showThemeMenu by remember { mutableStateOf(false) }
+    var showDebug by rememberSaveable { mutableStateOf(false) }
 
     Box(
         Modifier
@@ -184,175 +189,21 @@ private fun DemoDashboard(
                 )
             }
     ) {
-        BoxWithConstraints(Modifier.fillMaxSize()) {
-            val wide = maxWidth >= 1100.dp && maxHeight >= 650.dp
-            val compactDock = maxHeight < 560.dp
-
+        Box(Modifier.fillMaxSize()) {
             Column(
                 Modifier
                     .fillMaxSize()
                     .padding(14.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                // Top Global Bar with Theme Picker & Driving Mode Toggle
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    if (wide) {
-                        TopPeaceShieldBar(Modifier.weight(0.6f))
-                    } else {
-                        Column(Modifier.weight(0.6f)) {
-                            Text("DEAR FAMILY · 정차 시연", color = palette.accentPrimary, style = MaterialTheme.typography.titleMedium)
-                            Text(
-                                "가족 케어는 MOCK · 실제 차량 제어 없음",
-                                color = palette.secondaryText,
-                                style = MaterialTheme.typography.bodySmall,
-                                modifier = Modifier.testTag("simulationNotice")
-                            )
-                        }
-                    }
-
-                    // Interactive Control Capsule in Header
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        // Drive Mode Pill
-                        Surface(
-                            shape = RoundedCornerShape(12.dp),
-                            color = palette.cardBackgroundElevated,
-                            border = androidx.compose.foundation.BorderStroke(1.dp, palette.cardBorder),
-                            modifier = Modifier
-                                .clickable { onToggleDriveMode() }
-                                .testTag("drivingModeToggle")
-                        ) {
-                            Row(
-                                modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
-                                horizontalArrangement = Arrangement.spacedBy(6.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Box(
-                                    modifier = Modifier
-                                        .size(8.dp)
-                                        .clip(CircleShape)
-                                        .background(if (isDriving) palette.accentPrimary else palette.accentSecondary)
-                                )
-                                Text(
-                                    if (isDriving) "주행 중 (Driving)" else "정차/휴식 (Parked)",
-                                    style = MaterialTheme.typography.labelSmall,
-                                    fontWeight = FontWeight.Bold,
-                                    color = palette.primaryText
-                                )
-                            }
-                        }
-
-                        // Theme Switcher Button with Dropdown
-                        Box {
-                            Surface(
-                                shape = RoundedCornerShape(12.dp),
-                                color = palette.cardBackgroundElevated,
-                                border = androidx.compose.foundation.BorderStroke(1.dp, palette.accentPrimary.copy(alpha = 0.5f)),
-                                modifier = Modifier
-                                    .clickable { showThemeMenu = true }
-                                    .testTag("themePicker")
-                            ) {
-                                Row(
-                                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
-                                    horizontalArrangement = Arrangement.spacedBy(6.dp),
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    Text("🎨 " + themeMode.label, style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold, color = palette.accentPrimary)
-                                }
-                            }
-
-                            DropdownMenu(
-                                expanded = showThemeMenu,
-                                onDismissRequest = { showThemeMenu = false }
-                            ) {
-                                ThemeMode.entries.forEach { mode ->
-                                    DropdownMenuItem(
-                                        text = {
-                                            Column {
-                                                Text(mode.label, fontWeight = FontWeight.Bold)
-                                                Text(mode.subtitle, style = MaterialTheme.typography.bodySmall, color = palette.secondaryText)
-                                            }
-                                        },
-                                        onClick = {
-                                            onThemeChange(mode)
-                                            showThemeMenu = false
-                                        }
-                                    )
-                                }
-                            }
-                        }
-
-                        // Settings Icon Button
-                        Surface(
-                            shape = RoundedCornerShape(12.dp),
-                            color = palette.cardBackgroundElevated,
-                            border = androidx.compose.foundation.BorderStroke(1.dp, palette.cardBorder),
-                            modifier = Modifier
-                                .clickable { onOpenSettings() }
-                                .testTag("settingsButton")
-                        ) {
-                            Box(
-                                modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Text("⚙️ 설정", style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold, color = palette.primaryText)
-                            }
-                        }
-                    }
-                }
-
-                // AI Invisible Companion Floating Banner
-                Surface(
-                    shape = RoundedCornerShape(12.dp),
-                    color = palette.cardBackgroundElevated.copy(alpha = 0.85f),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, palette.accentSecondary.copy(alpha = 0.35f)),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .testTag("aiCompanionBanner")
-                ) {
-                    Row(
-                        modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp),
-                        horizontalArrangement = Arrangement.spacedBy(10.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Surface(
-                            shape = RoundedCornerShape(8.dp),
-                            color = palette.accentSecondary.copy(alpha = 0.2f)
-                        ) {
-                            Text(
-                                "✨ AI 동반자 · ${state.persona.title}",
-                                style = MaterialTheme.typography.labelSmall,
-                                fontWeight = FontWeight.Bold,
-                                color = palette.accentSecondary,
-                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-                            )
-                        }
-                        Text(
-                            state.companionMessage,
-                            style = MaterialTheme.typography.bodySmall,
-                            color = palette.primaryText,
-                            modifier = Modifier.weight(1f)
-                        )
-                        Surface(
-                            shape = RoundedCornerShape(6.dp),
-                            color = palette.cardBackground,
-                            modifier = Modifier.clickable { onOpenSettings() }
-                        ) {
-                            Text(
-                                "케어 프로필 ⚙️",
-                                style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp),
-                                color = palette.secondaryText,
-                                modifier = Modifier.padding(horizontal = 6.dp, vertical = 3.dp)
-                            )
-                        }
-                    }
-                }
+                DashboardHeader(
+                    themeMode = themeMode,
+                    onThemeChange = onThemeChange,
+                    isDriving = isDriving,
+                    onToggleDriveMode = onToggleDriveMode,
+                    onOpenSettings = onOpenSettings,
+                    onOpenDebug = { showDebug = true }
+                )
 
                 if (state.tourReport) {
                     Text(
@@ -379,11 +230,9 @@ private fun DemoDashboard(
                             WarmFamilyStoryView(
                                 state = state,
                                 voice = voice,
-                                onMute = narrator::toggleMute,
-                                onToggleFun = vm::toggleMode,
-                                onSnack = vm::chooseSnack,
-                                onEndConversation = vm::endConversation,
-                                onRestStop = vm::answerRestStop,
+                                onStoryPlayback = vm::toggleStoryPlayback,
+                                onCabinWarmth = vm::toggleCabinWarmth,
+                                onQuietCabin = vm::toggleQuietCabin,
                                 modifier = Modifier.fillMaxSize()
                             )
                         }
@@ -392,10 +241,11 @@ private fun DemoDashboard(
                                 state = state,
                                 voice = voice,
                                 onMute = narrator::toggleMute,
-                                onToggleFun = vm::toggleMode,
-                                onSnack = vm::chooseSnack,
-                                onEndConversation = vm::endConversation,
-                                onRestStop = vm::answerRestStop,
+                                onStoryPlayback = vm::toggleStoryPlayback,
+                                onTabSelect = vm::selectTab,
+                                onScenarioSelect = vm::selectScenario,
+                                onVentilationChange = vm::setSeatVentilation,
+                                onHeatingToggle = vm::toggleSeatHeating,
                                 modifier = Modifier.fillMaxSize()
                             )
                         }
@@ -405,32 +255,24 @@ private fun DemoDashboard(
                                 state = state,
                                 voice = voice,
                                 onMute = narrator::toggleMute,
-                                onToggleFun = vm::toggleMode,
-                                onSnack = vm::chooseSnack,
-                                onEndConversation = vm::endConversation,
-                                onRestStop = vm::answerRestStop,
+                                onStoryPlayback = vm::toggleStoryPlayback,
                                 modifier = Modifier.fillMaxSize()
                             )
                         }
                     }
                 }
 
-                if (vehicle.status != com.pleos.dearfamily.platform.VehicleLinkStatus.MOCK_ONLY) {
-                    VehicleReadout(vehicle, vm::refreshVehicle)
-                }
-
-                // Retractable Scenario Injector Dock (Always present and accessible)
-                ScenarioInjectorDock(
-                    state = state,
-                    onScenario = vm::manual,
-                    onTour = vm::startTour,
-                    onStop = vm::stopTour,
-                    onReset = vm::reset,
-                    onNoise = vm::setNoise,
-                    onElapsed = vm::setElapsed,
-                    compact = compactDock
-                )
             }
+        }
+
+        if (showDebug) {
+            DebugOverlay(
+                state = state,
+                vehicle = vehicle,
+                narrator = narrator,
+                vm = vm,
+                onDismiss = { showDebug = false }
+            )
         }
 
         if (showSettings) {
@@ -446,12 +288,160 @@ private fun DemoDashboard(
 }
 
 @Composable
-private fun VehicleReadout(state: VehicleReadState, refresh: (() -> Unit)?) {
+private fun DashboardHeader(
+    themeMode: ThemeMode,
+    onThemeChange: (ThemeMode) -> Unit,
+    isDriving: Boolean,
+    onToggleDriveMode: () -> Unit,
+    onOpenSettings: () -> Unit,
+    onOpenDebug: () -> Unit
+) {
+    val palette = LocalThemePalette.current
+    var menu by remember { mutableStateOf(false) }
+    val fontScale = androidx.compose.ui.platform.LocalDensity.current.fontScale
+    val controls: @Composable () -> Unit = {
+        TextButton(onToggleDriveMode, Modifier.heightIn(min = 48.dp).testTag("drivingModeToggle")) {
+            Text(if (isDriving) "모의 주행" else "정차", style = MaterialTheme.typography.labelSmall)
+        }
+        Box {
+            TextButton({ menu = true }, Modifier.heightIn(min = 48.dp).testTag("themePicker")) {
+                Text(when (themeMode) {
+                    ThemeMode.GENESIS_LUXURY -> "Luxury"
+                    ThemeMode.SCANDINAVIAN_WARM -> "Warm"
+                    ThemeMode.SPATIAL_WIDGET -> "Spatial"
+                }, style = MaterialTheme.typography.labelSmall)
+            }
+            DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
+                ThemeMode.entries.forEach { mode ->
+                    DropdownMenuItem(
+                        text = { Text(mode.label) },
+                        onClick = { onThemeChange(mode); menu = false },
+                        modifier = Modifier.testTag("theme_${mode.name}")
+                    )
+                }
+            }
+        }
+        TextButton(onOpenSettings, Modifier.heightIn(min = 48.dp).testTag("settingsButton")) {
+            Text("설정", style = MaterialTheme.typography.labelSmall)
+        }
+        Surface(
+            onClick = onOpenDebug,
+            modifier = Modifier.heightIn(min = 48.dp).testTag("debugBadge"),
+            shape = RoundedCornerShape(50),
+            color = palette.cardBackgroundElevated.copy(alpha = .75f),
+            border = androidx.compose.foundation.BorderStroke(1.dp, palette.cardBorder)
+        ) {
+            Text("Mock / Debug", Modifier.padding(horizontal = 14.dp, vertical = 12.dp),
+                style = MaterialTheme.typography.labelSmall, color = palette.accentSecondary)
+        }
+    }
+    val title: @Composable () -> Unit = {
+        Column {
+            Text("DEAR FAMILY", fontSize = 24.sp, fontWeight = FontWeight.SemiBold, color = palette.primaryText)
+            Text("케어 MOCK · 차량 조회 READ-ONLY", style = MaterialTheme.typography.labelSmall,
+                color = palette.secondaryText, modifier = Modifier.testTag("simulationNotice"))
+        }
+    }
+    BoxWithConstraints(Modifier.fillMaxWidth()) {
+        if (maxWidth < 820.dp || fontScale > 1.2f) {
+            Column(Modifier.fillMaxWidth()) {
+                title()
+                Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)) { controls() }
+            }
+        } else {
+            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                Box(Modifier.weight(1f)) { title() }
+                Row(verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)) { controls() }
+            }
+        }
+    }
+}
+
+@Composable
+private fun DebugOverlay(
+    state: FamilyCareUiState,
+    vehicle: VehicleReadState,
+    narrator: AudioNarrator,
+    vm: DearFamilyViewModel,
+    onDismiss: () -> Unit
+) {
+    Dialog(
+        onDismissRequest = onDismiss,
+        properties = DialogProperties(usePlatformDefaultWidth = false)
+    ) {
+        val palette = LocalThemePalette.current
+        BoxWithConstraints(
+            Modifier.fillMaxWidth(.94f).fillMaxHeight(.9f)
+        ) {
+            val panelHeight = maxHeight
+            Surface(
+            modifier = Modifier.fillMaxSize(),
+            shape = RoundedCornerShape(24.dp),
+            color = palette.background,
+            border = androidx.compose.foundation.BorderStroke(1.dp, palette.cardBorder)
+        ) {
+            Column(
+                Modifier.padding(18.dp).verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(14.dp)
+            ) {
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+                    Column {
+                        Text("Mock / Debug", style = MaterialTheme.typography.titleLarge, color = palette.accentPrimary)
+                        Text("가족 케어는 MOCK · 차량 조회는 READ-ONLY입니다.", style = MaterialTheme.typography.bodySmall, color = palette.secondaryText)
+                    }
+                    TextButton(onClick = onDismiss, modifier = Modifier.testTag("closeDebug")) { Text("닫기") }
+                }
+                Surface(
+                    modifier = Modifier.fillMaxWidth(),
+                    color = palette.cardBackground,
+                    shape = RoundedCornerShape(16.dp)
+                ) {
+                    Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                        Text("✨ AI 동반자 · ${state.persona.title}", style = MaterialTheme.typography.titleMedium, color = palette.accentSecondary)
+                        Text(state.companionMessage, style = MaterialTheme.typography.bodyMedium)
+                        Text("AI 호출 없음 · 가족 케어 MOCK 시나리오", style = MaterialTheme.typography.bodySmall, color = palette.secondaryText)
+                    }
+                }
+                ScenarioInjectorDock(
+                    state = state,
+                    onScenario = vm::manual,
+                    onTour = vm::startTour,
+                    onStop = vm::stopTour,
+                    onReset = vm::reset,
+                    onNoise = vm::setNoise,
+                    onElapsed = vm::setElapsed,
+                    compact = false,
+                    initiallyExpanded = true,
+                    modifier = Modifier.testTag("debugDock")
+                )
+                IpoPipelineMonitor(state.flow, state.eventId, Modifier.heightIn(max = panelHeight * .34f))
+                MultiZoneControllerPanel(
+                    state = state,
+                    voice = narrator.status.collectAsStateWithLifecycle().value,
+                    onMute = narrator::toggleMute,
+                    onToggleFun = vm::toggleMode,
+                    onSnack = vm::chooseSnack,
+                    onEndConversation = vm::endConversation,
+                    onRestStop = vm::answerRestStop,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                VehicleReadout(vehicle, vm::refreshVehicle, Modifier.heightIn(max = panelHeight * .34f))
+            }
+            }
+        }
+    }
+}
+
+@Composable
+private fun VehicleReadout(state: VehicleReadState, refresh: (() -> Unit)?, modifier: Modifier = Modifier) {
     val palette = LocalThemePalette.current
     Column(
-        Modifier
+        modifier
             .fillMaxWidth()
-            .heightIn(max = 125.dp)
+            .testTag("debugVehicle")
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(3.dp)
     ) {

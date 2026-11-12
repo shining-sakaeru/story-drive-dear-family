@@ -8,6 +8,8 @@ repositories {
 }
 val selectedFlavor = providers.gradleProperty("flavor").orElse("demo").get()
 require(selectedFlavor in listOf("demo", "pleos"))
+val includeAndroidTests = providers.gradleProperty("includeAndroidTests").orElse("false").get().toBooleanStrict()
+val classpathVariant = selectedFlavor + if (includeAndroidTests) "-instrumentation" else "-main"
 val aarLibs by configurations.creating
 val composeCompiler by configurations.creating
 val aarCoordinates = listOf(
@@ -36,13 +38,19 @@ dependencies {
     composeCompiler("androidx.compose.compiler:compiler:1.5.15")
     if (selectedFlavor == "pleos") aarLibs("ai.pleos.playground:Vehicle:2.3.2@aar")
     aarCoordinates.forEach { aarLibs("$it@aar") }
-    implementation(fileTree(layout.buildDirectory.dir("aar-jars/$selectedFlavor")) { include("*.jar") })
+    if (includeAndroidTests) {
+        implementation("junit:junit:4.13.2")
+        listOf("androidx.compose.ui:ui-test-android:1.6.1", "androidx.compose.ui:ui-test-junit4-android:1.6.1",
+            "androidx.test:core:1.5.0", "androidx.test:monitor:1.6.1", "androidx.test:runner:1.5.2",
+            "androidx.test:rules:1.5.0", "androidx.test.ext:junit:1.1.5").forEach { aarLibs("$it@aar") }
+    }
+    implementation(fileTree(layout.buildDirectory.dir("aar-jars/$classpathVariant")) { include("*.jar") })
 }
 val extractAars by tasks.registering {
     inputs.files(aarLibs)
-    outputs.dir(layout.buildDirectory.dir("aar-jars/$selectedFlavor"))
+    outputs.dir(layout.buildDirectory.dir("aar-jars/$classpathVariant"))
     doLast {
-        val out = layout.buildDirectory.dir("aar-jars/$selectedFlavor").get().asFile.apply { mkdirs() }
+        val out = layout.buildDirectory.dir("aar-jars/$classpathVariant").get().asFile.apply { mkdirs() }
         aarLibs.files.forEach { archive ->
             ZipFile(archive).use { zip ->
                 zip.getEntry("classes.jar")?.let { entry ->
@@ -55,7 +63,28 @@ val extractAars by tasks.registering {
 kotlin { jvmToolchain(17) }
 sourceSets.main { java.setSrcDirs(listOf("../../app/src/main/java", "../../app/src/$selectedFlavor/java")) }
 kotlin.sourceSets.main { kotlin.setSrcDirs(listOf("../../app/src/main/java", "../../app/src/$selectedFlavor/java")) }
+// Compile-only resource names, generated ONLY in this verification module.
+// These are not Android resource linking or runtime resource identifiers.
+val resourceSymbolsDir = layout.buildDirectory.dir("generated/resource-symbols")
+val generateResourceSymbols by tasks.registering {
+    val resourceRoot = file("../../app/src/main/res")
+    inputs.dir(resourceRoot)
+    outputs.dir(resourceSymbolsDir)
+    doLast {
+        val names = resourceRoot.listFiles().orEmpty()
+            .filter { it.isDirectory && it.name.startsWith("drawable") }
+            .flatMap { it.listFiles().orEmpty().filter { child -> child.isFile }.map { child -> child.name.substringBefore('.') } }
+            .distinct().sorted()
+        require(names.all { it.matches(Regex("[a-z][a-z0-9_]*")) })
+        val target = resourceSymbolsDir.get().file("com/pleos/dearfamily/R.kt").asFile
+        target.parentFile.mkdirs()
+        target.writeText("package com.pleos.dearfamily\nobject R { object drawable {\n" +
+            names.mapIndexed { index, name -> "const val $name: Int = ${index + 1}" }.joinToString("\n") + "\n} }\n")
+    }
+}
+kotlin.sourceSets.main { kotlin.srcDir(resourceSymbolsDir) }
+if (includeAndroidTests) kotlin.sourceSets.main { kotlin.srcDir("../../app/src/androidTest/java") }
 tasks.withType<KotlinCompile>().configureEach {
-    dependsOn(extractAars)
+    dependsOn(extractAars, generateResourceSymbols)
     kotlinOptions { jvmTarget = "17"; freeCompilerArgs += listOf("-Xplugin=${composeCompiler.singleFile.absolutePath}") }
 }

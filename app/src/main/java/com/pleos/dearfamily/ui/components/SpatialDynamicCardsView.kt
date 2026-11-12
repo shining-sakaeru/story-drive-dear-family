@@ -1,547 +1,226 @@
 package com.pleos.dearfamily.ui.components
 
-import androidx.compose.animation.core.*
-import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.CornerRadius
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.*
-import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.ProgressBarRangeInfo
+import androidx.compose.ui.semantics.progressBarRangeInfo
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.semantics.setProgress
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.pleos.dearfamily.R
+import com.pleos.dearfamily.domain.Scenario
+import com.pleos.dearfamily.model.CareTab
 import com.pleos.dearfamily.model.FamilyCareUiState
+import com.pleos.dearfamily.model.SeatStatus
 import com.pleos.dearfamily.model.SeatZone
 import com.pleos.dearfamily.platform.VoiceStatus
-import com.pleos.dearfamily.ui.theme.*
-import kotlin.math.PI
-import kotlin.math.sin
+import kotlin.math.roundToInt
 
-/**
- * [Option 3: Spatial Dynamic Cards / Next-Gen CarPlay & Android Automotive Widget Style]
- * Faithfully reproduces ui_mockup_option3_spatial_dynamic_widgets.jpg:
- * - High-contrast modern dark mode with 4 distinct vibrant neon-bordered quadrant cards:
- *   1. 'Driver Peace Shield' (Electric Cyan #00E5FF border, ANC 85%, Driver Fatigue Alert: Good, quick mute)
- *   2. 'Co-Pilot Lounge' (Coral Orange #FF6B4A border, album cover art, seat ventilation, balance game)
- *   3. '2nd Row Kids Dreamland' (Lavender Violet #B388FF border, bedtime story 'Magic Galaxy', dynamic neon audio waveform visualizer)
- *   4. '3rd Row Comfort' (Warm Gold #FFD54F border, heated seat level 1, air purification Pure 8 AQI)
- * - Bottom Dock: Sleek floating translucent pill dock containing quick vehicle controls and scenario pill
- */
+private val Bg = Color(0xFF080D16)
+private val Cyan = Color(0xFF00E5FF)
+private val Coral = Color(0xFFFF6B4A)
+private val Violet = Color(0xFFB388FF)
+private val Gold = Color(0xFFFFD54F)
+
 @Composable
 fun SpatialDynamicCardsView(
     state: FamilyCareUiState,
     voice: VoiceStatus,
     onMute: () -> Unit,
-    onToggleFun: () -> Unit,
-    onSnack: (String) -> Unit,
-    onEndConversation: () -> Unit,
-    onRestStop: (Boolean) -> Unit,
+    onStoryPlayback: () -> Unit,
+    onTabSelect: (CareTab) -> Unit,
+    onScenarioSelect: (Scenario) -> Unit,
+    onVentilationChange: (Int) -> Unit,
+    onHeatingToggle: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val infiniteTransition = rememberInfiniteTransition(label = "spatialWaves")
-    val waveOffset by infiniteTransition.animateFloat(
-        initialValue = 0f,
-        targetValue = 2f * PI.toFloat(),
-        animationSpec = infiniteRepeatable(tween(2000, easing = LinearEasing)),
-        label = "spatialWaves"
-    )
-
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        // TOP ROW: Quadrant 1 (Driver Peace Shield) & Quadrant 2 (Co-Pilot Lounge)
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(230.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            // [Quadrant 1: Driver Peace Shield (Electric Cyan Border)]
-            val driverAudio = state.audio.first { it.zone == SeatZone.DRIVER_1L }
-            Surface(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
-                    .testTag("seat_DRIVER_1L"),
-                shape = RoundedCornerShape(22.dp),
-                color = Color(0xFF101520),
-                border = androidx.compose.foundation.BorderStroke(1.5.dp, Color(0xFF00E5FF)),
-                shadowElevation = 8.dp
-            ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            Box(
-                                modifier = Modifier
-                                    .size(10.dp)
-                                    .clip(CircleShape)
-                                    .background(Color(0xFF00E5FF))
-                            )
-                            Text(
-                                "DRIVER PEACE SHIELD",
-                                style = MaterialTheme.typography.titleSmall,
-                                fontWeight = FontWeight.Bold,
-                                color = Color(0xFF00E5FF),
-                                letterSpacing = 0.5.sp
-                            )
-                        }
-                        Surface(
-                            shape = RoundedCornerShape(8.dp),
-                            color = Color(0xFF00E5FF).copy(alpha = 0.15f)
-                        ) {
-                            Text(
-                                "ANC 85%",
-                                style = MaterialTheme.typography.labelSmall,
-                                fontWeight = FontWeight.Bold,
-                                color = Color(0xFF00E5FF),
-                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
-                            )
-                        }
+    val driver = state.seats.first { it.zone == SeatZone.DRIVER_1L }
+    val passenger = state.seats.first { it.zone == SeatZone.PASSENGER_1R }
+    val kids = state.seats.first { it.zone == SeatZone.KIDS_2ND_ROW }
+    val parents = state.seats.first { it.zone == SeatZone.PARENTS_3RD_ROW }
+    BoxWithConstraints(modifier.fillMaxSize().background(Bg).testTag("spatialContent")) {
+        val narrow = maxWidth < 900.dp || androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f
+        val viewportHeight = maxHeight
+        Column(Modifier.fillMaxSize().padding(20.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
+            ScenarioHeader(state, onScenarioSelect)
+            if (narrow) {
+                Column(Modifier.fillMaxWidth().weight(1f).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(14.dp)) {
+                    DriverCard(driver, voice, onMute, Modifier.fillMaxWidth().height(viewportHeight * .6f))
+                    PassengerCard(passenger, state, onStoryPlayback, onVentilationChange, Modifier.fillMaxWidth().height(viewportHeight * .6f))
+                    KidsCard(kids, Modifier.fillMaxWidth().height(viewportHeight * .6f))
+                    ParentsCard(parents, onHeatingToggle, Modifier.fillMaxWidth().height(viewportHeight * .6f))
+                }
+            } else {
+                Column(Modifier.fillMaxWidth().weight(1f), verticalArrangement = Arrangement.spacedBy(14.dp)) {
+                    Row(Modifier.fillMaxWidth().weight(1f), horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+                        DriverCard(driver, voice, onMute, Modifier.weight(1f).fillMaxHeight())
+                        PassengerCard(passenger, state, onStoryPlayback, onVentilationChange, Modifier.weight(1f).fillMaxHeight())
                     }
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .size(50.dp)
-                                .clip(CircleShape)
-                                .background(Color(0xFF00E5FF).copy(alpha = 0.12f))
-                                .border(2.dp, Color(0xFF00E5FF), CircleShape),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text("🛡️", fontSize = 20.sp)
-                        }
-                        Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                            Text("전방 주시 보호 · 피로도 양호", fontWeight = FontWeight.Bold, color = Color.White, style = MaterialTheme.typography.bodyMedium)
-                            Text("후석 3개 존 소음 간섭 차단 · 내비 음성 우선 라우팅", style = MaterialTheme.typography.bodySmall.copy(fontSize = 11.sp), color = Color(0xFF94A3B8))
-                        }
-                    }
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .semantics(mergeDescendants = true) {}
-                            .testTag("audio_DRIVER_1L"),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text("내비게이션 오디오", style = MaterialTheme.typography.bodySmall, color = Color(0xFF94A3B8))
-                        Text("${driverAudio.volume}% · 전방 라우팅", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold, color = Color(0xFF00E5FF))
-                    }
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            "음성 안내 · " + voice.message,
-                            style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp),
-                            color = Color(0xFF94A3B8),
-                            modifier = Modifier.weight(1f).testTag("ttsStatus")
-                        )
-                        TextButton(onClick = onMute, modifier = Modifier.testTag("mute")) {
-                            Text(if (voice.muted) "음소거 해제" else "음소거", color = Color(0xFF00E5FF), style = MaterialTheme.typography.labelSmall)
-                        }
+                    Row(Modifier.fillMaxWidth().weight(1f), horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+                        KidsCard(kids, Modifier.weight(1f).fillMaxHeight())
+                        ParentsCard(parents, onHeatingToggle, Modifier.weight(1f).fillMaxHeight())
                     }
                 }
             }
-
-            // [Quadrant 2: Co-Pilot Lounge (Coral Orange Border)]
-            val passengerSeat = state.seats.first { it.zone == SeatZone.PASSENGER_1R }
-            val passengerAudio = state.audio.first { it.zone == SeatZone.PASSENGER_1R }
-            Surface(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
-                    .testTag("seat_PASSENGER_1R"),
-                shape = RoundedCornerShape(22.dp),
-                color = Color(0xFF181313),
-                border = androidx.compose.foundation.BorderStroke(1.5.dp, Color(0xFFFF6B4A)),
-                shadowElevation = 8.dp
-            ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            Box(
-                                modifier = Modifier
-                                    .size(10.dp)
-                                    .clip(CircleShape)
-                                    .background(Color(0xFFFF6B4A))
-                            )
-                            Text(
-                                "CO-PILOT LOUNGE",
-                                style = MaterialTheme.typography.titleSmall,
-                                fontWeight = FontWeight.Bold,
-                                color = Color(0xFFFF6B4A),
-                                letterSpacing = 0.5.sp
-                            )
-                        }
-                        TextButton(onClick = onToggleFun, modifier = Modifier.testTag("funToggle")) {
-                            Text(if (state.cozyMode) "게임 켜기" else "대화 복원", color = Color(0xFFFF6B4A), style = MaterialTheme.typography.labelSmall)
-                        }
-                    }
-
-                    // Album Art & Lounge Status
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        // Mini Album Art
-                        Box(
-                            modifier = Modifier
-                                .size(48.dp)
-                                .clip(RoundedCornerShape(10.dp))
-                                .background(
-                                    Brush.linearGradient(
-                                        listOf(Color(0xFFFF6B4A), Color(0xFFFF9E7D), Color(0xFFB388FF))
-                                    )
-                                ),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text("🎶", fontSize = 20.sp)
-                        }
-                        Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                            Text("Sunset Highway Lo-Fi", fontWeight = FontWeight.Bold, color = Color.White, style = MaterialTheme.typography.bodyMedium)
-                            Text("1열 조수석 · ${passengerSeat.status}", style = MaterialTheme.typography.bodySmall.copy(fontSize = 11.sp), color = Color(0xFFFF6B4A), fontWeight = FontWeight.SemiBold)
-                        }
-                    }
-
-                    if (!state.cozyMode) {
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                            Button(
-                                onClick = { onSnack("호두과자") },
-                                modifier = Modifier.testTag("snackWalnut"),
-                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF6B4A), contentColor = Color.Black),
-                                contentPadding = PaddingValues(horizontal = 10.dp, vertical = 2.dp)
-                            ) {
-                                Text("호두과자", style = MaterialTheme.typography.labelSmall)
-                            }
-                            OutlinedButton(
-                                onClick = onEndConversation,
-                                modifier = Modifier.testTag("conversationEnd"),
-                                contentPadding = PaddingValues(horizontal = 10.dp, vertical = 2.dp)
-                            ) {
-                                Text("대화 종료", style = MaterialTheme.typography.labelSmall)
-                            }
-                            state.snackChoice?.let {
-                                Text("선택: $it", color = Color(0xFFFF6B4A), modifier = Modifier.testTag("snackChoice"), style = MaterialTheme.typography.labelSmall)
-                            }
-                        }
-                    } else {
-                        Text("부드러운 Lo-Fi 앰비언트 사운드 재생 중 · 대화 시 25% 자동 덕킹", style = MaterialTheme.typography.bodySmall.copy(fontSize = 11.sp), color = Color(0xFF94A3B8))
-                    }
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .semantics(mergeDescendants = true) {}
-                            .testTag("audio_PASSENGER_1R"),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text("조수석 미디어", style = MaterialTheme.typography.bodySmall, color = Color(0xFF94A3B8))
-                        Text("${passengerAudio.volume}% · ${passengerAudio.status}", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold, color = Color(0xFFFF6B4A))
-                    }
-                }
-            }
+            Text(if (state.selectedTab == CareTab.NAVIGATION) "Navigation 선택 · 실제 경로 변경 없음 (MOCK)" else "${state.selectedTab.label} 선택 · Mock presentation", style = MaterialTheme.typography.bodySmall, color = Color(0xFFB7C4D4))
+            SpatialDock(state.selectedTab, onTabSelect, Modifier.fillMaxWidth(if (narrow) 1f else .7f).align(Alignment.CenterHorizontally).height((viewportHeight * .13f).coerceAtLeast(64.dp)))
         }
+    }
+}
 
-        // BOTTOM ROW: Quadrant 3 (Kids Dreamland) & Quadrant 4 (3rd Row Comfort)
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(230.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            // [Quadrant 3: 2nd Row Kids Dreamland (Lavender Violet Border)]
-            val kidsSeat = state.seats.first { it.zone == SeatZone.KIDS_2ND_ROW }
-            val kidsAudio = state.audio.first { it.zone == SeatZone.KIDS_2ND_ROW }
-            Surface(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
-                    .testTag("seat_KIDS_2ND_ROW"),
-                shape = RoundedCornerShape(22.dp),
-                color = Color(0xFF14111E),
-                border = androidx.compose.foundation.BorderStroke(1.5.dp, Color(0xFFB388FF)),
-                shadowElevation = 8.dp
-            ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            Box(
-                                modifier = Modifier
-                                    .size(10.dp)
-                                    .clip(CircleShape)
-                                    .background(Color(0xFFB388FF))
-                            )
-                            Text(
-                                "2ND ROW KIDS DREAMLAND",
-                                style = MaterialTheme.typography.titleSmall,
-                                fontWeight = FontWeight.Bold,
-                                color = Color(0xFFB388FF),
-                                letterSpacing = 0.5.sp
-                            )
-                        }
-                        Surface(
-                            shape = RoundedCornerShape(8.dp),
-                            color = Color(0xFFB388FF).copy(alpha = 0.15f)
-                        ) {
-                            Text(
-                                "2열 ${state.persona.title}",
-                                style = MaterialTheme.typography.labelSmall,
-                                fontWeight = FontWeight.Bold,
-                                color = Color(0xFFB388FF),
-                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
-                            )
-                        }
-                    }
-
-                    // Scenario Title & Status Text
-                    Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                        Text(
-                            "⭐ " + state.flow.activeScenarioTitle,
-                            style = MaterialTheme.typography.titleSmall,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.White,
-                            modifier = Modifier.testTag("activeScenario")
-                        )
-                        val statusText = when {
-                            !kidsSeat.ambientOn -> "조명 OFF · 수면 보호 · 귓속말 동화"
-                            kidsSeat.freshAir -> "외기 순환 · 독립 음장 제어"
-                            kidsSeat.active -> "외기 순환 · 매직 위스퍼 활성"
-                            else -> kidsSeat.status
-                        }
-                        Text(statusText, style = MaterialTheme.typography.bodySmall.copy(fontSize = 11.sp), color = Color(0xFFB388FF), fontWeight = FontWeight.Bold)
-                    }
-
-                    // Dynamic Neon Audio Waveform Visualizer
-                    Canvas(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(28.dp)
-                    ) {
-                        val barCount = 24
-                        val barWidth = size.width / (barCount * 1.5f)
-                        for (i in 0 until barCount) {
-                            val factor = sin((i.toFloat() / barCount * 2 * PI) + waveOffset).toFloat().coerceIn(0.15f, 1f)
-                            val barHeight = size.height * factor
-                            val left = i * (barWidth * 1.5f)
-                            val top = size.height - barHeight
-                            drawRoundRect(
-                                brush = Brush.verticalGradient(
-                                    listOf(Color(0xFF00E5FF), Color(0xFFB388FF))
-                                ),
-                                topLeft = Offset(left, top),
-                                size = Size(barWidth, barHeight),
-                                cornerRadius = CornerRadius(2.dp.toPx(), 2.dp.toPx())
-                            )
-                        }
-                    }
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .semantics(mergeDescendants = true) {}
-                            .testTag("audio_KIDS_2ND_ROW"),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text("2열 오디오북", style = MaterialTheme.typography.bodySmall, color = Color(0xFF94A3B8))
-                        Text("${kidsAudio.volume}% · ${kidsAudio.status}", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold, color = Color(0xFFB388FF))
-                    }
-                }
-            }
-
-            // [Quadrant 4: 3rd Row Comfort (Warm Gold Border)]
-            val parentsSeat = state.seats.first { it.zone == SeatZone.PARENTS_3RD_ROW }
-            val parentsAudio = state.audio.first { it.zone == SeatZone.PARENTS_3RD_ROW }
-            Surface(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
-                    .testTag("seat_PARENTS_3RD_ROW"),
-                shape = RoundedCornerShape(22.dp),
-                color = Color(0xFF161510),
-                border = androidx.compose.foundation.BorderStroke(1.5.dp, Color(0xFFFFD54F)),
-                shadowElevation = 8.dp
-            ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            Box(
-                                modifier = Modifier
-                                    .size(10.dp)
-                                    .clip(CircleShape)
-                                    .background(Color(0xFFFFD54F))
-                            )
-                            Text(
-                                "3RD ROW COMFORT",
-                                style = MaterialTheme.typography.titleSmall,
-                                fontWeight = FontWeight.Bold,
-                                color = Color(0xFFFFD54F),
-                                letterSpacing = 0.5.sp
-                            )
-                        }
-                        Surface(
-                            shape = RoundedCornerShape(8.dp),
-                            color = Color(0xFFFFD54F).copy(alpha = 0.15f)
-                        ) {
-                            Text(
-                                "Pure 8 AQI",
-                                style = MaterialTheme.typography.labelSmall,
-                                fontWeight = FontWeight.Bold,
-                                color = Color(0xFFFFD54F),
-                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
-                            )
-                        }
-                    }
-
-                    // Status text (must contain "온열 1" for test assertion)
-                    val parentsText = when {
-                        parentsSeat.heatingLevel > 0 -> "온열 ${parentsSeat.heatingLevel}단 · 요추 ${if (parentsSeat.lumbarOn) "ON" else "OFF"}"
-                        parentsSeat.active -> "온열 1단 · 피로 케어 활성"
-                        else -> parentsSeat.status
-                    }
-                    Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                        Text("3열 부모님 케어", fontWeight = FontWeight.Bold, color = Color.White, style = MaterialTheme.typography.bodyMedium)
-                        Text(parentsText, style = MaterialTheme.typography.bodySmall.copy(fontSize = 11.sp), color = Color(0xFFFFD54F), fontWeight = FontWeight.Bold)
-                    }
-
-                    // Rest stop proposal
-                    if (state.restStopVisible) {
-                        Surface(
-                            shape = RoundedCornerShape(10.dp),
-                            color = Color(0xFFFFD54F).copy(alpha = 0.15f),
-                            border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFFFD54F))
-                        ) {
-                            Column(Modifier.padding(8.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                                Text("평창휴게소를 경유할까요?", style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold, color = Color(0xFFFFD54F))
-                                if (state.restStopAccepted == null) {
-                                    Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                                        Button(
-                                            onClick = { onRestStop(true) },
-                                            modifier = Modifier.testTag("restAccept"),
-                                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFD54F), contentColor = Color.Black),
-                                            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 2.dp)
-                                        ) {
-                                            Text("모의 경유 추가", style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp))
-                                        }
-                                        TextButton(onClick = { onRestStop(false) }, contentPadding = PaddingValues(horizontal = 6.dp, vertical = 2.dp)) {
-                                            Text("통과", style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp))
-                                        }
-                                    }
-                                } else {
-                                    Text(
-                                        if (state.restStopAccepted == true) "모의 경유가 추가되었습니다." else "기존 경로 유지",
-                                        color = Color(0xFFFFD54F),
-                                        modifier = Modifier.testTag("restAnswer"),
-                                        style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp),
-                                        fontWeight = FontWeight.Bold
-                                    )
-                                }
-                            }
-                        }
-                    } else {
-                        Text("온열 1단 및 요추 지압 작동 중 · 편안한 휴식", style = MaterialTheme.typography.bodySmall.copy(fontSize = 11.sp), color = Color(0xFF94A3B8))
-                    }
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .semantics(mergeDescendants = true) {}
-                            .testTag("audio_PARENTS_3RD_ROW"),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text("3열 오디오", style = MaterialTheme.typography.bodySmall, color = Color(0xFF94A3B8))
-                        Text("${parentsAudio.volume}% · ${parentsAudio.status}", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold, color = Color(0xFFFFD54F))
-                    }
-                }
-            }
-        }
-
-        // Floating Bottom Translucent Pill Dock (Matching Mockup Dock: Home | HVAC | Media | Nav | Scenario)
-        Surface(
-            shape = RoundedCornerShape(20.dp),
-            color = Color(0xDD111622),
-            border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFF1E293B)),
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp, vertical = 10.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Row(horizontalArrangement = Arrangement.spacedBy(16.dp), verticalAlignment = Alignment.CenterVertically) {
-                    Text("🏠 홈", style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold, color = Color.White)
-                    Text("❄️ 공조", style = MaterialTheme.typography.labelSmall, color = Color(0xFF94A3B8))
-                    Text("🎶 미디어", style = MaterialTheme.typography.labelSmall, color = Color(0xFF94A3B8))
-                    Text("🧭 내비", style = MaterialTheme.typography.labelSmall, color = Color(0xFF94A3B8))
-                }
-                Surface(
-                    shape = RoundedCornerShape(12.dp),
-                    color = Color(0xFFB388FF).copy(alpha = 0.2f),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFB388FF))
-                ) {
-                    Text(
-                        "⚡ 시나리오: Night Journey",
-                        style = MaterialTheme.typography.labelSmall,
-                        fontWeight = FontWeight.Bold,
-                        color = Color(0xFFB388FF),
-                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
-                    )
-                }
+@Composable
+private fun ScenarioHeader(state: FamilyCareUiState, onSelect: (Scenario) -> Unit) {
+    var expanded by remember { mutableStateOf(false) }
+    Box {
+        OutlinedButton(onClick = { expanded = true }, modifier = Modifier.heightIn(min = 48.dp).testTag("scenarioPill")) { Text("MOCK PRESENTATION · ${state.selectedScenario}", fontSize = 16.sp) }
+        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+            Scenario.entries.forEach { scenario ->
+                DropdownMenuItem(text = { Text(scenarioLabel(scenario), fontSize = 16.sp) }, onClick = { onSelect(scenario); expanded = false }, modifier = Modifier.testTag("scenario_${scenario.name}"))
             }
         }
     }
 }
+
+@Composable
+private fun SpatialCard(zone: SeatZone, modifier: Modifier, accent: Color, content: @Composable ColumnScope.() -> Unit) {
+    Surface(modifier.testTag("seat_${zone.name}"), shape = RoundedCornerShape(22.dp), color = Color(0xFF101520), border = androidx.compose.foundation.BorderStroke(1.dp, accent), shadowElevation = 8.dp) {
+        Column(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(accent.copy(alpha = .12f), Color.Transparent))).padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp), content = content)
+    }
+}
+
+@Composable
+private fun DriverCard(seat: SeatStatus, voice: VoiceStatus, onMute: () -> Unit, modifier: Modifier) = SpatialCard(SeatZone.DRIVER_1L, modifier, Cyan) {
+    Text("Driver Peace Shield", fontSize = 26.sp, lineHeight = 30.sp, color = Color.White, fontWeight = FontWeight.Bold)
+    Column(Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Text("모의 정숙 케어 · 실제 ANC 아님", fontSize = 14.sp, lineHeight = 20.sp, color = Cyan)
+        Text("Good · 모의 휴식 상태", fontSize = 24.sp, lineHeight = 28.sp, color = Color(0xFFA4DFB5))
+        Text(if (voice.ready) "오프라인 음성 준비됨" else "음성 준비 안 됨 · 자막 안내",
+            fontSize = 14.sp, lineHeight = 20.sp, color = Color(0xFFB7C4D4))
+    }
+    Button(onMute, Modifier.fillMaxWidth().heightIn(min = 56.dp).testTag("quickMute")
+        .semantics { selected = voice.muted }, colors = ButtonDefaults.buttonColors(containerColor = Cyan, contentColor = Color.Black)) {
+        Icon(painterResource(R.drawable.ic_spatial_quick_mute), "앱 음성 음소거", Modifier.size(24.dp))
+        Spacer(Modifier.width(8.dp))
+        Text(if (voice.muted) "음소거 해제" else "QUICK MUTE", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+    }
+}
+
+@Composable
+private fun PassengerCard(seat: SeatStatus, state: FamilyCareUiState, onStory: () -> Unit, onVentilation: (Int) -> Unit, modifier: Modifier) = SpatialCard(SeatZone.PASSENGER_1R, modifier, Coral) {
+    Text("Co-Pilot Lounge", fontSize = 26.sp, lineHeight = 30.sp, color = Color.White, fontWeight = FontWeight.Bold)
+    Row(Modifier.fillMaxWidth().weight(1f), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        Image(painter = painterResource(R.drawable.img_spatial_album), contentDescription = "원본 앨범 참고 이미지 · 동화 시연",
+            modifier = Modifier.weight(.30f).fillMaxHeight(), contentScale = ContentScale.Fit)
+        Column(Modifier.weight(.48f).fillMaxHeight(), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            Column(Modifier.weight(1f).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text("Star Journey", fontSize = 22.sp, lineHeight = 26.sp, color = Color.White, fontWeight = FontWeight.SemiBold)
+                Text("오프라인 동화 · 모의", fontSize = 14.sp, lineHeight = 20.sp, color = Coral)
+                if (state.storyPlaying) {
+                    Text(state.flow.gleoTtsScript, fontSize = 16.sp, lineHeight = 22.sp,
+                        color = Color.White, modifier = Modifier.testTag("spatialStoryCaption"))
+                }
+            }
+            Button(onStory, Modifier.fillMaxWidth().heightIn(min = 56.dp).testTag("spatialPlay")
+                .semantics { selected = state.storyPlaying }, enabled = !state.quietCabin && state.silentMessage == null,
+                colors = ButtonDefaults.buttonColors(containerColor = Coral, contentColor = Color.Black)) {
+                Text(if (state.storyPlaying) "Stop Story" else "Play Story", fontSize = 18.sp)
+            }
+        }
+        VerticalVentilation(seat.fanLevel, onVentilation, Modifier.weight(.22f).fillMaxHeight())
+    }
+}
+
+@Composable
+private fun VerticalVentilation(value: Int, onVentilation: (Int) -> Unit, modifier: Modifier) {
+    val safe = value.coerceIn(0, 3)
+    val update: (Float) -> Unit = { raw -> if (raw.isFinite()) onVentilation(raw.roundToInt().coerceIn(0, 3)) }
+    Column(modifier.testTag("seatVentilation").semantics {
+        contentDescription = "좌석 통풍 · MOCK"
+        progressBarRangeInfo = ProgressBarRangeInfo(safe.toFloat(), 0f..3f, 2)
+        setProgress { raw -> if (!raw.isFinite()) false else { update(raw); true } }
+    }, horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Icon(painterResource(R.drawable.ic_spatial_seat_ventilation), null, Modifier.size(24.dp), tint = Coral)
+        Text("$safe / 3", fontSize = 20.sp, lineHeight = 24.sp, color = Coral)
+        BoxWithConstraints(Modifier.weight(1f).fillMaxWidth().pointerInput(Unit) {
+            detectTapGestures { offset -> if (size.height > 0) update((1f - offset.y / size.height) * 3f) }
+        }.pointerInput(Unit) {
+            detectVerticalDragGestures { change, _ ->
+                if (size.height > 0) update((1f - change.position.y / size.height) * 3f)
+                change.consume()
+            }
+        }) {
+            val thumbY = (maxHeight - 20.dp).coerceAtLeast(0.dp) * (1f - safe / 3f)
+            Box(Modifier.align(Alignment.Center).width(16.dp).fillMaxHeight().background(Color(0xFF584A49), RoundedCornerShape(8.dp)))
+            Box(Modifier.align(Alignment.BottomCenter).width(16.dp).fillMaxHeight(safe / 3f).background(Coral, RoundedCornerShape(8.dp)))
+            Box(Modifier.align(Alignment.TopCenter).offset(y = thumbY).size(24.dp, 20.dp).background(Color(0xFFFFDACD), RoundedCornerShape(10.dp)))
+        }
+    }
+}
+
+@Composable
+private fun KidsCard(seat: SeatStatus, modifier: Modifier) = SpatialCard(SeatZone.KIDS_2ND_ROW, modifier, Violet) {
+    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+        Text("2nd Row Kids Dreamland", Modifier.weight(1f), fontSize = 26.sp, lineHeight = 30.sp, color = Color.White, fontWeight = FontWeight.Bold)
+        Image(painterResource(R.drawable.img_spatial_story), "Magic Galaxy 참고 artwork", Modifier.size(40.dp))
+    }
+    Image(painter = painterResource(R.drawable.img_spatial_waveform), contentDescription = "원본 모의 파형 · 실제 오디오 측정 아님",
+        modifier = Modifier.fillMaxWidth().weight(1f), contentScale = ContentScale.Fit)
+    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+        Text(if (!seat.ambientOn) "Magic Galaxy · 조명 OFF" else if (seat.freshAir) "Magic Galaxy · 외기 순환" else "Magic Galaxy · 동화 대기",
+            fontSize = 16.sp, lineHeight = 22.sp, color = Violet)
+        Text("${seat.noiseDb} dB · ${seat.status} · MOCK", fontSize = 14.sp, lineHeight = 20.sp, color = Color(0xFFD2C4DE))
+    }
+}
+
+@Composable
+private fun ParentsCard(seat: SeatStatus, onHeating: () -> Unit, modifier: Modifier) = SpatialCard(SeatZone.PARENTS_3RD_ROW, modifier, Gold) {
+    Text("3rd Row Comfort", fontSize = 26.sp, lineHeight = 30.sp, color = Color.White, fontWeight = FontWeight.Bold)
+    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        IconToggleButton(checked = seat.heatingLevel > 0, onCheckedChange = { onHeating() },
+            modifier = Modifier.size(48.dp).testTag("seatHeating")) {
+            Icon(painterResource(R.drawable.ic_spatial_seat_heating), "모의 열선 ${if (seat.heatingLevel > 0) "끄기" else "켜기"}", tint = Gold)
+        }
+        Text("온열 ${seat.heatingLevel} · 팬 ${seat.fanLevel}", fontSize = 20.sp, lineHeight = 24.sp, color = Gold)
+        Icon(painterResource(R.drawable.ic_spatial_hvac), "공기 정화 참고 아이콘", tint = Gold)
+    }
+    Row(Modifier.fillMaxWidth().weight(1f), verticalAlignment = Alignment.CenterVertically) {
+        Text("MOCK\n8 AQI", Modifier.weight(1f), fontSize = 22.sp, lineHeight = 26.sp, color = Color(0xFFB4DFA8))
+        Image(painter = painterResource(R.drawable.img_spatial_comfort_curve), contentDescription = "원본 쾌적도 샘플 그래프 · 센서 이력 아님",
+            modifier = Modifier.weight(1f).fillMaxHeight(), contentScale = ContentScale.Fit)
+    }
+}
+
+@Composable
+private fun SpatialDock(selected: CareTab, onSelect: (CareTab) -> Unit, modifier: Modifier) = Surface(modifier, shape = RoundedCornerShape(32.dp), color = Color(0xDD182332)) {
+    Row(Modifier.fillMaxSize().padding(6.dp), horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+        CareTab.entries.forEach { tab ->
+            val active = selected == tab
+            TextButton(onClick = { onSelect(tab) }, modifier = Modifier.weight(1f).fillMaxHeight().testTag("dock_${tab.name}").semantics { this.selected = active }, colors = ButtonDefaults.textButtonColors(containerColor = if (active) Cyan.copy(alpha = .2f) else Color.Transparent, contentColor = if (active) Cyan else Color.White)) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) { Icon(painterResource(tabIcon(tab)), tab.label, modifier = Modifier.size(24.dp)); Text(tab.label, fontSize = 14.sp) }
+            }
+        }
+    }
+}
+
+private fun tabIcon(tab: CareTab) = when (tab) { CareTab.HOME -> R.drawable.ic_spatial_home; CareTab.CLIMATE -> R.drawable.ic_spatial_hvac; CareTab.MEDIA -> R.drawable.ic_spatial_media; CareTab.NAVIGATION -> R.drawable.ic_spatial_navigation }
+private fun scenarioLabel(scenario: Scenario) = when (scenario) { Scenario.KIDS_NOISE -> "Kids Noise"; Scenario.KIDS_SLEEP -> "Kids Sleep"; Scenario.TEEN_FOCUS -> "Teen Focus"; Scenario.PARENTS -> "Parents Care"; Scenario.PASSENGER -> "Passenger Cozy" }

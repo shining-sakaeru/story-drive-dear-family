@@ -10,6 +10,10 @@ enum class DriveModeState(val label: String, val badge: String) {
     PARKED_LOUNGE("정차 / 휴식", "FAMILY LOUNGE")
 }
 
+enum class CareTab(val label: String) {
+    HOME("홈"), CLIMATE("공조"), MEDIA("미디어"), NAVIGATION("내비")
+}
+
 enum class FamilyPersona(val title: String, val ageGroup: String, val description: String, val badge: String) {
     TODDLER_KIDS("유아 / 어린이", "4~7세", "상상력 자극 귓속말 미션 & 수면 오르골", "KIDS ADVENTURE"),
     TEEN_STUDENT("청소년 자녀", "13~18세", "차분한 Lo-Fi 힐링 & 집중 에어케어", "TEEN FOCUS & CALM"),
@@ -78,5 +82,11 @@ data class FamilyCareUiState(
     val companionMessage: String = "오늘도 온 가족이 편안한 여정이 되도록 AI가 함께합니다.",
     val persona: FamilyPersona = FamilyPersona.TODDLER_KIDS,
     val themeConfig: DriveModeThemeConfig = DriveModeThemeConfig(),
-    val showSettingsDialog: Boolean = false
+    val showSettingsDialog: Boolean = false,
+    // Local care intents, not proof of audible playback or physical vehicle writes.
+    val storyPlaying: Boolean = false,
+    val cabinWarmth: Boolean = false,
+    val quietCabin: Boolean = false,
+    val selectedTab: CareTab = CareTab.HOME,
+    val selectedScenario: String = "Night Journey"
 )

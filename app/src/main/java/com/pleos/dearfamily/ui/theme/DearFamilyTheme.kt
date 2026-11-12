@@ -112,12 +112,18 @@ val Coral: Color @Composable get() = LocalThemePalette.current.accentWarm
                 outline = palette.cardBorder
             ),
             typography = Typography(
-                headlineSmall = androidx.compose.ui.text.TextStyle(fontSize = 22.sp, fontWeight = FontWeight.Bold, letterSpacing = (-0.5).sp),
-                titleLarge = androidx.compose.ui.text.TextStyle(fontSize = 19.sp, fontWeight = FontWeight.Bold, letterSpacing = (-0.3).sp),
-                titleMedium = androidx.compose.ui.text.TextStyle(fontSize = 15.sp, fontWeight = FontWeight.SemiBold),
-                bodyMedium = androidx.compose.ui.text.TextStyle(fontSize = 13.sp, lineHeight = 19.sp),
-                bodySmall = androidx.compose.ui.text.TextStyle(fontSize = 11.sp, lineHeight = 16.sp),
-                labelSmall = androidx.compose.ui.text.TextStyle(fontSize = 10.sp, letterSpacing = 0.8.sp, fontWeight = FontWeight.Medium)
+                headlineLarge = androidx.compose.ui.text.TextStyle(fontSize = 34.sp, lineHeight = 40.sp, fontWeight = FontWeight.Bold),
+                headlineMedium = androidx.compose.ui.text.TextStyle(fontSize = 32.sp, lineHeight = 38.sp, fontWeight = FontWeight.Bold),
+                headlineSmall = androidx.compose.ui.text.TextStyle(fontSize = 32.sp, fontWeight = FontWeight.Bold, letterSpacing = (-0.5).sp),
+                titleLarge = androidx.compose.ui.text.TextStyle(fontSize = 26.sp, fontWeight = FontWeight.Bold, letterSpacing = (-0.3).sp),
+                titleMedium = androidx.compose.ui.text.TextStyle(fontSize = 26.sp, fontWeight = FontWeight.SemiBold),
+                titleSmall = androidx.compose.ui.text.TextStyle(fontSize = 24.sp, lineHeight = 30.sp, fontWeight = FontWeight.SemiBold),
+                bodyLarge = androidx.compose.ui.text.TextStyle(fontSize = 18.sp, lineHeight = 25.sp),
+                bodyMedium = androidx.compose.ui.text.TextStyle(fontSize = 18.sp, lineHeight = 25.sp),
+                bodySmall = androidx.compose.ui.text.TextStyle(fontSize = 16.sp, lineHeight = 22.sp),
+                labelLarge = androidx.compose.ui.text.TextStyle(fontSize = 16.sp, lineHeight = 22.sp, fontWeight = FontWeight.Medium),
+                labelMedium = androidx.compose.ui.text.TextStyle(fontSize = 14.sp, lineHeight = 20.sp, fontWeight = FontWeight.Medium),
+                labelSmall = androidx.compose.ui.text.TextStyle(fontSize = 14.sp, lineHeight = 20.sp, letterSpacing = 0.5.sp, fontWeight = FontWeight.Medium)
             ),
             content = content
         )

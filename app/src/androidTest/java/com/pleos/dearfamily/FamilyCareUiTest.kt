@@ -13,9 +13,13 @@ class FamilyCareUiTest {
         if (compose.onAllNodesWithTag("enterDemo").fetchSemanticsNodes().isNotEmpty())
             compose.onNodeWithTag("enterDemo").performClick()
     }
+    private fun openDebugBadgeAfterDemo() {
+        compose.onNodeWithTag("debugBadge").performClick()
+    }
+
     private fun mediaPanel() {
         if (compose.onAllNodesWithTag("panelTab2").fetchSemanticsNodes().isNotEmpty())
-            compose.onNodeWithTag("panelTab2").performClick()
+            compose.onNodeWithTag("panelTab2").performScrollTo().performClick()
     }
     @Test fun unknownStateDoesNotExposeScenarioControls() {
         org.junit.Assume.assumeTrue(compose.onAllNodesWithTag("enterDemo").fetchSemanticsNodes().isNotEmpty())
@@ -32,6 +36,7 @@ class FamilyCareUiTest {
 
     @Test fun sleepIsSilentAndResetRestoresBaseline() {
         enterDemo()
+        openDebugBadgeAfterDemo()
         compose.onNodeWithTag("kidsNoise").performScrollTo().performClick()
         compose.onNodeWithTag("kidsSleep").performScrollTo().performClick()
         compose.onNodeWithTag("silentSleepMessage").assertExists()
@@ -43,9 +48,10 @@ class FamilyCareUiTest {
 
     @Test fun passengerGameAndConversationRestoreAreInteractive() {
         enterDemo()
+        openDebugBadgeAfterDemo()
         compose.onNodeWithTag("passenger").performScrollTo().performClick()
         mediaPanel()
-        compose.onNodeWithTag("funToggle").performClick()
+        compose.onNodeWithTag("funToggle").performScrollTo().performClick()
         compose.onNodeWithTag("snackWalnut").performScrollTo().performClick()
         compose.onNodeWithTag("snackChoice").assertTextContains("호두과자", substring = true)
         compose.onNodeWithTag("conversationEnd").performScrollTo().performClick()
@@ -58,6 +64,7 @@ class FamilyCareUiTest {
 
     @Test fun manualScenarioStopsTourAndParentsOfferRest() {
         enterDemo()
+        openDebugBadgeAfterDemo()
         compose.onNodeWithTag("tour").performScrollTo().performClick()
         compose.onNodeWithTag("parents").performScrollTo().performClick()
         compose.onNodeWithTag("tourStop").assertDoesNotExist()

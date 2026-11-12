@@ -2,9 +2,10 @@ To honour the JVM settings for this build a single-use Daemon process will be fo
 Daemon will be stopped at the end of the build 
 > Task :checkKotlinGradlePluginConfigurationErrors
 > Task :extractAars
+> Task :generateResourceSymbols
 
 > Task :compileKotlin
-w: file:///Users/nathanael/git/story-drive-dear-family/app/src/main/java/com/pleos/dearfamily/ui/components/WarmFamilyStoryView.kt:57:9 Variable 'palette' is never used
+w: file:///opt/data/home/projects/story-drive-dear-family/app/src/main/java/com/pleos/dearfamily/ui/components/SpatialDynamicCardsView.kt:112:24 Parameter 'seat' is never used
 
-BUILD SUCCESSFUL in 33s
-3 actionable tasks: 3 executed
+BUILD SUCCESSFUL in 36s
+4 actionable tasks: 4 executed

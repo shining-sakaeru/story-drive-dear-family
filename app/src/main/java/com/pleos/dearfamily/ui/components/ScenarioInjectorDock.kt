@@ -4,9 +4,9 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
-import androidx.compose.foundation.horizontalScroll
+
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
+
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -22,6 +22,7 @@ import com.pleos.dearfamily.ui.theme.*
 import kotlin.math.roundToInt
 
 @Composable
+@OptIn(ExperimentalLayoutApi::class)
 fun ScenarioInjectorDock(
     state: FamilyCareUiState,
     onScenario: (Scenario) -> Unit,
@@ -31,10 +32,11 @@ fun ScenarioInjectorDock(
     onNoise: (Int) -> Unit,
     onElapsed: (Int) -> Unit,
     modifier: Modifier = Modifier,
-    compact: Boolean = false
+    compact: Boolean = false,
+    initiallyExpanded: Boolean = false
 ) {
     val palette = LocalThemePalette.current
-    var isDrawerOpen by remember { mutableStateOf(true) }
+    var isDrawerOpen by remember { mutableStateOf(initiallyExpanded) }
 
     Surface(
         modifier = modifier.fillMaxWidth(),
@@ -94,12 +96,10 @@ fun ScenarioInjectorDock(
             ) {
                 Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     // Scenario Preset Buttons
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .horizontalScroll(rememberScrollState()),
+                    FlowRow(
+                        modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         Button(
                             onClick = onTour,
@@ -208,7 +208,7 @@ private fun SensorSlider(
             valueRange = range,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(32.dp)
+                .heightIn(min = 48.dp)
                 .testTag(tag),
             colors = SliderDefaults.colors(
                 thumbColor = palette.accentPrimary,

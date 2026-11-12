@@ -61,6 +61,13 @@ class DearFamilyViewModel(application: Application, private val saved: SavedStat
     fun setNoise(value: Int) = guarded { sdk.setNoise(value) }
     fun setElapsed(value: Int) = guarded { sdk.setElapsed(value) }
     fun toggleMode() = guarded { sdk.toggleMode(); saved["cozyMode"] = state.value.cozyMode }
+    fun toggleStoryPlayback() = guarded { sdk.toggleStoryPlayback() }
+    fun toggleCabinWarmth() = guarded { sdk.toggleCabinWarmth() }
+    fun toggleQuietCabin() = guarded { sdk.toggleQuietCabin() }
+    fun selectTab(tab: com.pleos.dearfamily.model.CareTab) = guarded { sdk.selectTab(tab) }
+    fun selectScenario(scenario: Scenario) = guarded { sdk.selectScenario(scenario) }
+    fun setSeatVentilation(level: Int) = guarded { sdk.setSeatVentilation(level) }
+    fun toggleSeatHeating() = guarded { sdk.toggleSeatHeating() }
     fun chooseSnack(value: String) = guarded { sdk.chooseSnack(value); saved["snackChoice"] = value }
     fun answerRestStop(accepted: Boolean) = guarded { sdk.answerRestStop(accepted) }
     fun endConversation() = guarded { sdk.endConversation() }

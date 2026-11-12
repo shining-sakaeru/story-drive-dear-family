@@ -62,6 +62,44 @@ class MockPleosSdkManager(private val scope: CoroutineScope) {
         if (elapsedArmed && old <= 50 && safe > 50) { elapsedArmed = false; val context = com.pleos.dearfamily.domain.Context(elapsedMin = safe, pressureShift = true, oldRoadDistanceKm = 3.0); ScenarioEngine.evaluate(context)?.let { applyScenario(it, forceEvent = true) } }
     }
     fun toggleMode() { cancelTourOnly(); _state.update { it.copy(cozyMode = !it.cozyMode) } }
+    fun toggleStoryPlayback() {
+        cancelTourOnly()
+        _state.update { old ->
+            if (old.quietCabin || old.silentMessage != null) old
+            else {
+                val play = !old.storyPlaying
+                old.copy(storyPlaying = play, eventId = old.eventId + 1,
+                    flow = old.flow.copy(gleoTtsScript = if (play)
+                        "별빛 여정이 시작됩니다. 작은 여우는 따뜻한 담요를 덮고 별들이 들려주는 조용한 이야기에 귀를 기울였어요." else ""))
+            }
+        }
+    }
+    fun toggleCabinWarmth() {
+        cancelTourOnly()
+        _state.update { it.copy(cabinWarmth = !it.cabinWarmth) }
+    }
+    fun toggleQuietCabin() {
+        cancelTourOnly()
+        _state.update { old -> old.copy(quietCabin = !old.quietCabin,
+            storyPlaying = false, eventId = old.eventId + 1,
+            flow = old.flow.copy(gleoTtsScript = "")) }
+    }
+    fun selectTab(tab: CareTab) { _state.update { it.copy(selectedTab = tab) } }
+    fun selectScenario(scenario: Scenario) { trigger(scenario) }
+    fun setSeatVentilation(level: Int) {
+        cancelTourOnly()
+        val safe = level.coerceIn(0, 3)
+        _state.update { it.copy(seats = it.seats.map { seat ->
+            if (seat.zone == SeatZone.PASSENGER_1R) seat.copy(fanLevel = safe) else seat
+        }) }
+    }
+    fun toggleSeatHeating() {
+        cancelTourOnly()
+        _state.update { it.copy(seats = it.seats.map { seat ->
+            if (seat.zone == SeatZone.PARENTS_3RD_ROW)
+                seat.copy(heatingLevel = if (seat.heatingLevel > 0) 0 else 1) else seat
+        }) }
+    }
     fun chooseSnack(choice: String) { cancelTourOnly(); _state.update { it.copy(snackChoice = choice) } }
     fun answerRestStop(accepted: Boolean) { cancelTourOnly(); _state.update { it.copy(restStopAccepted = accepted, restStopVisible = true) } }
     fun endConversation() { cancelTourOnly(); volumeJobs[SeatZone.PASSENGER_1R]?.cancel(); volumeJobs[SeatZone.PASSENGER_1R] = scope.launch { restoreVolume(SeatZone.PASSENGER_1R) } }
@@ -104,7 +142,10 @@ class MockPleosSdkManager(private val scope: CoroutineScope) {
     }
     fun stopTour() { tourJob?.cancel(); tourJob = null; _state.update { it.copy(tourRunning = false) } }
     fun reset() { cancelManualJobs(); noiseArmed = true; elapsedArmed = true; _state.value = FamilyCareUiState() }
-    fun shutdown() { cancelManualJobs() }
+    fun shutdown() {
+        cancelManualJobs()
+        _state.update { it.copy(storyPlaying = false, flow = it.flow.copy(gleoTtsScript = "")) }
+    }
 
     fun setPersona(persona: FamilyPersona) {
         cancelTourOnly()
@@ -134,7 +175,7 @@ class MockPleosSdkManager(private val scope: CoroutineScope) {
     private fun refreshScenario(scenario: Scenario) {
         val old = _state.value
         val flow = ScenarioEngine.flow(scenario, old.noiseDb, old.elapsedMin, persona = old.persona)
-        _state.update { it.copy(flow = flow, seats = old.seats.map { seat -> seatFor(seat, scenario, old.noiseDb) }) }
+        _state.update { it.copy(flow = flow, selectedScenario = scenario.name, seats = old.seats.map { seat -> seatFor(seat, scenario, old.noiseDb) }) }
     }
     private fun applyScenario(scenario: Scenario, cancel: Boolean = true, forceEvent: Boolean = false) {
         if (cancel) { tourJob?.cancel(); tourJob = null }
@@ -152,7 +193,7 @@ class MockPleosSdkManager(private val scope: CoroutineScope) {
             Scenario.PARENTS -> "3열 부모님의 허리 피로를 위해 온열 럼버 케어를 시작합니다."
             Scenario.PASSENGER -> "조수석 파트너와 편안하게 대화하실 수 있도록 음악을 은은하게 조절했습니다."
         }
-        _state.update { it.copy(flow = flow, companionMessage = companionMsg, seats = old.seats.map { seat -> seatFor(seat, scenario, old.noiseDb) }, audio = old.audio.map { audio -> audioFor(audio, scenario) }, silentMessage = if (scenario == Scenario.KIDS_SLEEP) "2열 아이들이 잠들었습니다. 후석 수면 케어를 시작합니다." else null, restStopVisible = scenario == Scenario.PARENTS || (scenario == Scenario.PASSENGER && old.restStopVisible), tourReport = false, eventId = if (newEvent) old.eventId + 1 else old.eventId, sleepPulseId = if (scenario == Scenario.KIDS_SLEEP && newEvent) old.sleepPulseId + 1 else old.sleepPulseId) }
+        _state.update { it.copy(flow = flow, selectedScenario = scenario.name, storyPlaying = false, companionMessage = companionMsg, seats = old.seats.map { seat -> seatFor(seat, scenario, old.noiseDb) }, audio = old.audio.map { audio -> audioFor(audio, scenario) }, silentMessage = if (scenario == Scenario.KIDS_SLEEP) "2열 아이들이 잠들었습니다. 후석 수면 케어를 시작합니다." else null, restStopVisible = scenario == Scenario.PARENTS || (scenario == Scenario.PASSENGER && old.restStopVisible), tourReport = false, eventId = if (newEvent) old.eventId + 1 else old.eventId, sleepPulseId = if (scenario == Scenario.KIDS_SLEEP && newEvent) old.sleepPulseId + 1 else old.sleepPulseId) }
         if (scenario == Scenario.KIDS_NOISE || scenario == Scenario.PASSENGER || scenario == Scenario.TEEN_FOCUS) duckVolume(flow.targetZone, if (scenario == Scenario.PASSENGER) 25 else if (scenario == Scenario.TEEN_FOCUS) 45 else 40)
     }
     private fun seatFor(old: SeatStatus, scenario: Scenario, noise: Int): SeatStatus = when (scenario) {

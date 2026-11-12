@@ -1,0 +1,272 @@
+{
+  "sourceImagesAreVisualTruth": true,
+  "assets": [
+    {
+      "path": "app/src/main/res/drawable-nodpi/img_genesis_car_base.webp",
+      "resolutionPx": [
+        567,
+        387
+      ],
+      "bytes": 165916,
+      "sha256": "8830c28d60d1f8d309d9904d9808f4f862116c41dfe34c0dba2a97353df9b82a",
+      "source": "ui_mockup_option1_genesis_ccnc.jpg",
+      "sourceRectPx": [
+        410,
+        193,
+        977,
+        580
+      ],
+      "notes": "Source already has illuminated seats. Source card occlusions are transparent holes, not reconstructed vehicle detail. Layered original/hi-res render still required for lossless restoration."
+    },
+    {
+      "path": "app/src/main/res/drawable-nodpi/img_genesis_seat_glow.webp",
+      "resolutionPx": [
+        256,
+        256
+      ],
+      "bytes": 5796,
+      "sha256": "65da21e5595dca3480398276c1e1e123a6905f8f4d5417316bd6d4e5366cbb65",
+      "source": null,
+      "sourceRectPx": null,
+      "notes": "Generated soft cyan/amber radial alpha overlay; not a vehicle drawing."
+    },
+    {
+      "path": "app/src/main/res/drawable-nodpi/img_warm_fox.webp",
+      "resolutionPx": [
+        204,
+        175
+      ],
+      "bytes": 45708,
+      "sha256": "9ec83bf3296caf3af2358a27c6e771d707e042155c13eeb72c81acf7dda322f6",
+      "source": "ui_mockup_option2_scandinavian_family_care.jpg",
+      "sourceRectPx": [
+        366,
+        238,
+        570,
+        413
+      ],
+      "notes": "Literal supplied-reference crop at original pixel resolution; no high-resolution source is available."
+    },
+    {
+      "path": "app/src/main/res/drawable-nodpi/img_warm_cabin.webp",
+      "resolutionPx": [
+        198,
+        175
+      ],
+      "bytes": 31028,
+      "sha256": "cce8cbf09a142a34b6453781c525f9c6dccb8bb0f31d7b1b043de964e46b2652",
+      "source": "ui_mockup_option2_scandinavian_family_care.jpg",
+      "sourceRectPx": [
+        603,
+        238,
+        801,
+        413
+      ],
+      "notes": "Literal supplied-reference crop at original pixel resolution; no high-resolution source is available."
+    },
+    {
+      "path": "app/src/main/res/drawable-nodpi/img_warm_seat.webp",
+      "resolutionPx": [
+        149,
+        112
+      ],
+      "bytes": 13004,
+      "sha256": "e79c877e90b6b23100036904fbf4ce88e137e6556964bc5c34095790ce55a4f7",
+      "source": "ui_mockup_option2_scandinavian_family_care.jpg",
+      "sourceRectPx": [
+        859,
+        252,
+        1008,
+        364
+      ],
+      "notes": "Literal supplied-reference crop at original pixel resolution; no high-resolution source is available."
+    },
+    {
+      "path": "app/src/main/res/drawable-nodpi/img_spatial_album.webp",
+      "resolutionPx": [
+        113,
+        113
+      ],
+      "bytes": 21960,
+      "sha256": "b6c5d5ab1641947efe5cfb453864c89efb0fb842c6792f24c7376380e295aff1",
+      "source": "ui_mockup_option3_spatial_dynamic_widgets.jpg",
+      "sourceRectPx": [
+        739,
+        217,
+        852,
+        330
+      ],
+      "notes": "Literal supplied-reference crop at original pixel resolution; no high-resolution source is available."
+    },
+    {
+      "path": "app/src/main/res/drawable-nodpi/img_genesis_album.webp",
+      "resolutionPx": [
+        78,
+        80
+      ],
+      "bytes": 7392,
+      "sha256": "78e768628a20b0d3c584d9569801b8dd2c8d3a3fd3288514e4b92989e658bc95",
+      "source": "ui_mockup_option1_genesis_ccnc.jpg",
+      "sourceRectPx": [
+        897,
+        221,
+        975,
+        301
+      ],
+      "notes": "Original album reference crop; not a streaming service or actual song playback."
+    },
+    {
+      "path": "app/src/main/res/drawable-nodpi/img_genesis_waveform.webp",
+      "resolutionPx": [
+        217,
+        47
+      ],
+      "bytes": 11508,
+      "sha256": "b1fb473a7732fa601710c8a655d0a4216878197ffdc11a6159707fafa1ffd69e",
+      "source": "ui_mockup_option1_genesis_ccnc.jpg",
+      "sourceRectPx": [
+        271,
+        467,
+        488,
+        514
+      ],
+      "notes": "Reference mock waveform artwork; not measured audio."
+    },
+    {
+      "path": "app/src/main/res/drawable-nodpi/img_spatial_story.webp",
+      "resolutionPx": [
+        68,
+        69
+      ],
+      "bytes": 6444,
+      "sha256": "89e2eb78141e2d66bf0603940020e27e609422a0c647929d3d7d554b903dea3a",
+      "source": "ui_mockup_option3_spatial_dynamic_widgets.jpg",
+      "sourceRectPx": [
+        585,
+        419,
+        653,
+        488
+      ],
+      "notes": "Original galaxy story artwork; preserves detail instead of a primitive icon replacement."
+    },
+    {
+      "path": "app/src/main/res/drawable-nodpi/img_spatial_waveform.webp",
+      "resolutionPx": [
+        494,
+        78
+      ],
+      "bytes": 38212,
+      "sha256": "cdf1278170aae07a33b06e72913d6cfff79af6cf9920034218257aad5af098a9",
+      "source": "ui_mockup_option3_spatial_dynamic_widgets.jpg",
+      "sourceRectPx": [
+        160,
+        496,
+        654,
+        574
+      ],
+      "notes": "Reference visualization, NOT a live audio measurement. Dark background extracted to alpha."
+    },
+    {
+      "path": "app/src/main/res/drawable-nodpi/img_spatial_comfort_curve.webp",
+      "resolutionPx": [
+        233,
+        59
+      ],
+      "bytes": 12588,
+      "sha256": "ca79e2a5a1b251650537599773eee312d780a01f1721c4c22e966b4aa1358030",
+      "source": "ui_mockup_option3_spatial_dynamic_widgets.jpg",
+      "sourceRectPx": [
+        984,
+        545,
+        1217,
+        604
+      ],
+      "notes": "Original comfort visualization sample; not measured AQI history."
+    },
+    {
+      "path": "app/src/main/res/drawable/ic_spatial_seat_ventilation.xml",
+      "resolutionPx": [
+        24,
+        24
+      ],
+      "vectorViewport": true,
+      "bytes": 590,
+      "sha256": "af59ec782b87fb1644a6067578f48e81bb1f262282455b8d493243efc72f1253"
+    },
+    {
+      "path": "app/src/main/res/drawable/ic_spatial_seat_heating.xml",
+      "resolutionPx": [
+        24,
+        24
+      ],
+      "vectorViewport": true,
+      "bytes": 609,
+      "sha256": "a8b9f334eb29e8e9b7e3e52f937ea33b28b121c0d0671152401201b8f12cac61"
+    },
+    {
+      "path": "app/src/main/res/drawable/ic_spatial_fan.xml",
+      "resolutionPx": [
+        24,
+        24
+      ],
+      "vectorViewport": true,
+      "bytes": 622,
+      "sha256": "f7a6be9f2b3f00c0121669088053bc447f73f3d2683672174b65f695179063f0"
+    },
+    {
+      "path": "app/src/main/res/drawable/ic_spatial_quick_mute.xml",
+      "resolutionPx": [
+        24,
+        24
+      ],
+      "vectorViewport": true,
+      "bytes": 534,
+      "sha256": "fc39e45841f6e05110ded5d944a52636715c4cb135ab78779da5fe8facad8155"
+    },
+    {
+      "path": "app/src/main/res/drawable/ic_spatial_home.xml",
+      "resolutionPx": [
+        24,
+        24
+      ],
+      "vectorViewport": true,
+      "bytes": 532,
+      "sha256": "531b8c834bd702ba3f3dad6624b6ca888982bb520cc964767a48b82720b59b0c"
+    },
+    {
+      "path": "app/src/main/res/drawable/ic_spatial_hvac.xml",
+      "resolutionPx": [
+        24,
+        24
+      ],
+      "vectorViewport": true,
+      "bytes": 544,
+      "sha256": "f4e7e9ee286d1ee574f8625874c7de3d0d4bf20f6c2afbdc42fa53735203436a"
+    },
+    {
+      "path": "app/src/main/res/drawable/ic_spatial_media.xml",
+      "resolutionPx": [
+        24,
+        24
+      ],
+      "vectorViewport": true,
+      "bytes": 507,
+      "sha256": "d9e39014b735b211009525733a7962d4b369040e8bd35732d74b4be486bb41a4"
+    },
+    {
+      "path": "app/src/main/res/drawable/ic_spatial_navigation.xml",
+      "resolutionPx": [
+        24,
+        24
+      ],
+      "vectorViewport": true,
+      "bytes": 487,
+      "sha256": "831ed93ca323e5dbf266a97a99e9deb803b60d64fbde3dcd40b91845bc6069ab"
+    }
+  ],
+  "limitations": [
+    "Raster crops retain JPEG source resolution and source lighting.",
+    "Card-occluded parts of the car cannot be recovered from this JPG.",
+    "Reference usage rights/provenance must be checked before public distribution."
+  ]
+}

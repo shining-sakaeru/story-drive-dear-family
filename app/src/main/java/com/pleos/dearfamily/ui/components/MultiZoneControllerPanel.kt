@@ -29,7 +29,9 @@ import kotlin.math.sin
         infiniteRepeatable(tween(1800, easing = LinearEasing)), label = "voice bars")
     CarePanel(modifier) {
         PanelHeading("03", "서로 다른 취향, 같은 여행", "PRIVATE ZONE · SHARED MEMORIES", Amber)
-        Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()),
+        // The debug overlay owns vertical scrolling. A second viewport here left
+        // controls clipped even after performScrollTo(), so physical clicks missed.
+        Column(Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween) {
@@ -37,7 +39,7 @@ import kotlin.math.sin
                     Text("Gleo 브리핑", style = MaterialTheme.typography.titleMedium)
                     Text("시나리오 스크립트 · AI 호출 없음", color = SecondaryText, style = MaterialTheme.typography.bodySmall)
                 }
-                TextButton(onClick = onMute, modifier = Modifier.testTag("mute")) {
+                TextButton(onClick = onMute, modifier = Modifier.heightIn(min = 48.dp).testTag("mute")) {
                     Text(if (voice.muted) "음성 켜기" else "음소거")
                 }
             }
@@ -78,7 +80,7 @@ import kotlin.math.sin
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 Text("COZY & FUN DUO", color = Amber, style = MaterialTheme.typography.labelSmall,
                     modifier = Modifier.weight(1f))
-                TextButton(onClick = onToggleFun, modifier = Modifier.testTag("funToggle")) {
+                TextButton(onClick = onToggleFun, modifier = Modifier.heightIn(min = 48.dp).testTag("funToggle")) {
                     Text(if (state.cozyMode) "Fun 모드" else "Cozy 모드")
                 }
             }
@@ -87,13 +89,13 @@ import kotlin.math.sin
                     verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     Text("우리 부부 이구동성 밸런스 게임", color = Amber, style = MaterialTheme.typography.titleMedium)
                     Text("Q. 휴게소 최애 간식은?", style = MaterialTheme.typography.bodyMedium)
-                    OutlinedButton({ onSnack("호두과자") }, Modifier.fillMaxWidth().testTag("snackWalnut")) { Text("호두과자") }
-                    OutlinedButton({ onSnack("알감자") }, Modifier.fillMaxWidth().testTag("snackPotato")) { Text("알감자") }
+                    OutlinedButton({ onSnack("호두과자") }, Modifier.fillMaxWidth().heightIn(min = 48.dp).testTag("snackWalnut")) { Text("호두과자") }
+                    OutlinedButton({ onSnack("알감자") }, Modifier.fillMaxWidth().heightIn(min = 48.dp).testTag("snackPotato")) { Text("알감자") }
                     state.snackChoice?.let { Text("우리의 선택: $it", color = Amber, modifier = Modifier.testTag("snackChoice")) }
                 }
             } else Text("따뜻한 앰버 조명, 빗소리와 로파이. 대화 중에는 25%로 낮춥니다.",
                 style = MaterialTheme.typography.bodySmall, color = SecondaryText)
-            OutlinedButton(onClick = onEndConversation, modifier = Modifier.fillMaxWidth().testTag("conversationEnd")) {
+            OutlinedButton(onClick = onEndConversation, modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp).testTag("conversationEnd")) {
                 Text("대화 종료 · 음악 70% 복원", style = MaterialTheme.typography.bodySmall)
             }
             if (state.restStopVisible) {
@@ -104,8 +106,8 @@ import kotlin.math.sin
                     Text("가상 위치·예상 시간 · 실제 내비 변경 없음", color = SecondaryText,
                         style = MaterialTheme.typography.bodySmall)
                     if (state.restStopAccepted == null) {
-                        OutlinedButton({ onRestStop(true) }, Modifier.fillMaxWidth().testTag("restAccept")) { Text("모의 경유 추가") }
-                        TextButton({ onRestStop(false) }, Modifier.fillMaxWidth()) { Text("지금은 괜찮아요") }
+                        OutlinedButton({ onRestStop(true) }, Modifier.fillMaxWidth().heightIn(min = 48.dp).testTag("restAccept")) { Text("모의 경유 추가") }
+                        TextButton({ onRestStop(false) }, Modifier.fillMaxWidth().heightIn(min = 48.dp)) { Text("지금은 괜찮아요") }
                     } else Text(if (state.restStopAccepted == true) "모의 경유가 추가되었습니다." else "기존 모의 경로를 유지합니다.",
                         modifier = Modifier.testTag("restAnswer"), color = Coral)
                 }

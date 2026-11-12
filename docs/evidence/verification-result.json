@@ -1,10 +1,10 @@
 {
-  "scope": "source-and-apk-build-attempt",
+  "scope": "jvm-and-compose-source-only",
   "checks": [
     {
       "name": "unit",
       "command": [
-        "/Users/nathanael/git/story-drive-dear-family/gradlew",
+        "/opt/data/home/projects/story-drive-dear-family/gradlew",
         "-p",
         "verification/engine-acceptance",
         "test",
@@ -19,7 +19,7 @@
     {
       "name": "engine-unit",
       "command": [
-        "/Users/nathanael/git/story-drive-dear-family/gradlew",
+        "/opt/data/home/projects/story-drive-dear-family/gradlew",
         "-p",
         "engine-tests",
         "test",
@@ -34,7 +34,7 @@
     {
       "name": "compile-demo",
       "command": [
-        "/Users/nathanael/git/story-drive-dear-family/gradlew",
+        "/opt/data/home/projects/story-drive-dear-family/gradlew",
         "-p",
         "verification/ui-compile-check",
         "-Pflavor=demo",
@@ -50,7 +50,7 @@
     {
       "name": "compile-pleos",
       "command": [
-        "/Users/nathanael/git/story-drive-dear-family/gradlew",
+        "/opt/data/home/projects/story-drive-dear-family/gradlew",
         "-p",
         "verification/ui-compile-check",
         "-Pflavor=pleos",
@@ -64,37 +64,45 @@
       "result": "PASS"
     },
     {
-      "name": "pleos-dependencies",
+      "name": "compile-ui-tests-demo",
       "command": [
-        "/Users/nathanael/git/story-drive-dear-family/gradlew",
-        ":app:dependencies",
-        "--configuration",
-        "pleosDebugRuntimeClasspath",
+        "/opt/data/home/projects/story-drive-dear-family/gradlew",
+        "-p",
+        "verification/ui-compile-check",
+        "-Pflavor=demo",
+        "-PincludeAndroidTests=true",
+        "compileKotlin",
+        "--rerun-tasks",
         "--no-daemon",
         "--console=plain"
       ],
       "exitCode": 0,
-      "log": "docs/evidence/pleos-dependencies.log",
+      "log": "docs/evidence/compile-ui-tests-demo.log",
       "result": "PASS"
     },
     {
-      "name": "assemble-debug",
+      "name": "compile-ui-tests-pleos",
       "command": [
-        "/Users/nathanael/git/story-drive-dear-family/gradlew",
-        "assembleDebug",
+        "/opt/data/home/projects/story-drive-dear-family/gradlew",
+        "-p",
+        "verification/ui-compile-check",
+        "-Pflavor=pleos",
+        "-PincludeAndroidTests=true",
+        "compileKotlin",
+        "--rerun-tasks",
         "--no-daemon",
         "--console=plain"
       ],
       "exitCode": 0,
-      "log": "docs/evidence/assemble-debug.log",
+      "log": "docs/evidence/compile-ui-tests-pleos.log",
       "result": "PASS"
     }
   ],
-  "testCount": 37,
-  "testExecutions": 58,
+  "testCount": 51,
+  "testExecutions": 84,
   "moduleTestCounts": {
-    "unit": 37,
-    "engine-unit": 21
+    "unit": 51,
+    "engine-unit": 33
   },
   "testCases": [
     {
@@ -291,6 +299,48 @@
     },
     {
       "module": "unit",
+      "class": "com.pleos.dearfamily.sdk.MockCareControlsTest",
+      "test": "storyCannotStartDuringQuietCabinOrKidsSleep",
+      "passed": true
+    },
+    {
+      "module": "unit",
+      "class": "com.pleos.dearfamily.sdk.MockCareControlsTest",
+      "test": "quietActivationStopsStoryAndQuietOffDoesNotResumeIt",
+      "passed": true
+    },
+    {
+      "module": "unit",
+      "class": "com.pleos.dearfamily.sdk.MockCareControlsTest",
+      "test": "warmthIsIndependentOfCozyAndDoesNotStartStory",
+      "passed": true
+    },
+    {
+      "module": "unit",
+      "class": "com.pleos.dearfamily.sdk.MockCareControlsTest",
+      "test": "resetClearsCareFlags",
+      "passed": true
+    },
+    {
+      "module": "unit",
+      "class": "com.pleos.dearfamily.sdk.MockCareControlsTest",
+      "test": "shutdownStopsStoryPlayback",
+      "passed": true
+    },
+    {
+      "module": "unit",
+      "class": "com.pleos.dearfamily.sdk.MockCareControlsTest",
+      "test": "storyPlaybackIsIndependentAndReversibleWithoutChangingCozyMode",
+      "passed": true
+    },
+    {
+      "module": "unit",
+      "class": "com.pleos.dearfamily.sdk.MockCareControlsTest",
+      "test": "careTogglesCancelAnActiveTour",
+      "passed": true
+    },
+    {
+      "module": "unit",
       "class": "com.pleos.dearfamily.sdk.MockPleosSdkManagerTest",
       "test": "sliderUpdatesRetainedScenarioWithoutNewEvent",
       "passed": true
@@ -317,6 +367,48 @@
       "module": "unit",
       "class": "com.pleos.dearfamily.sdk.MockPleosSdkManagerTest",
       "test": "noiseRisingEdgeRearmsAndDucks",
+      "passed": true
+    },
+    {
+      "module": "unit",
+      "class": "com.pleos.dearfamily.sdk.MockSpatialControlsTest",
+      "test": "spatialControlsDoNotStartStoryOrToggleCozyMode",
+      "passed": true
+    },
+    {
+      "module": "unit",
+      "class": "com.pleos.dearfamily.sdk.MockSpatialControlsTest",
+      "test": "boundedVentilationOnlyChangesPassengerFanLevel",
+      "passed": true
+    },
+    {
+      "module": "unit",
+      "class": "com.pleos.dearfamily.sdk.MockSpatialControlsTest",
+      "test": "seatHeatingTogglesParentsBetweenOffAndLevelOne",
+      "passed": true
+    },
+    {
+      "module": "unit",
+      "class": "com.pleos.dearfamily.sdk.MockSpatialControlsTest",
+      "test": "tabAndScenarioSelectionsPersistUntilReset",
+      "passed": true
+    },
+    {
+      "module": "unit",
+      "class": "com.pleos.dearfamily.sdk.MockSpatialControlsTest",
+      "test": "scenarioSelectionReflectsNameAndAppliesCorrectZone",
+      "passed": true
+    },
+    {
+      "module": "unit",
+      "class": "com.pleos.dearfamily.sdk.SpatialActionTest",
+      "test": "selectingDockChangesOnlyUiSelectionNotPlayback",
+      "passed": true
+    },
+    {
+      "module": "unit",
+      "class": "com.pleos.dearfamily.sdk.StoryActionTest",
+      "test": "storyStartStopLeavesPassengerModeAlone",
       "passed": true
     },
     {
@@ -417,6 +509,48 @@
     },
     {
       "module": "engine-unit",
+      "class": "com.pleos.dearfamily.sdk.MockCareControlsTest",
+      "test": "storyCannotStartDuringQuietCabinOrKidsSleep()",
+      "passed": true
+    },
+    {
+      "module": "engine-unit",
+      "class": "com.pleos.dearfamily.sdk.MockCareControlsTest",
+      "test": "quietActivationStopsStoryAndQuietOffDoesNotResumeIt()",
+      "passed": true
+    },
+    {
+      "module": "engine-unit",
+      "class": "com.pleos.dearfamily.sdk.MockCareControlsTest",
+      "test": "warmthIsIndependentOfCozyAndDoesNotStartStory()",
+      "passed": true
+    },
+    {
+      "module": "engine-unit",
+      "class": "com.pleos.dearfamily.sdk.MockCareControlsTest",
+      "test": "resetClearsCareFlags()",
+      "passed": true
+    },
+    {
+      "module": "engine-unit",
+      "class": "com.pleos.dearfamily.sdk.MockCareControlsTest",
+      "test": "shutdownStopsStoryPlayback()",
+      "passed": true
+    },
+    {
+      "module": "engine-unit",
+      "class": "com.pleos.dearfamily.sdk.MockCareControlsTest",
+      "test": "storyPlaybackIsIndependentAndReversibleWithoutChangingCozyMode()",
+      "passed": true
+    },
+    {
+      "module": "engine-unit",
+      "class": "com.pleos.dearfamily.sdk.MockCareControlsTest",
+      "test": "careTogglesCancelAnActiveTour()",
+      "passed": true
+    },
+    {
+      "module": "engine-unit",
       "class": "com.pleos.dearfamily.sdk.MockPleosSdkManagerTest",
       "test": "sliderUpdatesRetainedScenarioWithoutNewEvent()",
       "passed": true
@@ -444,19 +578,55 @@
       "class": "com.pleos.dearfamily.sdk.MockPleosSdkManagerTest",
       "test": "noiseRisingEdgeRearmsAndDucks()",
       "passed": true
+    },
+    {
+      "module": "engine-unit",
+      "class": "com.pleos.dearfamily.sdk.MockSpatialControlsTest",
+      "test": "spatialControlsDoNotStartStoryOrToggleCozyMode()",
+      "passed": true
+    },
+    {
+      "module": "engine-unit",
+      "class": "com.pleos.dearfamily.sdk.MockSpatialControlsTest",
+      "test": "boundedVentilationOnlyChangesPassengerFanLevel()",
+      "passed": true
+    },
+    {
+      "module": "engine-unit",
+      "class": "com.pleos.dearfamily.sdk.MockSpatialControlsTest",
+      "test": "seatHeatingTogglesParentsBetweenOffAndLevelOne()",
+      "passed": true
+    },
+    {
+      "module": "engine-unit",
+      "class": "com.pleos.dearfamily.sdk.MockSpatialControlsTest",
+      "test": "tabAndScenarioSelectionsPersistUntilReset()",
+      "passed": true
+    },
+    {
+      "module": "engine-unit",
+      "class": "com.pleos.dearfamily.sdk.MockSpatialControlsTest",
+      "test": "scenarioSelectionReflectsNameAndAppliesCorrectZone()",
+      "passed": true
     }
   ],
   "sourceSha256": {
     "app/build.gradle.kts": "35f30175fffa90057cc4cc6bebb4a4a8741606806f3082d3764c21c739f0534b",
-    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareNativeAcceptanceTest.kt": "3964bd9433b90ca5afa4766e63df84fffb40a253c559a059f86316463ad5e8b0",
-    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCarePlatformAcceptanceTest.kt": "879a271f64d68e395c65ce96da993f58a35910769749e135663c4bdb1cd12f28",
-    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareUiTest.kt": "c0790b9073855915bbc4bc0574091abd2f8c965f2656b7f5a9b431ff47606570",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareDebugInteractionProbeTest.kt": "742cff3877e8bdbc8396a8299b1648cbbf907b3818e743e6adf7e4a8fed6ade0",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareDesignContractTest.kt": "fc1d42e5f6fb415f283fdf9dd2732d8a7c6984a69bf36d9e61e0bbc0257fad85",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareNativeAcceptanceTest.kt": "05e41432e6c8695f569241a2f7d613d8869d0980b112e363258c518b4006ef79",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCarePlatformAcceptanceTest.kt": "48d150a39f36c3082a7a23cdc61348d86846fe0c14597e637723235c5fa0f2d5",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareReferenceCaptureTest.kt": "59cea7b3749ac6080cedf81ddf10ac085dfa1e4dbab8d738ed6b6b0b5f9c6c42",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareSpatialActionsTest.kt": "dd38e41d1e244758eafcacd5461274f4d7e95441dd6de61bc3b281650a3d92f1",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareUiTest.kt": "37be678fb5b532a359db24cc420a79d051d4010cb26112121a57d9442504bf1b",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareVisualStructureTest.kt": "b617e99a50ee49e391873e352fd7e74086a5402d35064ba71ca6387a2630d35d",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareWarmActionsTest.kt": "92e51a6761488e8115622bbc6093d0c1be474550bc002c99c605bd7ca9c70db5",
     "app/src/demo/AndroidManifest.xml": "a0fd45777014318ef3bc93b262d5e1e43357593f03a4f73be370cea28c6b2e76",
     "app/src/demo/java/com/pleos/dearfamily/platform/GatewayFactory.kt": "bbf98d59a0dbeeb7f72c383b4ac175e42fbf64d641d4ee935449864e251cda86",
     "app/src/main/AndroidManifest.xml": "e06a82ec089208ef903bbdb2a2171c79f8c289d01e2cd380d219accf20f5cb6c",
     "app/src/main/java/com/pleos/dearfamily/MainActivity.kt": "2d2b4496152217118e26645ded6c747df2009a4e079d0931c4459f461e2c257e",
     "app/src/main/java/com/pleos/dearfamily/domain/ScenarioEngine.kt": "d692e3b231610eaa4369374f11c6c4d1fe413c5ea619bd04c483c639f84efa0b",
-    "app/src/main/java/com/pleos/dearfamily/model/FamilyCareModels.kt": "d74725c5a1e54141898ab454f95ab4dfed42276cb1c0c240311d91762858e8ba",
+    "app/src/main/java/com/pleos/dearfamily/model/FamilyCareModels.kt": "369f36431bf07a24eae0a6b365d60005281e631c5eea548ea78f42e8e5d5cc8b",
     "app/src/main/java/com/pleos/dearfamily/platform/AudioNarrator.kt": "14999dc7e2f5f5ee352222a04582a8f68f7dc55c68416f856dac194793fae689",
     "app/src/main/java/com/pleos/dearfamily/platform/CarUxObserver.kt": "09d8f0b45cbfa04eb11636f7907993351d3be2086c239350819222bfab00aff8",
     "app/src/main/java/com/pleos/dearfamily/platform/VehicleReadGateway.kt": "c55f171fce0960f39266d7adeadeabd5914626e73b9b32f2f1c447ad9e4a95e8",
@@ -464,37 +634,60 @@
     "app/src/main/java/com/pleos/dearfamily/policy/SessionStopper.kt": "dd1397dd815da843b9eddbb34d70b38a41b5741b3ed8864489c68ed03773d2ad",
     "app/src/main/java/com/pleos/dearfamily/policy/audio/NarrationSession.kt": "6e489a02a53eed4d02c5c081a47280d6814f6c6ceefb2348fad6dc9d0bf3646c",
     "app/src/main/java/com/pleos/dearfamily/policy/audio/PcmWave.kt": "c2a007724aa0c11ba434c1d9468c4939cab4f5cbed18fb047b10ab03c479368a",
-    "app/src/main/java/com/pleos/dearfamily/sdk/MockPleosSdkManager.kt": "eb35b904aaac585e6dca131d0ee0d013923a1992f26a084a5887cbc490c8a9ba",
-    "app/src/main/java/com/pleos/dearfamily/ui/DearFamilyMainScreen.kt": "22964f762b6560ab5830f41615051a20fe15c775738cc863becbea29b5fc4df0",
-    "app/src/main/java/com/pleos/dearfamily/ui/DearFamilyViewModel.kt": "15b91db0903e0e5f9201d03bb25c5133cfd7154ffcd1330a04c22fa765c8e29b",
-    "app/src/main/java/com/pleos/dearfamily/ui/components/CabinDigitalTwinView.kt": "7dc992873a95284e27f7ce806fe90d6323e78a8ca106d1a44be8eb147ae0720f",
-    "app/src/main/java/com/pleos/dearfamily/ui/components/DearFamilySettingsDialog.kt": "afc587d2ea2751d1dea753e49e15ff8ea7c3c37fd739c31e1b69c4207ec87e7d",
-    "app/src/main/java/com/pleos/dearfamily/ui/components/GenesisLuxuryCockpitView.kt": "241f15a7dfbd24007d0bb63f5516c5e294dc997d05128acdf2748b3cf55fd61f",
+    "app/src/main/java/com/pleos/dearfamily/sdk/MockPleosSdkManager.kt": "06b827e87dd4a2cfb126ed691862b326765569bda6562cd188028b0d59e28033",
+    "app/src/main/java/com/pleos/dearfamily/ui/DearFamilyMainScreen.kt": "14aa850e9fb6fd6c4af45251ce433b58642d56d451a791fa5f57bcf0145835e4",
+    "app/src/main/java/com/pleos/dearfamily/ui/DearFamilyViewModel.kt": "270cbea15ef135726221da7c02919c7dee434cc8d6f256e9df9114d809a775b7",
+    "app/src/main/java/com/pleos/dearfamily/ui/components/CabinDigitalTwinView.kt": "24959a96c271ac417652b706a5605addbd431588bb6360552dd782ec185ad8fa",
+    "app/src/main/java/com/pleos/dearfamily/ui/components/DearFamilySettingsDialog.kt": "5fa141675ea8aa74a23028902f1cefc22199d7a773b5efd3e138320375acf818",
+    "app/src/main/java/com/pleos/dearfamily/ui/components/GenesisLuxuryCockpitView.kt": "c08bc92c2ad055fdee1e43881996c82366884109bf75a9549e9b10600d28ccba",
     "app/src/main/java/com/pleos/dearfamily/ui/components/IpoPipelineMonitor.kt": "b53936fadfa830511b46821507fe81842db045225be8366e0942f32329b65553",
-    "app/src/main/java/com/pleos/dearfamily/ui/components/MultiZoneControllerPanel.kt": "8d1a76a25a38519b95b32b1ff03ffa0f103a5e0a6877b66b6b84e4881b22e754",
-    "app/src/main/java/com/pleos/dearfamily/ui/components/ScenarioInjectorDock.kt": "72347151e5176760aa72001927a26631e69283ce9935f4ffb29559889ec48166",
-    "app/src/main/java/com/pleos/dearfamily/ui/components/SpatialDynamicCardsView.kt": "251bd7fe1f954e54ee1f1feeb4aa7cf18211f1948323b783b75cbbedd47436ce",
+    "app/src/main/java/com/pleos/dearfamily/ui/components/MultiZoneControllerPanel.kt": "d05425b025464a6652e4a5afbb0c91601a74f1f3c918198900238f370ee934d1",
+    "app/src/main/java/com/pleos/dearfamily/ui/components/ScenarioInjectorDock.kt": "0b421d460d1202171e12617f79a242c77f717ea4a9b9f7997e924a6995a19901",
+    "app/src/main/java/com/pleos/dearfamily/ui/components/SpatialDynamicCardsView.kt": "b88e14f43922c3ad22340886244d32643d89f5aa2c219bae36a7ecc83cb2c571",
     "app/src/main/java/com/pleos/dearfamily/ui/components/TopPeaceShieldBar.kt": "6b5e33a75440f8ee571dc351ec39b14adc0a3d39a41609ef110e90d6e6031ca9",
-    "app/src/main/java/com/pleos/dearfamily/ui/components/WarmFamilyStoryView.kt": "c9a7874c9382238cd4ac5297f2eabe311cef4a37a8269245f1c18d93fd2432bb",
-    "app/src/main/java/com/pleos/dearfamily/ui/theme/DearFamilyTheme.kt": "0455bfc456b70e90f33f9f27b6ca2255739f0046232aeedd8a784c19f8f7641c",
+    "app/src/main/java/com/pleos/dearfamily/ui/components/WarmFamilyStoryView.kt": "37fb0171f6b2fa9d97450eb911fb754238ec9eb35819b1cac8c65519ea8bd69e",
+    "app/src/main/java/com/pleos/dearfamily/ui/theme/DearFamilyTheme.kt": "b9e6c843c928c8b28b15514aecbc87ce7b63b623fe7bbcfe0b474c9b85718091",
     "app/src/main/res/drawable/ic_dearfamily_background.xml": "ddff85d4aec800fecc98d9b442bf8edc3c8c6dfea05995b3ef867067505cdb4a",
     "app/src/main/res/drawable/ic_dearfamily_foreground.xml": "4ffc7b34e1df7acef80adaf7735371ef832c6421ef595a91cf364b0c28c193e0",
+    "app/src/main/res/drawable/ic_spatial_fan.xml": "f7a6be9f2b3f00c0121669088053bc447f73f3d2683672174b65f695179063f0",
+    "app/src/main/res/drawable/ic_spatial_home.xml": "531b8c834bd702ba3f3dad6624b6ca888982bb520cc964767a48b82720b59b0c",
+    "app/src/main/res/drawable/ic_spatial_hvac.xml": "f4e7e9ee286d1ee574f8625874c7de3d0d4bf20f6c2afbdc42fa53735203436a",
+    "app/src/main/res/drawable/ic_spatial_media.xml": "d9e39014b735b211009525733a7962d4b369040e8bd35732d74b4be486bb41a4",
+    "app/src/main/res/drawable/ic_spatial_navigation.xml": "831ed93ca323e5dbf266a97a99e9deb803b60d64fbde3dcd40b91845bc6069ab",
+    "app/src/main/res/drawable/ic_spatial_quick_mute.xml": "fc39e45841f6e05110ded5d944a52636715c4cb135ab78779da5fe8facad8155",
+    "app/src/main/res/drawable/ic_spatial_seat_heating.xml": "a8b9f334eb29e8e9b7e3e52f937ea33b28b121c0d0671152401201b8f12cac61",
+    "app/src/main/res/drawable/ic_spatial_seat_ventilation.xml": "af59ec782b87fb1644a6067578f48e81bb1f262282455b8d493243efc72f1253",
+    "app/src/main/res/drawable-nodpi/img_genesis_album.webp": "78e768628a20b0d3c584d9569801b8dd2c8d3a3fd3288514e4b92989e658bc95",
+    "app/src/main/res/drawable-nodpi/img_genesis_car_base.webp": "8830c28d60d1f8d309d9904d9808f4f862116c41dfe34c0dba2a97353df9b82a",
+    "app/src/main/res/drawable-nodpi/img_genesis_seat_glow.webp": "65da21e5595dca3480398276c1e1e123a6905f8f4d5417316bd6d4e5366cbb65",
+    "app/src/main/res/drawable-nodpi/img_genesis_waveform.webp": "b1fb473a7732fa601710c8a655d0a4216878197ffdc11a6159707fafa1ffd69e",
+    "app/src/main/res/drawable-nodpi/img_spatial_album.webp": "b6c5d5ab1641947efe5cfb453864c89efb0fb842c6792f24c7376380e295aff1",
+    "app/src/main/res/drawable-nodpi/img_spatial_comfort_curve.webp": "ca79e2a5a1b251650537599773eee312d780a01f1721c4c22e966b4aa1358030",
+    "app/src/main/res/drawable-nodpi/img_spatial_story.webp": "89e2eb78141e2d66bf0603940020e27e609422a0c647929d3d7d554b903dea3a",
+    "app/src/main/res/drawable-nodpi/img_spatial_waveform.webp": "cdf1278170aae07a33b06e72913d6cfff79af6cf9920034218257aad5af098a9",
+    "app/src/main/res/drawable-nodpi/img_warm_cabin.webp": "cce8cbf09a142a34b6453781c525f9c6dccb8bb0f31d7b1b043de964e46b2652",
+    "app/src/main/res/drawable-nodpi/img_warm_fox.webp": "9ec83bf3296caf3af2358a27c6e771d707e042155c13eeb72c81acf7dda322f6",
+    "app/src/main/res/drawable-nodpi/img_warm_seat.webp": "e79c877e90b6b23100036904fbf4ce88e137e6556964bc5c34095790ce55a4f7",
     "app/src/main/res/mipmap-anydpi-v26/ic_dearfamily.xml": "aec1bab747ae213bade24492888f359f4fe6b4ce38c442287a75ebec04058403",
     "app/src/main/res/mipmap-anydpi-v26/ic_dearfamily_round.xml": "aec1bab747ae213bade24492888f359f4fe6b4ce38c442287a75ebec04058403",
     "app/src/main/res/values/styles.xml": "5d41f57d6255474a617f351a44598bc58b27bae76966ba58887584c75e1bb9a1",
     "app/src/pleos/AndroidManifest.xml": "ddb0beec8a94bdcae9da9e9dedc3591aaba039a761799a8fae30bd0ab995d4bb",
     "app/src/pleos/java/com/pleos/dearfamily/platform/GatewayFactory.kt": "751153651803eb1f872bb48b3a675254bcb130a0f7be5e8238902ce0e9ea4fa0",
     "app/src/test/java/com/pleos/dearfamily/domain/ScenarioEngineTest.kt": "aefa2b42b460ee796332c91f6f36f1a3330bfad31960c182ce69aa54c8073a40",
+    "app/src/test/java/com/pleos/dearfamily/sdk/SpatialActionTest.kt": "8007b89dcc11e5cb77a782af4e37928989738bb77285608c0ece60cc0bc17922",
+    "app/src/test/java/com/pleos/dearfamily/sdk/StoryActionTest.kt": "965fecb9588bd927c369d08e4d6eb2fdf15bad6090d459e30b2ad20890deddaa",
     "build.gradle.kts": "d07a0c3c8e53069ea198460d615bb2607bc02299083d603c9db8e2e5d7923543",
     "engine-tests/build.gradle.kts": "b8b1fc97740d299d0ca2793aae1fbb111c6dbfea877e007cf0e1bdff534d93be",
     "engine-tests/settings.gradle.kts": "371d8986cf073ea3b5ce8ab20565ce6abcb88cc98e9465a240d09cb3c9407aa6",
     "engine-tests/src/test/kotlin/com/pleos/dearfamily/acceptance/FamilyAcceptanceTest.kt": "0a98838424a8804ed43c51ddf3cbec112ef6471acbf827c2aeb8abd2c9b8ebe9",
+    "engine-tests/src/test/kotlin/com/pleos/dearfamily/sdk/MockCareControlsTest.kt": "b3a7906f721a2b6f1e8ad9f699d852a201a3de423bcb8ba38581b92bae61f0f4",
     "engine-tests/src/test/kotlin/com/pleos/dearfamily/sdk/MockPleosSdkManagerTest.kt": "a3c1a229b960e29f84b2ae3fc1b154a0152b3dfcc5eaa57acdcc6701b9c812dd",
+    "engine-tests/src/test/kotlin/com/pleos/dearfamily/sdk/MockSpatialControlsTest.kt": "316ba560b8ddf16af2f3bb0bc11e364495a775ff6fc0a176b962537fe6ccc93a",
     "gradle/wrapper/gradle-wrapper.jar": "a8451eeda314d0568b5340498b36edf147a8f0d692c5ff58082d477abe9146e4",
     "gradle/wrapper/gradle-wrapper.properties": "7736481b5bba89d45b73a91aa7dd9f5d27f75e139c3be6209c9027662f63740d",
-    "gradle.properties": "6cb385ade369b633c0480f8670a18ea6ed3fce1b5e91d5e9344dd95dad0606f6",
-    "scripts/test_verify_local.py": "4aab449dd128388f3afacf76d65182ca77f08b2e9367bacec3741792bb797758",
-    "scripts/verify_local.py": "184ab03b0df6190cbd726be2be2e022a58b9a84bc33d68b9dfcfd48cffb2ea7c",
+    "gradle.properties": "fa078c27c9e4bde28a029d673875b028884505efa436b68cf60e1ac0be5b679b",
+    "scripts/test_verify_local.py": "5a9fecb84d4cadd76a0abc590eb80648becf36b8669381c2f7caf52624d1e515",
+    "scripts/verify_local.py": "212eccd2208f8773427fe84028cdd6ebf1fc41f752739a851276c2d7e5afaae0",
     "settings.gradle.kts": "f9d77872fe891d06d6beba05d0cd8f607638c4aea02b9348b27a89eb26d67f19",
     "verification/engine-acceptance/build.gradle.kts": "d10dd85093f5cf5936504c15772f4173993815d9e70507765e61cf1677b16991",
     "verification/engine-acceptance/src/test/kotlin/com/pleos/dearfamily/acceptance/FamilyAcceptanceTest.kt": "0a98838424a8804ed43c51ddf3cbec112ef6471acbf827c2aeb8abd2c9b8ebe9",
@@ -502,17 +695,11 @@
     "verification/engine-acceptance/src/test/kotlin/com/pleos/dearfamily/acceptance/PcmWaveTest.kt": "aebc6c4966d3519e8379814e2c54c234568a5779460d8f5dbc8301588b5e6d71",
     "verification/engine-acceptance/src/test/kotlin/com/pleos/dearfamily/acceptance/SafetyPolicyTest.kt": "b57a7060f44593bd358f27ca9c9b2226fb6b402f8c7dd4b71c8b64e5cbf132a1",
     "verification/engine-acceptance/src/test/kotlin/com/pleos/dearfamily/acceptance/SessionStopperTest.kt": "568b387da53a44e9e47c6f348bdc5b5bce7804b16077bc704febe14eea686006",
-    "verification/ui-compile-check/build.gradle.kts": "46ff7c0f29ce76f05cdd517c0b2c52fdd645859c2118d56c03bb3516bc276a89"
+    "verification/ui-compile-check/build.gradle.kts": "3f04b932d7895b8ad48acb7eabb4f69ef77f0d99351dde60c5fcc6c20a5c301c"
   },
   "sourcesStable": true,
-  "apkProduced": true,
-  "apkSha256": {
-    "app/build/outputs/apk/androidTest/pleos/debug/app-pleos-debug-androidTest.apk": "50b5c2ffcc626e8614442dcbc5e78b6dce800a12edb6fb914fc2d77a37811fa1",
-    "app/build/outputs/apk/demo/debug/app-demo-debug.apk": "d4ff38a391268a750f06f0a819e08fff10b09591bcc699d527ee79299943ca5b",
-    "app/build/outputs/apk/demo/release/app-demo-release-unsigned.apk": "d42ba6329c2104239740058181ca1c93a1079c7736a9f0407b9bb4dfb9fb7e67",
-    "app/build/outputs/apk/pleos/debug/app-pleos-debug.apk": "6c41210a1ac9f7af87d9de375169785b9399be17a177c741ef8882c8227dfe3a",
-    "app/build/outputs/apk/pleos/release/app-pleos-release-unsigned.apk": "682d9bdf3aa8329e6c7f41bc40ba83b3fc608ab8cac0c114954ada101f771a6c"
-  },
+  "apkProduced": false,
+  "apkSha256": {},
   "deviceExecutionVerified": false,
   "notice": "Source compilation is not Android resource linking, APK installation, real SDK callbacks, physical audio, or emulator UI verification."
 }

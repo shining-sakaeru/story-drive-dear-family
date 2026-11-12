@@ -22,10 +22,17 @@ class FamilyCarePlatformAcceptanceTest {
     private fun model(): DearFamilyViewModel =
         ViewModelProvider(compose.activity)[DearFamilyViewModel::class.java]
 
+    private fun openDebugBadgeAfterDemo() {
+        if (compose.onAllNodesWithTag("debugDock").fetchSemanticsNodes().isEmpty()) {
+            compose.onNodeWithTag("debugBadge").performClick()
+        }
+    }
+
     private fun enterDemoIfAvailable() {
         if (compose.onAllNodesWithTag("enterDemo").fetchSemanticsNodes().isNotEmpty()) {
             compose.onNodeWithTag("enterDemo").performClick()
         }
+        openDebugBadgeAfterDemo()
         compose.waitUntil(3_000) {
             compose.onAllNodesWithTag("tour").fetchSemanticsNodes().isNotEmpty()
         }
@@ -80,6 +87,7 @@ class FamilyCarePlatformAcceptanceTest {
     @Test
     fun tourStopsAcrossActivityRecreateWithoutAutomaticReplay() {
         enterDemoIfAvailable()
+        openDebugBadgeAfterDemo()
         val vm = model()
         compose.runOnIdle { vm.startTour() }
         compose.waitUntil(3_000) { vm.state.value.tourRunning }

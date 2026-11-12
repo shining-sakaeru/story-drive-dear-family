@@ -22,9 +22,12 @@ class FamilyCareNativeAcceptanceTest {
         ViewModelProvider(compose.activity)[DearFamilyViewModel::class.java]
 
     private fun enterDemoIfAvailable() {
-        if (compose.onAllNodesWithTag("enterDemo").fetchSemanticsNodes().isNotEmpty()) {
+        val enteredFromRestrictedState = compose.onAllNodesWithTag("enterDemo").fetchSemanticsNodes().isNotEmpty()
+        if (enteredFromRestrictedState) {
             node("enterDemo").performClick()
-        } else {
+        }
+        openDebugBadgeAfterDemo()
+        if (!enteredFromRestrictedState) {
             node("tour").assertExists()
             node("kidsNoise").assertExists()
             node("parents").assertExists()
@@ -35,9 +38,15 @@ class FamilyCareNativeAcceptanceTest {
         }
     }
 
+    private fun openDebugBadgeAfterDemo() {
+        if (compose.onAllNodesWithTag("debugDock").fetchSemanticsNodes().isEmpty()) {
+            node("debugBadge").performClick()
+        }
+    }
+
     private fun media() {
         if (compose.onAllNodesWithTag("panelTab2").fetchSemanticsNodes().isNotEmpty()) {
-            node("panelTab2").performClick()
+            node("panelTab2").performScrollTo().performClick()
         }
     }
 
@@ -73,6 +82,7 @@ class FamilyCareNativeAcceptanceTest {
 
     @Test fun noiseSliderRearmsOnlyAfterDroppingBelowThreshold() {
         enterDemoIfAvailable()
+        openDebugBadgeAfterDemo()
         val vm = model()
         setProgress("noiseSlider", 82f)
         compose.waitUntil(3_000) { vm.state.value.noiseDb == 82 && vm.state.value.flow.activeScenarioTitle.contains("소란") }
@@ -99,6 +109,7 @@ class FamilyCareNativeAcceptanceTest {
 
     @Test fun elapsedSliderRearmsOnlyAfterDroppingBelowThreshold() {
         enterDemoIfAvailable()
+        openDebugBadgeAfterDemo()
         val vm = model()
         setProgress("elapsedSlider", 52f)
         compose.waitUntil(3_000) { vm.state.value.elapsedMin == 52 && vm.state.value.flow.activeScenarioTitle.contains("부모님") }
@@ -136,7 +147,9 @@ class FamilyCareNativeAcceptanceTest {
                 "parents" -> "온열 1"
                 else -> "Cozy 대화"
             }
-            node(seat).assert(hasAnyDescendant(hasText(renderedStatus, substring = true)))
+            // Clickable seat cards merge their text; other themes expose descendants.
+            node(seat).assert(hasText(renderedStatus, substring = true).or(
+                hasAnyDescendant(hasText(renderedStatus, substring = true))))
             assertEquals(seat.removePrefix("seat_"), model().state.value.flow.targetZone.name)
             assertEquals(status, model().state.value.seats.first { it.zone.name == seat.removePrefix("seat_") }.status)
             assertMockIpoOutput()
@@ -146,6 +159,7 @@ class FamilyCareNativeAcceptanceTest {
 
     @Test fun passengerFunConversationAndRestStopRestoreState() {
         enterDemoIfAvailable()
+        openDebugBadgeAfterDemo()
         node("passenger").performScrollTo().performClick()
         media()
         node("funToggle").performScrollTo().performClick()
@@ -162,6 +176,7 @@ class FamilyCareNativeAcceptanceTest {
 
     @Test fun tourCanBeCancelledWithoutLeavingRunningState() {
         enterDemoIfAvailable()
+        openDebugBadgeAfterDemo()
         node("tour").performScrollTo().performClick()
         node("tourStop").performScrollTo().performClick()
         node("tourStop").assertDoesNotExist()
@@ -170,6 +185,7 @@ class FamilyCareNativeAcceptanceTest {
 
     @Test fun tourRunsThirtyRealSecondsAndShowsDriverSilentReport() {
         enterDemoIfAvailable()
+        openDebugBadgeAfterDemo()
         val vm = model()
         node("tour").performScrollTo().performClick()
         compose.waitUntil(45_000) { vm.state.value.tourReport && !vm.state.value.tourRunning }

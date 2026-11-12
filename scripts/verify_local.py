@@ -14,6 +14,7 @@ EVIDENCE = ROOT / "docs" / "evidence"
 
 def snapshot():
     paths = list((ROOT / "app/src").rglob("*.kt")) + list((ROOT / "app/src").rglob("*.xml"))
+    paths += [p for p in (ROOT / "app/src/main/res").rglob("*") if p.is_file()]
     paths += list((ROOT / "verification/engine-acceptance/src").rglob("*.kt"))
     paths += list((ROOT / "engine-tests/src").rglob("*.kt"))
     paths += [ROOT / name for name in ["settings.gradle.kts", "build.gradle.kts", "app/build.gradle.kts",
@@ -30,6 +31,8 @@ def verification_plan(jvm_only=False):
         ("engine-unit", ["-p", "engine-tests", "test", "--rerun-tasks"]),
         ("compile-demo", ["-p", "verification/ui-compile-check", "-Pflavor=demo", "compileKotlin", "--rerun-tasks"]),
         ("compile-pleos", ["-p", "verification/ui-compile-check", "-Pflavor=pleos", "compileKotlin", "--rerun-tasks"]),
+        ("compile-ui-tests-demo", ["-p", "verification/ui-compile-check", "-Pflavor=demo", "-PincludeAndroidTests=true", "compileKotlin", "--rerun-tasks"]),
+        ("compile-ui-tests-pleos", ["-p", "verification/ui-compile-check", "-Pflavor=pleos", "-PincludeAndroidTests=true", "compileKotlin", "--rerun-tasks"]),
     ]
     if not jvm_only:
         checks += [("pleos-dependencies", [":app:dependencies", "--configuration", "pleosDebugRuntimeClasspath"]),

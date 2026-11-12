@@ -76,6 +76,20 @@ com.pleos.dearfamily.domain.ScenarioEngineTest > sleepRequiresQuietEyesAndBreath
 
 com.pleos.dearfamily.domain.ScenarioEngineTest > flowReflectsSliderInputAndExactScript PASSED
 
+com.pleos.dearfamily.sdk.MockCareControlsTest > storyCannotStartDuringQuietCabinOrKidsSleep PASSED
+
+com.pleos.dearfamily.sdk.MockCareControlsTest > quietActivationStopsStoryAndQuietOffDoesNotResumeIt PASSED
+
+com.pleos.dearfamily.sdk.MockCareControlsTest > warmthIsIndependentOfCozyAndDoesNotStartStory PASSED
+
+com.pleos.dearfamily.sdk.MockCareControlsTest > resetClearsCareFlags PASSED
+
+com.pleos.dearfamily.sdk.MockCareControlsTest > shutdownStopsStoryPlayback PASSED
+
+com.pleos.dearfamily.sdk.MockCareControlsTest > storyPlaybackIsIndependentAndReversibleWithoutChangingCozyMode PASSED
+
+com.pleos.dearfamily.sdk.MockCareControlsTest > careTogglesCancelAnActiveTour PASSED
+
 com.pleos.dearfamily.sdk.MockPleosSdkManagerTest > sliderUpdatesRetainedScenarioWithoutNewEvent PASSED
 
 com.pleos.dearfamily.sdk.MockPleosSdkManagerTest > sleepAndParentsPopulateTypedOutputs PASSED
@@ -86,5 +100,19 @@ com.pleos.dearfamily.sdk.MockPleosSdkManagerTest > passengerRestoresVolumeAndSna
 
 com.pleos.dearfamily.sdk.MockPleosSdkManagerTest > noiseRisingEdgeRearmsAndDucks PASSED
 
-BUILD SUCCESSFUL in 13s
+com.pleos.dearfamily.sdk.MockSpatialControlsTest > spatialControlsDoNotStartStoryOrToggleCozyMode PASSED
+
+com.pleos.dearfamily.sdk.MockSpatialControlsTest > boundedVentilationOnlyChangesPassengerFanLevel PASSED
+
+com.pleos.dearfamily.sdk.MockSpatialControlsTest > seatHeatingTogglesParentsBetweenOffAndLevelOne PASSED
+
+com.pleos.dearfamily.sdk.MockSpatialControlsTest > tabAndScenarioSelectionsPersistUntilReset PASSED
+
+com.pleos.dearfamily.sdk.MockSpatialControlsTest > scenarioSelectionReflectsNameAndAppliesCorrectZone PASSED
+
+com.pleos.dearfamily.sdk.SpatialActionTest > selectingDockChangesOnlyUiSelectionNotPlayback PASSED
+
+com.pleos.dearfamily.sdk.StoryActionTest > storyStartStopLeavesPassengerModeAlone PASSED
+
+BUILD SUCCESSFUL in 24s
 4 actionable tasks: 4 executed
