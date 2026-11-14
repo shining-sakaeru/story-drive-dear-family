@@ -3,10 +3,14 @@ package com.pleos.dearfamily
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import org.junit.Rule
+import org.junit.Before
 import org.junit.Test
 
 /** Requires a landscape Android 10+ device. Not a replacement for JVM domain tests. */
 class FamilyCareUiTest {
+    @Before
+    fun waitForPlatformWindow() { awaitDearFamilyWindow(compose) }
+
     @get:Rule val compose = createAndroidComposeRule<MainActivity>()
 
     private fun enterDemo() {

@@ -50,7 +50,7 @@ import com.pleos.dearfamily.ui.theme.*
                 Text(flow.processingRule, style = MaterialTheme.typography.bodyMedium)
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                     Text("규칙 기반 컨텍스트 판단", color = SecondaryText, style = MaterialTheme.typography.bodySmall)
-                    Text("${flow.confidenceScore}%  MOCK", color = color, style = MaterialTheme.typography.labelSmall)
+                    Text("조건 기반 · MOCK", color = color, style = MaterialTheme.typography.labelSmall)
                 }
             }
             PacketConnector((packet + .5f) % 1f, color, eventId > 0)

@@ -3,11 +3,15 @@ package com.pleos.dearfamily
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import org.junit.Assert.assertTrue
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
 /** Verifies the Phase 2 Genesis visual structure through real Compose semantics. */
 class FamilyCareVisualStructureTest {
+    @Before
+    fun waitForPlatformWindow() { awaitDearFamilyWindow(compose) }
+
     @get:Rule
     val compose = createAndroidComposeRule<MainActivity>()
 

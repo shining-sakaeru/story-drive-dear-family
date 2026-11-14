@@ -3,22 +3,33 @@ package com.pleos.dearfamily.sdk
 import com.pleos.dearfamily.domain.Scenario
 import com.pleos.dearfamily.domain.ScenarioEngine
 import com.pleos.dearfamily.model.*
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.selects.onTimeout
+import kotlinx.coroutines.selects.select
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class MockPleosSdkManager(private val scope: CoroutineScope) {
+class MockPleosSdkManager(
+    private val scope: CoroutineScope,
+    private val monotonicMillis: () -> Long = { System.nanoTime() / 1_000_000 }
+) {
     private val _state = MutableStateFlow(FamilyCareUiState())
     val state: StateFlow<FamilyCareUiState> = _state.asStateFlow()
     private var tourJob: Job? = null
     private val volumeJobs = mutableMapOf<SeatZone, Job>()
     private var noiseArmed = true
     private var elapsedArmed = true
+    private var tourGeneration = 0L
+    private var narratedFeedbackEventId: Long? = null
+    private var narratedFeedbackOutcome: NarrationOutcome? = null
+    private var narratedFeedbackSignal: CompletableDeferred<NarrationOutcome>? = null
+    private var narratedSceneDeadline: Long? = null
 
     fun trigger(scenario: Scenario) {
         cancelTourOnly()
@@ -103,10 +114,32 @@ class MockPleosSdkManager(private val scope: CoroutineScope) {
     fun chooseSnack(choice: String) { cancelTourOnly(); _state.update { it.copy(snackChoice = choice) } }
     fun answerRestStop(accepted: Boolean) { cancelTourOnly(); _state.update { it.copy(restStopAccepted = accepted, restStopVisible = true) } }
     fun endConversation() { cancelTourOnly(); volumeJobs[SeatZone.PASSENGER_1R]?.cancel(); volumeJobs[SeatZone.PASSENGER_1R] = scope.launch { restoreVolume(SeatZone.PASSENGER_1R) } }
-    fun startTour() {
+    fun onNarrationFeedback(eventId: Long, outcome: NarrationOutcome) {
+        if (!_state.value.tourRunning || narratedFeedbackEventId != eventId || narratedFeedbackOutcome != null) return
+        if (narratedSceneDeadline?.let { monotonicMillis() >= it } == true) {
+            stopTour()
+            return
+        }
+        if (outcome == NarrationOutcome.CANCELLED) {
+            stopTour()
+            return
+        }
+        narratedFeedbackOutcome = outcome
+        narratedFeedbackSignal?.complete(outcome)
+    }
+    fun startTour(awaitNarration: Boolean = false) {
         tourJob?.cancel()
         volumeJobs.values.forEach(Job::cancel)
         volumeJobs.clear()
+        val generation = ++tourGeneration
+        narratedFeedbackEventId = null
+        narratedFeedbackOutcome = null
+        narratedFeedbackSignal = null
+        narratedSceneDeadline = null
+        if (awaitNarration) {
+            startNarratedTour(generation)
+            return
+        }
         tourJob = scope.launch {
             _state.update { it.copy(noiseDb = 82, tourRunning = true, tourElapsedSeconds = 0, tourReport = false) }
             applyScenario(Scenario.KIDS_NOISE, cancel = false, forceEvent = true)
@@ -122,26 +155,86 @@ class MockPleosSdkManager(private val scope: CoroutineScope) {
                         _state.update { it.copy(tourElapsedSeconds = elapsed) }
                         applyScenario(Scenario.PASSENGER, cancel = false, forceEvent = true)
                     }
-                    21 -> {
-                        val report = _state.value.flow.copy(
-                            activeScenarioTitle = "가족 케어 데모 리포트",
-                            targetZone = SeatZone.DRIVER_1L,
-                            inputSensors = listOf(SensorReading("Context Engine LOCAL MOCK", "tour_report", "21초 리포트", true)),
-                            processingRule = "AUTO_TOUR completed care summary",
-                            vehicleControlOutputs = listOf("운전자 평온 리포트 · LOCAL MOCK"),
-                            audioRoutingOutput = "운전자 리포트 · TTS 없음",
-                            gleoTtsScript = ""
-                        )
-                        _state.update { it.copy(tourElapsedSeconds = elapsed, tourReport = true, eventId = it.eventId + 1, flow = report) }
-                    }
+                    21 -> publishTourReport(elapsed)
                     30 -> _state.update { it.copy(tourElapsedSeconds = elapsed, tourRunning = false, tourReport = true) }
                     else -> _state.update { it.copy(tourElapsedSeconds = elapsed) }
                 }
             }
         }
     }
-    fun stopTour() { tourJob?.cancel(); tourJob = null; _state.update { it.copy(tourRunning = false) } }
-    fun reset() { cancelManualJobs(); noiseArmed = true; elapsedArmed = true; _state.value = FamilyCareUiState() }
+    @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
+    private fun startNarratedTour(generation: Long) {
+        _state.update { it.copy(noiseDb = 82, tourRunning = true, tourElapsedSeconds = 0, tourReport = false) }
+        applyScenario(Scenario.KIDS_NOISE, cancel = false, forceEvent = true)
+        narratedFeedbackEventId = _state.value.eventId
+        narratedFeedbackOutcome = null
+        narratedFeedbackSignal = CompletableDeferred()
+        narratedSceneDeadline = monotonicMillis() + 30_000
+        tourJob = scope.launch {
+            var elapsed = 0
+            for (scene in listOf(Scenario.KIDS_NOISE, Scenario.PARENTS, Scenario.PASSENGER)) {
+                if (scene != Scenario.KIDS_NOISE) {
+                    _state.update { it.copy(elapsedMin = if (scene == Scenario.PARENTS) 52 else it.elapsedMin) }
+                    applyScenario(scene, cancel = false, forceEvent = true)
+                    narratedFeedbackEventId = _state.value.eventId
+                    narratedFeedbackOutcome = null
+                    narratedFeedbackSignal = CompletableDeferred()
+                    narratedSceneDeadline = monotonicMillis() + 30_000
+                }
+                val startedAt = elapsed
+                val signal = narratedFeedbackSignal ?: return@launch
+                while (narratedFeedbackOutcome == null) {
+                    select<Unit> {
+                        onTimeout(1_000) {
+                            elapsed++
+                            _state.update { it.copy(tourElapsedSeconds = elapsed) }
+                        }
+                        signal.onAwait { outcome -> narratedFeedbackOutcome = outcome }
+                    }
+                    if (elapsed - startedAt >= 30) { stopTour(); return@launch }
+                }
+                while (elapsed - startedAt < 7) {
+                    delay(1_000)
+                    elapsed++
+                    _state.update { it.copy(tourElapsedSeconds = elapsed) }
+                }
+                if (generation != tourGeneration || !_state.value.tourRunning) return@launch
+            }
+            publishTourReport(elapsed)
+            repeat(9) {
+                delay(1_000)
+                elapsed++
+                _state.update { it.copy(tourElapsedSeconds = elapsed) }
+            }
+            _state.update { it.copy(tourRunning = false, tourReport = true) }
+        }
+    }
+    private fun publishTourReport(elapsed: Int) {
+        val report = _state.value.flow.copy(
+            activeScenarioTitle = "가족 케어 데모 리포트", targetZone = SeatZone.DRIVER_1L,
+            inputSensors = listOf(SensorReading("Context Engine LOCAL MOCK", "tour_report", "${elapsed}초 리포트", true)),
+            processingRule = "AUTO_TOUR completed care summary",
+            vehicleControlOutputs = listOf("운전자 평온 리포트 · LOCAL MOCK"),
+            audioRoutingOutput = "운전자 리포트 · TTS 없음", gleoTtsScript = "")
+        _state.update { it.copy(tourElapsedSeconds = elapsed, tourReport = true, eventId = it.eventId + 1, flow = report) }
+    }
+    fun stopTour() {
+        ++tourGeneration
+        narratedFeedbackEventId = null
+        narratedFeedbackOutcome = null
+        narratedFeedbackSignal = null
+        narratedSceneDeadline = null
+        val wasActive = tourJob != null || _state.value.tourRunning || _state.value.storyPlaying || _state.value.flow.gleoTtsScript.isNotEmpty()
+        tourJob?.cancel()
+        tourJob = null
+        volumeJobs.values.forEach(Job::cancel)
+        volumeJobs.clear()
+        _state.update { old ->
+            if (!wasActive) old.copy(tourRunning = false)
+            else old.copy(tourRunning = false, storyPlaying = false, eventId = old.eventId + 1, flow = old.flow.copy(gleoTtsScript = ""))
+        }
+    }
+    fun reset() { cancelManualJobs(); noiseArmed = true; elapsedArmed = true; _state.value = FamilyCareUiState(eventId = _state.value.eventId + 1) }
     fun shutdown() {
         cancelManualJobs()
         _state.update { it.copy(storyPlaying = false, flow = it.flow.copy(gleoTtsScript = "")) }
@@ -170,8 +263,8 @@ class MockPleosSdkManager(private val scope: CoroutineScope) {
         _state.update { it.copy(showSettingsDialog = visible) }
     }
 
-    private fun cancelManualJobs() { tourJob?.cancel(); tourJob = null; volumeJobs.values.forEach(Job::cancel); volumeJobs.clear(); _state.update { it.copy(tourRunning = false) } }
-    private fun cancelTourOnly() { tourJob?.cancel(); tourJob = null; _state.update { it.copy(tourRunning = false) } }
+    private fun cancelManualJobs() { cancelTourOnly(); volumeJobs.values.forEach(Job::cancel); volumeJobs.clear() }
+    private fun cancelTourOnly() { ++tourGeneration; tourJob?.cancel(); tourJob = null; narratedFeedbackEventId = null; narratedFeedbackOutcome = null; narratedFeedbackSignal = null; narratedSceneDeadline = null; _state.update { it.copy(tourRunning = false) } }
     private fun refreshScenario(scenario: Scenario) {
         val old = _state.value
         val flow = ScenarioEngine.flow(scenario, old.noiseDb, old.elapsedMin, persona = old.persona)

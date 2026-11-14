@@ -5,6 +5,7 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.lifecycle.ViewModelProvider
 import com.pleos.dearfamily.ui.DearFamilyViewModel
 import org.junit.Assert.assertFalse
+import org.junit.Before
 import org.junit.Assert.assertTrue
 import org.junit.Assume.assumeTrue
 import org.junit.Rule
@@ -13,6 +14,9 @@ import java.io.File
 
 /** Records nested debug-panel interaction evidence without replacing UI clicks with SDK calls. */
 class FamilyCareDebugInteractionProbeTest {
+    @Before
+    fun waitForPlatformWindow() { awaitDearFamilyWindow(compose) }
+
     @get:Rule
     val compose = createAndroidComposeRule<MainActivity>()
 

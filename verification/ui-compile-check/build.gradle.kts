@@ -36,7 +36,10 @@ dependencies {
     implementation("androidx.annotation:annotation-jvm:1.7.1")
     implementation("androidx.collection:collection-jvm:1.4.0")
     composeCompiler("androidx.compose.compiler:compiler:1.5.15")
-    if (selectedFlavor == "pleos") aarLibs("ai.pleos.playground:Vehicle:2.3.2@aar")
+    if (selectedFlavor == "pleos") {
+        aarLibs("ai.pleos.playground:Vehicle:2.3.2@aar")
+        aarLibs("ai.pleos.playground:TextToSpeech:3.3.1@aar")
+    }
     aarCoordinates.forEach { aarLibs("$it@aar") }
     if (includeAndroidTests) {
         implementation("junit:junit:4.13.2")

@@ -1,5 +1,17 @@
 # 실제 앱 시연 하이라이트
 
+## 최신 승인 영상
+
+`StoryDrive_DearFamily_live_showcase.mp4`는 공식 Pleos 에뮬레이터의 실제 앱 화면과 ON_DEVICE 음성으로 아이 소란 → 수면·무음 → 부모님 케어를 보여 줍니다. 새 BGM·사전 녹음 대체 내레이션은 추가하지 않았습니다. 원본 앱 음성 트랙의 타임스탬프 간격을 보존해 재인코딩·음량 보정했습니다. 물리 청취 인증, 실차 제어, 고정 30초 자동투어 종료 시연은 아닙니다.
+
+SHA-256: `6f71010bad5c0276e05b7cc613d751dbaa75584312bac963166e911a02895033`
+
+검증 기록: `docs/design/FAMILY_JOURNEY_VERIFICATION_20261113.md`, `docs/design/SELF_FOLLOWUP_VERIFICATION_20261113.md`.
+
+## 과거 무음 영상 기록
+
+아래 설명은 `StoryDrive_DearFamily_demo_captioned.mp4`에만 해당하며 최신 승인 영상의 음성 상태와 혼용하지 않습니다.
+
 - `StoryDrive_DearFamily_demo_captioned.mp4`: 실제 공식 Pleos 에뮬레이터 녹화를 편집한 **28.5초 무음·한국어 자막** 영상. H.264, 1920×1336, 30 fps/855 frames.
 - `frames/children.png`, `parents.png`, `cozy.png`, `report.png`: 편집본의 2/9/16/24초 실제 프레임.
 - `dearfamily-demo-captioned.ass`: 편집본 자막 원본.

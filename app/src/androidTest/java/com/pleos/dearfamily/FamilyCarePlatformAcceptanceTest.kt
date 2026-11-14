@@ -10,12 +10,16 @@ import java.util.Locale
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import org.junit.Assert.assertFalse
+import org.junit.Before
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 
 /** Device probes for platform contracts; no fake car provider or network voice is used. */
 class FamilyCarePlatformAcceptanceTest {
+    @Before
+    fun waitForPlatformWindow() { awaitDearFamilyWindow(compose) }
+
     @get:Rule
     val compose = createAndroidComposeRule<MainActivity>()
 

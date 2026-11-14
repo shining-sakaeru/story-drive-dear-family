@@ -198,8 +198,10 @@ class FamilyAcceptanceTest {
         val sdk = MockPleosSdkManager(this)
         try {
             sdk.startTour(); runCurrent(); advanceTimeBy(100)
+            val priorEvent = sdk.state.value.eventId
             sdk.reset(); advanceUntilIdle()
-            assertEquals(FamilyCareUiState(), sdk.state.value)
+            assertTrue(sdk.state.value.eventId > priorEvent)
+            assertEquals(FamilyCareUiState(eventId = sdk.state.value.eventId), sdk.state.value)
         } finally { sdk.shutdown() }
     }
 

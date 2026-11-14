@@ -20,7 +20,7 @@
 - 숏폼은 별도 선택이며 본상 가산점으로 취급하지 않는다.
 - 선택 산출물이 없다고 최소 필수 접수를 차단하지 않는다.
 - APK를 선택하면 `apk/팀명_앱이름_release.apk` 형태를 사용한다. 기본 ZIP 구조(`AndroidManifest.xml`, `classes.dex`)만 확인하며 META-INF v1 파일을 필수로 가정하지 않는다. `debug`, `unsigned`, 단순 파일명 변경은 거부한다. 별도 `apksigner` 서명 기록과 `adb` 설치 기록이 동일 APK SHA-256을 가리켜야 한다.
-- 용량 초과 시 GitHub Releases를 사용할 수 있으나, GitHub의 source/APK 경로는 별도 release APK 항목과 같은 파일이어야 한다. private 저장소라면 공식 심사자의 접근 권한을 실제로 확인해야 한다. CLI는 GitHub 접근이나 APK 실행을 검증하지 않으며 JSON 증거는 기록 일관성 검사일 뿐이다.
+- 용량 초과 시 GitHub Releases를 사용할 수 있으나, GitHub의 source/APK 경로는 별도 release APK 항목과 같은 파일이어야 한다. 공식 FAQ에 따라 심사 계정 Collaborator 초대는 필요하지 않다. 비공개 저장소는 공식 공개 일정 또는 소스/APK 압축파일 다운로드 대안을 확인하고, 제출 주소의 접근성을 실제로 점검한다. 공개 범위를 임의 변경하지 않는다. CLI는 GitHub 접근이나 APK 실행을 검증하지 않으며 JSON 증거는 기록 일관성 검사일 뿐이다.
 - APK v2/v3 서명은 APK 내부 META-INF v1 파일을 요구하지 않을 수 있다. 참고: https://source.android.com/docs/security/features/apksigning/v2. META-INF 없는 synthetic ZIP fixture는 실제 v2 서명 증거가 아니다.
 
 ## CLI 사용

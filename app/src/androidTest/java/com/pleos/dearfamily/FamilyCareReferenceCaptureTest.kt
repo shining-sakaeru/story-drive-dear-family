@@ -9,12 +9,16 @@ import org.json.JSONArray
 import org.json.JSONObject
 import org.junit.Assume.assumeTrue
 import org.junit.Rule
+import org.junit.Before
 import org.junit.Test
 import java.io.File
 import java.util.Locale
 
 /** Captures real MainActivity theme roots and theme content for parent-side review. */
 class FamilyCareReferenceCaptureTest {
+    @Before
+    fun waitForPlatformWindow() { awaitDearFamilyWindow(compose) }
+
     @get:Rule
     val compose = createAndroidComposeRule<MainActivity>()
 

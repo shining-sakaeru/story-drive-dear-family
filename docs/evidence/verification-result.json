@@ -98,11 +98,11 @@
       "result": "PASS"
     }
   ],
-  "testCount": 51,
-  "testExecutions": 84,
+  "testCount": 71,
+  "testExecutions": 115,
   "moduleTestCounts": {
-    "unit": 51,
-    "engine-unit": 33
+    "unit": 67,
+    "engine-unit": 48
   },
   "testCases": [
     {
@@ -299,6 +299,36 @@
     },
     {
       "module": "unit",
+      "class": "com.pleos.dearfamily.policy.audio.NarrationFeedbackTrackerTest",
+      "test": "resumingTheSamePendingEventDoesNotCancelOrBeginItAgain",
+      "passed": true
+    },
+    {
+      "module": "unit",
+      "class": "com.pleos.dearfamily.policy.audio.NarrationFeedbackTrackerTest",
+      "test": "staleVendorTokenCannotFinishTheCurrentApplicationEvent",
+      "passed": true
+    },
+    {
+      "module": "unit",
+      "class": "com.pleos.dearfamily.policy.audio.NarrationFeedbackTrackerTest",
+      "test": "everyTerminalOutcomeIsEmittedOnce",
+      "passed": true
+    },
+    {
+      "module": "unit",
+      "class": "com.pleos.dearfamily.policy.audio.NarrationFeedbackTrackerTest",
+      "test": "replacingAnActiveRequestCancelsOnlyThePreviousEvent",
+      "passed": true
+    },
+    {
+      "module": "unit",
+      "class": "com.pleos.dearfamily.policy.audio.NarrationFeedbackTrackerTest",
+      "test": "completionIsEmittedAtMostOnceForApplicationEvent",
+      "passed": true
+    },
+    {
+      "module": "unit",
       "class": "com.pleos.dearfamily.sdk.MockCareControlsTest",
       "test": "storyCannotStartDuringQuietCabinOrKidsSleep",
       "passed": true
@@ -354,6 +384,12 @@
     {
       "module": "unit",
       "class": "com.pleos.dearfamily.sdk.MockPleosSdkManagerTest",
+      "test": "stoppingTourCancelsNarrationAndPendingVolumeWorkWithoutChangingCurrentScenario",
+      "passed": true
+    },
+    {
+      "module": "unit",
+      "class": "com.pleos.dearfamily.sdk.MockPleosSdkManagerTest",
       "test": "tourHasRequiredTimelineAndNoSleep",
       "passed": true
     },
@@ -397,6 +433,66 @@
       "module": "unit",
       "class": "com.pleos.dearfamily.sdk.MockSpatialControlsTest",
       "test": "scenarioSelectionReflectsNameAndAppliesCorrectZone",
+      "passed": true
+    },
+    {
+      "module": "unit",
+      "class": "com.pleos.dearfamily.sdk.NarratedTourTest",
+      "test": "narrationTimeoutStopsTourInsteadOfForcingNextScene",
+      "passed": true
+    },
+    {
+      "module": "unit",
+      "class": "com.pleos.dearfamily.sdk.NarratedTourTest",
+      "test": "earlyCompletionStillKeepsMinimumSevenSeconds",
+      "passed": true
+    },
+    {
+      "module": "unit",
+      "class": "com.pleos.dearfamily.sdk.NarratedTourTest",
+      "test": "manualStopAndRestartInvalidateOldCallbacks",
+      "passed": true
+    },
+    {
+      "module": "unit",
+      "class": "com.pleos.dearfamily.sdk.NarratedTourTest",
+      "test": "cancelledFeedbackStopsTourAndIgnoresLaterCallbacks",
+      "passed": true
+    },
+    {
+      "module": "unit",
+      "class": "com.pleos.dearfamily.sdk.NarratedTourTest",
+      "test": "unavailableFeedbackAdvancesAfterMinimum",
+      "passed": true
+    },
+    {
+      "module": "unit",
+      "class": "com.pleos.dearfamily.sdk.NarratedTourTest",
+      "test": "staleAndDuplicateFeedbackDoNotAdvanceNewScene",
+      "passed": true
+    },
+    {
+      "module": "unit",
+      "class": "com.pleos.dearfamily.sdk.NarratedTourTest",
+      "test": "resetNeverReusesNarrationIdsForDelayedCompletion",
+      "passed": true
+    },
+    {
+      "module": "unit",
+      "class": "com.pleos.dearfamily.sdk.NarratedTourTest",
+      "test": "feedbackAtDeadlineStopsInsteadOfWinningTheTimerRace",
+      "passed": true
+    },
+    {
+      "module": "unit",
+      "class": "com.pleos.dearfamily.sdk.NarratedTourTest",
+      "test": "narratedTourKeepsSceneForSevenSecondsAndWaitsForCompletion",
+      "passed": true
+    },
+    {
+      "module": "unit",
+      "class": "com.pleos.dearfamily.sdk.NarratedTourTest",
+      "test": "failedOrUnavailableFeedbackAdvancesAfterMinimum",
       "passed": true
     },
     {
@@ -509,6 +605,30 @@
     },
     {
       "module": "engine-unit",
+      "class": "com.pleos.dearfamily.acceptance.ShowcaseJourneyAcceptanceTest",
+      "test": "thresholdsKeepStrictBoundariesAndRequireCompanionSignals",
+      "passed": true
+    },
+    {
+      "module": "engine-unit",
+      "class": "com.pleos.dearfamily.acceptance.ShowcaseJourneyAcceptanceTest",
+      "test": "replayCreatesAnEventAndStopClearsNarrationWithoutChangingDriver",
+      "passed": true
+    },
+    {
+      "module": "engine-unit",
+      "class": "com.pleos.dearfamily.acceptance.ShowcaseJourneyAcceptanceTest",
+      "test": "passengerScriptDoesNotClaimRealAudioOrVehicleControl",
+      "passed": true
+    },
+    {
+      "module": "engine-unit",
+      "class": "com.pleos.dearfamily.acceptance.ShowcaseJourneyAcceptanceTest",
+      "test": "representativeScenesUseShortKoreanScriptsAndKeepOtherZones",
+      "passed": true
+    },
+    {
+      "module": "engine-unit",
       "class": "com.pleos.dearfamily.sdk.MockCareControlsTest",
       "test": "storyCannotStartDuringQuietCabinOrKidsSleep()",
       "passed": true
@@ -564,6 +684,12 @@
     {
       "module": "engine-unit",
       "class": "com.pleos.dearfamily.sdk.MockPleosSdkManagerTest",
+      "test": "stoppingTourCancelsNarrationAndPendingVolumeWorkWithoutChangingCurrentScenario()",
+      "passed": true
+    },
+    {
+      "module": "engine-unit",
+      "class": "com.pleos.dearfamily.sdk.MockPleosSdkManagerTest",
       "test": "tourHasRequiredTimelineAndNoSleep()",
       "passed": true
     },
@@ -608,41 +734,114 @@
       "class": "com.pleos.dearfamily.sdk.MockSpatialControlsTest",
       "test": "scenarioSelectionReflectsNameAndAppliesCorrectZone()",
       "passed": true
+    },
+    {
+      "module": "engine-unit",
+      "class": "com.pleos.dearfamily.sdk.NarratedTourTest",
+      "test": "narrationTimeoutStopsTourInsteadOfForcingNextScene()",
+      "passed": true
+    },
+    {
+      "module": "engine-unit",
+      "class": "com.pleos.dearfamily.sdk.NarratedTourTest",
+      "test": "earlyCompletionStillKeepsMinimumSevenSeconds()",
+      "passed": true
+    },
+    {
+      "module": "engine-unit",
+      "class": "com.pleos.dearfamily.sdk.NarratedTourTest",
+      "test": "manualStopAndRestartInvalidateOldCallbacks()",
+      "passed": true
+    },
+    {
+      "module": "engine-unit",
+      "class": "com.pleos.dearfamily.sdk.NarratedTourTest",
+      "test": "cancelledFeedbackStopsTourAndIgnoresLaterCallbacks()",
+      "passed": true
+    },
+    {
+      "module": "engine-unit",
+      "class": "com.pleos.dearfamily.sdk.NarratedTourTest",
+      "test": "unavailableFeedbackAdvancesAfterMinimum()",
+      "passed": true
+    },
+    {
+      "module": "engine-unit",
+      "class": "com.pleos.dearfamily.sdk.NarratedTourTest",
+      "test": "staleAndDuplicateFeedbackDoNotAdvanceNewScene()",
+      "passed": true
+    },
+    {
+      "module": "engine-unit",
+      "class": "com.pleos.dearfamily.sdk.NarratedTourTest",
+      "test": "resetNeverReusesNarrationIdsForDelayedCompletion()",
+      "passed": true
+    },
+    {
+      "module": "engine-unit",
+      "class": "com.pleos.dearfamily.sdk.NarratedTourTest",
+      "test": "feedbackAtDeadlineStopsInsteadOfWinningTheTimerRace()",
+      "passed": true
+    },
+    {
+      "module": "engine-unit",
+      "class": "com.pleos.dearfamily.sdk.NarratedTourTest",
+      "test": "narratedTourKeepsSceneForSevenSecondsAndWaitsForCompletion()",
+      "passed": true
+    },
+    {
+      "module": "engine-unit",
+      "class": "com.pleos.dearfamily.sdk.NarratedTourTest",
+      "test": "failedOrUnavailableFeedbackAdvancesAfterMinimum()",
+      "passed": true
     }
   ],
   "sourceSha256": {
-    "app/build.gradle.kts": "35f30175fffa90057cc4cc6bebb4a4a8741606806f3082d3764c21c739f0534b",
-    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareDebugInteractionProbeTest.kt": "742cff3877e8bdbc8396a8299b1648cbbf907b3818e743e6adf7e4a8fed6ade0",
-    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareDesignContractTest.kt": "fc1d42e5f6fb415f283fdf9dd2732d8a7c6984a69bf36d9e61e0bbc0257fad85",
-    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareNativeAcceptanceTest.kt": "05e41432e6c8695f569241a2f7d613d8869d0980b112e363258c518b4006ef79",
-    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCarePlatformAcceptanceTest.kt": "48d150a39f36c3082a7a23cdc61348d86846fe0c14597e637723235c5fa0f2d5",
-    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareReferenceCaptureTest.kt": "59cea7b3749ac6080cedf81ddf10ac085dfa1e4dbab8d738ed6b6b0b5f9c6c42",
-    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareSpatialActionsTest.kt": "dd38e41d1e244758eafcacd5461274f4d7e95441dd6de61bc3b281650a3d92f1",
-    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareUiTest.kt": "37be678fb5b532a359db24cc420a79d051d4010cb26112121a57d9442504bf1b",
-    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareVisualStructureTest.kt": "b617e99a50ee49e391873e352fd7e74086a5402d35064ba71ca6387a2630d35d",
-    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareWarmActionsTest.kt": "92e51a6761488e8115622bbc6093d0c1be474550bc002c99c605bd7ca9c70db5",
+    "app/build.gradle.kts": "c4151a9a6b140ca21a666b5f6ba87c062908a04269bb3809683eb5d22110e6d6",
+    "app/src/androidTest/java/com/pleos/dearfamily/DearFamilyWindowTestSupport.kt": "04b69711af7987fd274d960447c8b85844e246cdcbf16d790a210464c444171d",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareAudioFocusProbeTest.kt": "4bccebdedda4c3e50d2eff30b35ff67e1c39d746dc19bf027aad04ec73b21370",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareDebugInteractionProbeTest.kt": "f9563ded870563a81255dc6240cfd3270bb55a727dd8ce34cb1ac750426acdd2",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareDesignContractTest.kt": "2042ab5d7ad20cb056d61ebc4c7d88c6f8c50703b3bc7e33ff7d4aedcaf84038",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareFollowupNativeProbeTest.kt": "a88b16aef15fe50390ee9f278e5b06ceb49c3bc69294b5e73718fcb5efe54fd8",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareLifecycleProbeTest.kt": "2d2233ee1405dfc78e5f50c58b1d88b59f74538edea0bf82277e6e50c480d77e",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareNarrationFeedbackProbeTest.kt": "ef8ea9193ab175b7a112746e4ed7f36891008d2c239e1053c04e19591df91921",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareNativeAcceptanceTest.kt": "cfb05584759a78405d5e0922e833500c2c5547aef0f8d51b0db99968db0c046e",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareOfflineVoiceProbeTest.kt": "16f2147b77ccc24870b6692a4bae9f4fa61b359dada840050e9c95c25d2380ec",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCarePlatformAcceptanceTest.kt": "5043c37243735247c4230e34f4d9945859a98b9fd2b36d9bb7fd5fc10308509a",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareReferenceCaptureTest.kt": "0f04f303cd57382aab7f1c1d3fe0b499c7f81730dc27b778254ddf35e021e8b4",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareShowcaseRecordingTest.kt": "c92c0945f81a80e66397a770f642a7233427ad2374302842d2452774a34ea0b7",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareShowcaseTest.kt": "db192b137ab47c730df30afac6dc8c85d20f7672ad4cdfdb110246dedfbe79ab",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareSpatialActionsTest.kt": "fc4159cc270694eb19adcd2594a7ffd97f6543163872a8fd72f8293fe1426dab",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareUiTest.kt": "77f30164d4bae1648fb7d6fd19b02da2531983e41e9151922f60dd43c4481916",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareVisualStructureTest.kt": "26db263a866ea665fa261dacd4926f5751bedc74a10d2c1766ca9a67df26d4ba",
+    "app/src/androidTest/java/com/pleos/dearfamily/FamilyCareWarmActionsTest.kt": "1affd75fd219f0bde312341fea9f47a5c579054925c3bb76a6f3ebf23d979b26",
     "app/src/demo/AndroidManifest.xml": "a0fd45777014318ef3bc93b262d5e1e43357593f03a4f73be370cea28c6b2e76",
     "app/src/demo/java/com/pleos/dearfamily/platform/GatewayFactory.kt": "bbf98d59a0dbeeb7f72c383b4ac175e42fbf64d641d4ee935449864e251cda86",
+    "app/src/demo/java/com/pleos/dearfamily/platform/OfflineSpeechFactory.kt": "7c00122b49df87466cf881ae8ec3b933bedcafe2ec1062224c557263ca384954",
     "app/src/main/AndroidManifest.xml": "e06a82ec089208ef903bbdb2a2171c79f8c289d01e2cd380d219accf20f5cb6c",
-    "app/src/main/java/com/pleos/dearfamily/MainActivity.kt": "2d2b4496152217118e26645ded6c747df2009a4e079d0931c4459f461e2c257e",
-    "app/src/main/java/com/pleos/dearfamily/domain/ScenarioEngine.kt": "d692e3b231610eaa4369374f11c6c4d1fe413c5ea619bd04c483c639f84efa0b",
+    "app/src/main/java/com/pleos/dearfamily/MainActivity.kt": "79b275ff4485264565253deb9ec98c5aefe09e177b52e31829157358a66efd50",
+    "app/src/main/java/com/pleos/dearfamily/domain/ScenarioEngine.kt": "3d49c137fbdd08aa53848c0fb9d87ddf0474d6110e119c89810086bf1ab5de0c",
     "app/src/main/java/com/pleos/dearfamily/model/FamilyCareModels.kt": "369f36431bf07a24eae0a6b365d60005281e631c5eea548ea78f42e8e5d5cc8b",
-    "app/src/main/java/com/pleos/dearfamily/platform/AudioNarrator.kt": "14999dc7e2f5f5ee352222a04582a8f68f7dc55c68416f856dac194793fae689",
+    "app/src/main/java/com/pleos/dearfamily/model/NarrationFeedback.kt": "8369f91a43fc09acc779656c2ab3c2df298577ba33d77e233c7ca395dc7dc728",
+    "app/src/main/java/com/pleos/dearfamily/platform/AudioNarrator.kt": "3c14fb0312ba9a9f5d522f256c81569815e8706c93de22635eadaa20bd7ef36b",
     "app/src/main/java/com/pleos/dearfamily/platform/CarUxObserver.kt": "09d8f0b45cbfa04eb11636f7907993351d3be2086c239350819222bfab00aff8",
+    "app/src/main/java/com/pleos/dearfamily/platform/OfflineSpeechAdapter.kt": "a767663fdb63c8bd83374af6e70754ca6c9fe507ca94067153b661d86cfd8309",
     "app/src/main/java/com/pleos/dearfamily/platform/VehicleReadGateway.kt": "c55f171fce0960f39266d7adeadeabd5914626e73b9b32f2f1c447ad9e4a95e8",
     "app/src/main/java/com/pleos/dearfamily/policy/SafetyState.kt": "ad218c21c5e314df0dc16068036efa2361b29ffba66b33e4a10e56f2ec595e9d",
     "app/src/main/java/com/pleos/dearfamily/policy/SessionStopper.kt": "dd1397dd815da843b9eddbb34d70b38a41b5741b3ed8864489c68ed03773d2ad",
+    "app/src/main/java/com/pleos/dearfamily/policy/audio/NarrationFeedbackTracker.kt": "e2b81014900f99d113bcd7fe5cb3249e679e67e546bfbb2b612fc6431f067872",
     "app/src/main/java/com/pleos/dearfamily/policy/audio/NarrationSession.kt": "6e489a02a53eed4d02c5c081a47280d6814f6c6ceefb2348fad6dc9d0bf3646c",
     "app/src/main/java/com/pleos/dearfamily/policy/audio/PcmWave.kt": "c2a007724aa0c11ba434c1d9468c4939cab4f5cbed18fb047b10ab03c479368a",
-    "app/src/main/java/com/pleos/dearfamily/sdk/MockPleosSdkManager.kt": "06b827e87dd4a2cfb126ed691862b326765569bda6562cd188028b0d59e28033",
-    "app/src/main/java/com/pleos/dearfamily/ui/DearFamilyMainScreen.kt": "14aa850e9fb6fd6c4af45251ce433b58642d56d451a791fa5f57bcf0145835e4",
-    "app/src/main/java/com/pleos/dearfamily/ui/DearFamilyViewModel.kt": "270cbea15ef135726221da7c02919c7dee434cc8d6f256e9df9114d809a775b7",
+    "app/src/main/java/com/pleos/dearfamily/sdk/MockPleosSdkManager.kt": "50d6ccc164464f02f4a60c96d6ca9d227e012bca8287611a9cad9e7f3622087f",
+    "app/src/main/java/com/pleos/dearfamily/ui/DearFamilyMainScreen.kt": "719721f2a6baee9c806a73df146ea93d162eecd1a2894b470fee42bd022cab4b",
+    "app/src/main/java/com/pleos/dearfamily/ui/DearFamilyViewModel.kt": "69dbbff8268bf3c287dcc870a3f4625c96cc64d4dae317f2abd207141f3c097c",
     "app/src/main/java/com/pleos/dearfamily/ui/components/CabinDigitalTwinView.kt": "24959a96c271ac417652b706a5605addbd431588bb6360552dd782ec185ad8fa",
     "app/src/main/java/com/pleos/dearfamily/ui/components/DearFamilySettingsDialog.kt": "5fa141675ea8aa74a23028902f1cefc22199d7a773b5efd3e138320375acf818",
+    "app/src/main/java/com/pleos/dearfamily/ui/components/FamilyJourneyShowcasePanel.kt": "1ba55f91a1ce494929d650ee722032fe9ccefbb4eff44a58f92512c073f116ae",
     "app/src/main/java/com/pleos/dearfamily/ui/components/GenesisLuxuryCockpitView.kt": "c08bc92c2ad055fdee1e43881996c82366884109bf75a9549e9b10600d28ccba",
-    "app/src/main/java/com/pleos/dearfamily/ui/components/IpoPipelineMonitor.kt": "b53936fadfa830511b46821507fe81842db045225be8366e0942f32329b65553",
+    "app/src/main/java/com/pleos/dearfamily/ui/components/IpoPipelineMonitor.kt": "ac5866190604bd92d79fcffb040fd56af154fce385bcd85b90bb696306f75fea",
     "app/src/main/java/com/pleos/dearfamily/ui/components/MultiZoneControllerPanel.kt": "d05425b025464a6652e4a5afbb0c91601a74f1f3c918198900238f370ee934d1",
-    "app/src/main/java/com/pleos/dearfamily/ui/components/ScenarioInjectorDock.kt": "0b421d460d1202171e12617f79a242c77f717ea4a9b9f7997e924a6995a19901",
+    "app/src/main/java/com/pleos/dearfamily/ui/components/ScenarioInjectorDock.kt": "20d94b0c1bd851bc0d84358b7be0d3061b13c64318fe0837a690986cdbf46896",
     "app/src/main/java/com/pleos/dearfamily/ui/components/SpatialDynamicCardsView.kt": "b88e14f43922c3ad22340886244d32643d89f5aa2c219bae36a7ecc83cb2c571",
     "app/src/main/java/com/pleos/dearfamily/ui/components/TopPeaceShieldBar.kt": "6b5e33a75440f8ee571dc351ec39b14adc0a3d39a41609ef110e90d6e6031ca9",
     "app/src/main/java/com/pleos/dearfamily/ui/components/WarmFamilyStoryView.kt": "37fb0171f6b2fa9d97450eb911fb754238ec9eb35819b1cac8c65519ea8bd69e",
@@ -671,18 +870,23 @@
     "app/src/main/res/mipmap-anydpi-v26/ic_dearfamily.xml": "aec1bab747ae213bade24492888f359f4fe6b4ce38c442287a75ebec04058403",
     "app/src/main/res/mipmap-anydpi-v26/ic_dearfamily_round.xml": "aec1bab747ae213bade24492888f359f4fe6b4ce38c442287a75ebec04058403",
     "app/src/main/res/values/styles.xml": "5d41f57d6255474a617f351a44598bc58b27bae76966ba58887584c75e1bb9a1",
-    "app/src/pleos/AndroidManifest.xml": "ddb0beec8a94bdcae9da9e9dedc3591aaba039a761799a8fae30bd0ab995d4bb",
+    "app/src/pleos/AndroidManifest.xml": "20e1a63d2885526afc45b0ae8d481d5ebb91ab457b4eea3c9772d8c08e7193c6",
     "app/src/pleos/java/com/pleos/dearfamily/platform/GatewayFactory.kt": "751153651803eb1f872bb48b3a675254bcb130a0f7be5e8238902ce0e9ea4fa0",
+    "app/src/pleos/java/com/pleos/dearfamily/platform/OfflineSpeechFactory.kt": "2354578eb1e0701b8cc4cd3166e4479bdbd7dcb9ac42703e5b09fa1507086dec",
+    "app/src/pleos/java/com/pleos/dearfamily/platform/PleosOfflineSpeechAdapter.kt": "0f9de02ce0feed94a751445c71439190eafcbcd9dbaaab7acafa7722ed019a38",
     "app/src/test/java/com/pleos/dearfamily/domain/ScenarioEngineTest.kt": "aefa2b42b460ee796332c91f6f36f1a3330bfad31960c182ce69aa54c8073a40",
+    "app/src/test/java/com/pleos/dearfamily/policy/audio/NarrationFeedbackTrackerTest.kt": "36bd0eff148131d88962584e2edc85869ad28156268d4bea60dcc46286e43d27",
     "app/src/test/java/com/pleos/dearfamily/sdk/SpatialActionTest.kt": "8007b89dcc11e5cb77a782af4e37928989738bb77285608c0ece60cc0bc17922",
     "app/src/test/java/com/pleos/dearfamily/sdk/StoryActionTest.kt": "965fecb9588bd927c369d08e4d6eb2fdf15bad6090d459e30b2ad20890deddaa",
     "build.gradle.kts": "d07a0c3c8e53069ea198460d615bb2607bc02299083d603c9db8e2e5d7923543",
     "engine-tests/build.gradle.kts": "b8b1fc97740d299d0ca2793aae1fbb111c6dbfea877e007cf0e1bdff534d93be",
     "engine-tests/settings.gradle.kts": "371d8986cf073ea3b5ce8ab20565ce6abcb88cc98e9465a240d09cb3c9407aa6",
-    "engine-tests/src/test/kotlin/com/pleos/dearfamily/acceptance/FamilyAcceptanceTest.kt": "0a98838424a8804ed43c51ddf3cbec112ef6471acbf827c2aeb8abd2c9b8ebe9",
+    "engine-tests/src/test/kotlin/com/pleos/dearfamily/acceptance/FamilyAcceptanceTest.kt": "fe05b151bb51dfd96a28cb60e58fd2cbddc66a02c06ea0535f4da4b12c94eba7",
+    "engine-tests/src/test/kotlin/com/pleos/dearfamily/acceptance/ShowcaseJourneyAcceptanceTest.kt": "6a48319b3b6000ed0f1f52d8269e73c35b23796144a5bfbf794e728cf2313aa8",
     "engine-tests/src/test/kotlin/com/pleos/dearfamily/sdk/MockCareControlsTest.kt": "b3a7906f721a2b6f1e8ad9f699d852a201a3de423bcb8ba38581b92bae61f0f4",
-    "engine-tests/src/test/kotlin/com/pleos/dearfamily/sdk/MockPleosSdkManagerTest.kt": "a3c1a229b960e29f84b2ae3fc1b154a0152b3dfcc5eaa57acdcc6701b9c812dd",
+    "engine-tests/src/test/kotlin/com/pleos/dearfamily/sdk/MockPleosSdkManagerTest.kt": "e53849608fe9b1d8dc5f8c0a14ca60626afff5b6a365b85ff65437e0438f142f",
     "engine-tests/src/test/kotlin/com/pleos/dearfamily/sdk/MockSpatialControlsTest.kt": "316ba560b8ddf16af2f3bb0bc11e364495a775ff6fc0a176b962537fe6ccc93a",
+    "engine-tests/src/test/kotlin/com/pleos/dearfamily/sdk/NarratedTourTest.kt": "cb5d8cd67817c15debcf3b259e8ae5d8b1189158a2a755de2f6ef6c46ba040da",
     "gradle/wrapper/gradle-wrapper.jar": "a8451eeda314d0568b5340498b36edf147a8f0d692c5ff58082d477abe9146e4",
     "gradle/wrapper/gradle-wrapper.properties": "7736481b5bba89d45b73a91aa7dd9f5d27f75e139c3be6209c9027662f63740d",
     "gradle.properties": "fa078c27c9e4bde28a029d673875b028884505efa436b68cf60e1ac0be5b679b",
@@ -690,12 +894,12 @@
     "scripts/verify_local.py": "212eccd2208f8773427fe84028cdd6ebf1fc41f752739a851276c2d7e5afaae0",
     "settings.gradle.kts": "f9d77872fe891d06d6beba05d0cd8f607638c4aea02b9348b27a89eb26d67f19",
     "verification/engine-acceptance/build.gradle.kts": "d10dd85093f5cf5936504c15772f4173993815d9e70507765e61cf1677b16991",
-    "verification/engine-acceptance/src/test/kotlin/com/pleos/dearfamily/acceptance/FamilyAcceptanceTest.kt": "0a98838424a8804ed43c51ddf3cbec112ef6471acbf827c2aeb8abd2c9b8ebe9",
+    "verification/engine-acceptance/src/test/kotlin/com/pleos/dearfamily/acceptance/FamilyAcceptanceTest.kt": "fe05b151bb51dfd96a28cb60e58fd2cbddc66a02c06ea0535f4da4b12c94eba7",
     "verification/engine-acceptance/src/test/kotlin/com/pleos/dearfamily/acceptance/NarrationSessionTest.kt": "4481c6950669360caa92645e5af2983e9bef0a80dd69cbd0ffa676bf4a48392a",
     "verification/engine-acceptance/src/test/kotlin/com/pleos/dearfamily/acceptance/PcmWaveTest.kt": "aebc6c4966d3519e8379814e2c54c234568a5779460d8f5dbc8301588b5e6d71",
     "verification/engine-acceptance/src/test/kotlin/com/pleos/dearfamily/acceptance/SafetyPolicyTest.kt": "b57a7060f44593bd358f27ca9c9b2226fb6b402f8c7dd4b71c8b64e5cbf132a1",
     "verification/engine-acceptance/src/test/kotlin/com/pleos/dearfamily/acceptance/SessionStopperTest.kt": "568b387da53a44e9e47c6f348bdc5b5bce7804b16077bc704febe14eea686006",
-    "verification/ui-compile-check/build.gradle.kts": "3f04b932d7895b8ad48acb7eabb4f69ef77f0d99351dde60c5fcc6c20a5c301c"
+    "verification/ui-compile-check/build.gradle.kts": "46ed43837e9bf4766d55143e7275136e6874c4884f7a3c8d801b29e0515922af"
   },
   "sourcesStable": true,
   "apkProduced": false,

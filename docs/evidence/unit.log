@@ -76,6 +76,16 @@ com.pleos.dearfamily.domain.ScenarioEngineTest > sleepRequiresQuietEyesAndBreath
 
 com.pleos.dearfamily.domain.ScenarioEngineTest > flowReflectsSliderInputAndExactScript PASSED
 
+com.pleos.dearfamily.policy.audio.NarrationFeedbackTrackerTest > resumingTheSamePendingEventDoesNotCancelOrBeginItAgain PASSED
+
+com.pleos.dearfamily.policy.audio.NarrationFeedbackTrackerTest > staleVendorTokenCannotFinishTheCurrentApplicationEvent PASSED
+
+com.pleos.dearfamily.policy.audio.NarrationFeedbackTrackerTest > everyTerminalOutcomeIsEmittedOnce PASSED
+
+com.pleos.dearfamily.policy.audio.NarrationFeedbackTrackerTest > replacingAnActiveRequestCancelsOnlyThePreviousEvent PASSED
+
+com.pleos.dearfamily.policy.audio.NarrationFeedbackTrackerTest > completionIsEmittedAtMostOnceForApplicationEvent PASSED
+
 com.pleos.dearfamily.sdk.MockCareControlsTest > storyCannotStartDuringQuietCabinOrKidsSleep PASSED
 
 com.pleos.dearfamily.sdk.MockCareControlsTest > quietActivationStopsStoryAndQuietOffDoesNotResumeIt PASSED
@@ -94,6 +104,8 @@ com.pleos.dearfamily.sdk.MockPleosSdkManagerTest > sliderUpdatesRetainedScenario
 
 com.pleos.dearfamily.sdk.MockPleosSdkManagerTest > sleepAndParentsPopulateTypedOutputs PASSED
 
+com.pleos.dearfamily.sdk.MockPleosSdkManagerTest > stoppingTourCancelsNarrationAndPendingVolumeWorkWithoutChangingCurrentScenario PASSED
+
 com.pleos.dearfamily.sdk.MockPleosSdkManagerTest > tourHasRequiredTimelineAndNoSleep PASSED
 
 com.pleos.dearfamily.sdk.MockPleosSdkManagerTest > passengerRestoresVolumeAndSnackState PASSED
@@ -110,9 +122,29 @@ com.pleos.dearfamily.sdk.MockSpatialControlsTest > tabAndScenarioSelectionsPersi
 
 com.pleos.dearfamily.sdk.MockSpatialControlsTest > scenarioSelectionReflectsNameAndAppliesCorrectZone PASSED
 
+com.pleos.dearfamily.sdk.NarratedTourTest > narrationTimeoutStopsTourInsteadOfForcingNextScene PASSED
+
+com.pleos.dearfamily.sdk.NarratedTourTest > earlyCompletionStillKeepsMinimumSevenSeconds PASSED
+
+com.pleos.dearfamily.sdk.NarratedTourTest > manualStopAndRestartInvalidateOldCallbacks PASSED
+
+com.pleos.dearfamily.sdk.NarratedTourTest > cancelledFeedbackStopsTourAndIgnoresLaterCallbacks PASSED
+
+com.pleos.dearfamily.sdk.NarratedTourTest > unavailableFeedbackAdvancesAfterMinimum PASSED
+
+com.pleos.dearfamily.sdk.NarratedTourTest > staleAndDuplicateFeedbackDoNotAdvanceNewScene PASSED
+
+com.pleos.dearfamily.sdk.NarratedTourTest > resetNeverReusesNarrationIdsForDelayedCompletion PASSED
+
+com.pleos.dearfamily.sdk.NarratedTourTest > feedbackAtDeadlineStopsInsteadOfWinningTheTimerRace PASSED
+
+com.pleos.dearfamily.sdk.NarratedTourTest > narratedTourKeepsSceneForSevenSecondsAndWaitsForCompletion PASSED
+
+com.pleos.dearfamily.sdk.NarratedTourTest > failedOrUnavailableFeedbackAdvancesAfterMinimum PASSED
+
 com.pleos.dearfamily.sdk.SpatialActionTest > selectingDockChangesOnlyUiSelectionNotPlayback PASSED
 
 com.pleos.dearfamily.sdk.StoryActionTest > storyStartStopLeavesPassengerModeAlone PASSED
 
-BUILD SUCCESSFUL in 24s
+BUILD SUCCESSFUL in 14s
 4 actionable tasks: 4 executed

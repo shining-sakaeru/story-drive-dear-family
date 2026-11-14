@@ -166,8 +166,9 @@ private fun DemoDashboard(
     val edge = if (sleepFlash.value > 0f) sleepFlash.value else if (sleeping) .22f else if (rearActive) breathing else .1f
 
     var showDebug by rememberSaveable { mutableStateOf(false) }
+    var showJourney by rememberSaveable { mutableStateOf(false) }
 
-    Box(
+    BoxWithConstraints(
         Modifier
             .fillMaxSize()
             .background(palette.background)
@@ -189,6 +190,7 @@ private fun DemoDashboard(
                 )
             }
     ) {
+        val journeyHeight = maxHeight * .38f
         Box(Modifier.fillMaxSize()) {
             Column(
                 Modifier
@@ -202,8 +204,25 @@ private fun DemoDashboard(
                     isDriving = isDriving,
                     onToggleDriveMode = onToggleDriveMode,
                     onOpenSettings = onOpenSettings,
+                    onOpenJourney = {
+                        onThemeChange(ThemeMode.SCANDINAVIAN_WARM)
+                        showJourney = true
+                    },
                     onOpenDebug = { showDebug = true }
                 )
+
+                if (showJourney) {
+                    FamilyJourneyShowcasePanel(
+                        state = state,
+                        voice = voice,
+                        onScenario = vm::manual,
+                        onStop = vm::stopTour,
+                        onRestStop = vm::answerRestStop,
+                        onClose = { vm.stopTour(); showJourney = false },
+                        modifier = Modifier.fillMaxWidth().heightIn(max = journeyHeight)
+                            .verticalScroll(rememberScrollState())
+                    )
+                }
 
                 if (state.tourReport) {
                     Text(
@@ -294,6 +313,7 @@ private fun DashboardHeader(
     isDriving: Boolean,
     onToggleDriveMode: () -> Unit,
     onOpenSettings: () -> Unit,
+    onOpenJourney: () -> Unit,
     onOpenDebug: () -> Unit
 ) {
     val palette = LocalThemePalette.current
@@ -323,6 +343,9 @@ private fun DashboardHeader(
         }
         TextButton(onOpenSettings, Modifier.heightIn(min = 48.dp).testTag("settingsButton")) {
             Text("설정", style = MaterialTheme.typography.labelSmall)
+        }
+        TextButton(onOpenJourney, Modifier.heightIn(min = 48.dp).testTag("openFamilyJourney")) {
+            Text("가족 여정", style = MaterialTheme.typography.labelSmall)
         }
         Surface(
             onClick = onOpenDebug,

@@ -17,6 +17,7 @@ android {
 
 dependencies {
     "pleosImplementation"("ai.pleos.playground:Vehicle:2.3.2")
+    "pleosImplementation"("ai.pleos.playground:TextToSpeech:3.3.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.activity:activity-compose:1.8.2")

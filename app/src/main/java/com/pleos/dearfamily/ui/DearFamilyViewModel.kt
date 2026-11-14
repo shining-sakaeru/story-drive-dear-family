@@ -71,7 +71,11 @@ class DearFamilyViewModel(application: Application, private val saved: SavedStat
     fun chooseSnack(value: String) = guarded { sdk.chooseSnack(value); saved["snackChoice"] = value }
     fun answerRestStop(accepted: Boolean) = guarded { sdk.answerRestStop(accepted) }
     fun endConversation() = guarded { sdk.endConversation() }
-    fun startTour() = guarded { sdk.startTour() }
+    fun startTour() = guarded { if (!state.value.quietCabin) sdk.startTour(awaitNarration = true) }
+    fun onNarrationFeedback(feedback: com.pleos.dearfamily.model.NarrationFeedback) {
+        if (!safety.value.canPlayAudio) sdk.stopTour()
+        else sdk.onNarrationFeedback(feedback.eventId, feedback.outcome)
+    }
     fun stopTour() = sdk.stopTour()
     fun setPersona(persona: com.pleos.dearfamily.model.FamilyPersona) = guarded {
         sdk.setPersona(persona)

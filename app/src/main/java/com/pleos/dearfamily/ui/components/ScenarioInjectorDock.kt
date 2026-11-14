@@ -103,6 +103,7 @@ fun ScenarioInjectorDock(
                     ) {
                         Button(
                             onClick = onTour,
+                            enabled = !state.quietCabin,
                             modifier = Modifier
                                 .heightIn(min = 48.dp)
                                 .testTag("tour"),
@@ -112,7 +113,7 @@ fun ScenarioInjectorDock(
                             )
                         ) {
                             Text(
-                                if (state.tourRunning) "데모 재시작 · ${state.tourElapsedSeconds}s" else "30초 풀 투어 시작",
+                                if (state.tourRunning) "투어 재시작 · ${state.tourElapsedSeconds}s" else "음성 연동 투어 시작",
                                 fontWeight = FontWeight.Bold
                             )
                         }

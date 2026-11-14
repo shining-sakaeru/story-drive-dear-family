@@ -17,10 +17,10 @@ data class Context(
 )
 
 object ScenarioEngine {
-    const val KIDS_SCRIPT = "쉿! 다들 내 목소리 들리니? 지금 우리 차가 잠든 거인이 사는 비밀 터널에 들어왔어. 거인이 깨지 않게 가장 작은 귓속말로 구름 사탕이라고 속삭여 볼까?"
-    const val TEEN_SCRIPT = "오늘 시험 준비하느라 피곤했지? 2열 에어컨을 21.5도로 쾌적하게 맞추고, 편안한 Lo-Fi 플레이리스트를 띄워둘게. 도착할 때까지 편하게 눈 붙여도 돼."
-    const val PARENTS_SCRIPT = "어머님, 아버님, 오래 앉아 계시느라 허리 뻐근하시죠? 등받이를 따뜻하게 데워 드렸어요. 지금 지나가는 대관령 길은 1970년대에 처음 고속도로가 뚫리던 추억의 명소랍니다."
-    const val PASSENGER_SCRIPT = "빗소리와 어울리는 따뜻한 조명을 켰어요. 두 분이 이야기 나누시는 동안 음악 소리는 살짝 줄여둘게요."
+    const val KIDS_SCRIPT = "쉿, 잠든 거인의 비밀 터널을 지나는 동화 시간이야. 작은 목소리로 구름 사탕을 찾아볼까? 이야기가 끝나면 마음 놓고 함께 쉬어요."
+    const val TEEN_SCRIPT = "시험 준비하느라 피곤했지? 잠깐 눈을 쉬게 하며 조용한 상상 미션을 해볼까? 원하면 언제든 이야기를 멈출 수 있어."
+    const val PARENTS_SCRIPT = "오래 앉아 계셨으니 잠깐 편히 쉬어 가실까요? 무리하지 말고, 필요하면 가까운 곳에서 천천히 쉬어 가요."
+    const val PASSENGER_SCRIPT = "빗소리를 들으며 잠깐 쉬어 갈까요? 두 분의 이야기를 방해하지 않도록 조용히 곁에 있을게요."
 
     fun evaluate(c: Context): Scenario? = when {
         c.noiseDb > 75 && c.tunnelMeters <= 300 -> Scenario.KIDS_NOISE
@@ -56,7 +56,7 @@ object ScenarioEngine {
                 ),
                 audioRoutingOutput = "2열 방향성 오디오 · LOCAL MOCK",
                 gleoTtsScript = if (isTeen) TEEN_SCRIPT else KIDS_SCRIPT,
-                driverPeaceShieldStatus = "완벽 차단 · 내비 100% 전방 집중"
+                driverPeaceShieldStatus = "운전석 상태 별도 표시 · 실제 음장 분리 아님"
             )
         }
         Scenario.TEEN_FOCUS -> IpoFlowState(

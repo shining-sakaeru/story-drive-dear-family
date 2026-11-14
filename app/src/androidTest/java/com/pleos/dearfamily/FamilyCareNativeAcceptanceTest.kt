@@ -11,11 +11,14 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Rule
+import org.junit.Before
 import org.junit.Test
 
 /** Acceptance coverage for actual Compose semantics and the public ViewModel state contract. */
 class FamilyCareNativeAcceptanceTest {
     @get:Rule val compose = createAndroidComposeRule<MainActivity>()
+
+    @Before fun waitForPlatformWindow() { awaitDearFamilyWindow(compose) }
 
     private fun node(tag: String) = compose.onNodeWithTag(tag)
     private fun model(): DearFamilyViewModel =
@@ -41,6 +44,9 @@ class FamilyCareNativeAcceptanceTest {
     private fun openDebugBadgeAfterDemo() {
         if (compose.onAllNodesWithTag("debugDock").fetchSemanticsNodes().isEmpty()) {
             node("debugBadge").performClick()
+        }
+        compose.waitUntil(5_000) {
+            runCatching { compose.onAllNodesWithTag("debugDock").fetchSemanticsNodes().size == 1 }.getOrDefault(false)
         }
     }
 
@@ -183,12 +189,13 @@ class FamilyCareNativeAcceptanceTest {
         assertFalse(model().state.value.tourRunning)
     }
 
-    @Test fun tourRunsThirtyRealSecondsAndShowsDriverSilentReport() {
+    @Test fun tourWaitsForNarrationAndShowsDriverSilentReport() {
         enterDemoIfAvailable()
         openDebugBadgeAfterDemo()
         val vm = model()
         node("tour").performScrollTo().performClick()
-        compose.waitUntil(45_000) { vm.state.value.tourReport && !vm.state.value.tourRunning }
+        compose.waitUntil(110_000) { vm.state.value.tourReport && !vm.state.value.tourRunning }
+        assertTrue("All scene minimums and report hold must remain", vm.state.value.tourElapsedSeconds >= 30)
         node("tourReport").assertTextContains("운전석 내비 라우팅 유지", substring = true)
         assertEquals("DRIVER_1L", vm.state.value.flow.targetZone.name)
         assertEquals("운전자 리포트 · TTS 없음", vm.state.value.flow.audioRoutingOutput)

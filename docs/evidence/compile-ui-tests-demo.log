@@ -1,11 +1,12 @@
 To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.2/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
-Daemon will be stopped at the end of the build
+Daemon will be stopped at the end of the build 
 > Task :checkKotlinGradlePluginConfigurationErrors
 > Task :extractAars
 > Task :generateResourceSymbols
+
 > Task :compileKotlin
-w: file:///opt/data/home/projects/story-drive-dear-family/app/src/androidTest/java/com/pleos/dearfamily/FamilyCarePlatformAcceptanceTest.kt:46:35 Variable 'engineName' initializer is redundant
+w: file:///opt/data/home/projects/story-drive-dear-family/app/src/androidTest/java/com/pleos/dearfamily/FamilyCarePlatformAcceptanceTest.kt:50:35 Variable 'engineName' initializer is redundant
 w: file:///opt/data/home/projects/story-drive-dear-family/app/src/main/java/com/pleos/dearfamily/ui/components/SpatialDynamicCardsView.kt:112:24 Parameter 'seat' is never used
 
-BUILD SUCCESSFUL in 44s
+BUILD SUCCESSFUL in 21s
 4 actionable tasks: 4 executed

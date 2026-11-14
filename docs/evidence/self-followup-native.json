@@ -1,0 +1,45 @@
+{
+  "sourceSha256": "0299f8be04b2c1783459a02dcafba079ca3e58b408c6388fb389ca7a2797a5b8",
+  "publicGitHeadUnchanged": "cdfd6ef133118ed4b19c0c03bd4bc575154e8354",
+  "uncommitted": true,
+  "python": {
+    "tests": 55,
+    "failed": 0
+  },
+  "hostJvm": {
+    "unique": 71,
+    "executions": 115,
+    "failed": 0
+  },
+  "nativeUnitExecutions": 20,
+  "nativeInstrumentation": {
+    "declared": 41,
+    "discovered": 41,
+    "passed": 39,
+    "failed": 0,
+    "skipped": 2
+  },
+  "font15Supplement": {
+    "status": "incomplete_system_server_gnss_watchdog",
+    "firstAttempt": {
+      "discovered": 5,
+      "passed": 4,
+      "failed": 1
+    },
+    "retries": "aborted; incomplete discovery is not a pass",
+    "locationOffRetry": "two tests passed before system crashed; remaining unverified",
+    "visualCaptureThemes": 3,
+    "visualCaptureImages": 6
+  },
+  "baselineCaptures": {
+    "themes": 3,
+    "images": 6,
+    "fontScale": 1
+  },
+  "physicalListeningVerified": false,
+  "oemSuspendVerified": false,
+  "vehicleDdsRoundTripVerified": false,
+  "approvedVideoChanged": false,
+  "commitOrPushPerformed": false,
+  "releaseKeyCreated": false
+}

@@ -7,5 +7,5 @@ Daemon will be stopped at the end of the build
 > Task :compileKotlin
 w: file:///opt/data/home/projects/story-drive-dear-family/app/src/main/java/com/pleos/dearfamily/ui/components/SpatialDynamicCardsView.kt:112:24 Parameter 'seat' is never used
 
-BUILD SUCCESSFUL in 36s
+BUILD SUCCESSFUL in 20s
 4 actionable tasks: 4 executed

@@ -3,12 +3,15 @@ package com.pleos.dearfamily
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import org.junit.Rule
+import org.junit.Before
 import org.junit.Test
 
 /** Covers opt-in diagnostics and reachable parked-mode design controls. */
 class FamilyCareDesignContractTest {
     @get:Rule
     val compose = createAndroidComposeRule<MainActivity>()
+
+    @Before fun waitForPlatformWindow() { awaitDearFamilyWindow(compose) }
 
     private fun enterDemoIfAvailable() {
         if (compose.onAllNodesWithTag("enterDemo").fetchSemanticsNodes().isNotEmpty()) {
@@ -36,6 +39,12 @@ class FamilyCareDesignContractTest {
         compose.onNodeWithTag("debugVehicle").assertDoesNotExist()
 
         compose.onNodeWithTag("debugBadge").performClick()
+        compose.waitUntil(5_000) {
+            runCatching {
+                compose.onNodeWithTag("debugDock").assertIsDisplayed()
+                true
+            }.getOrDefault(false)
+        }
         compose.onNodeWithTag("debugDock").assertIsDisplayed()
         compose.onNodeWithTag("debugVehicle").assertExists()
         compose.onNodeWithTag("debugVehicle").performScrollTo().assertIsDisplayed()

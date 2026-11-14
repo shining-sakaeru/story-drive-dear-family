@@ -1,0 +1,285 @@
+{
+  "schema": "family-journey-native-v1",
+  "dateUtc": "2026-11-13T08:16:15.321930+00:00",
+  "appSourceZipSha256": "1c2457f0a931b0f6807d5976e8e3c6f210f4c2f8bde70e320317975084e9d07d",
+  "finalBuildSourceZipSha256": "cb5f17a2e95901f7ff37d801edebaac025bbbeceec8c956fb5c96ba147f49bac",
+  "finalAppBinariesIdenticalToTestedAndRecordedApp": true,
+  "apks": {
+    "demo": {
+      "file": "app-demo-debug.apk",
+      "sha256": "bc23fa939912e32c322d6b139ef00d8d57b6b69d65454a31a64a85b4d0ee14a2",
+      "bytes": 23467350,
+      "internetPermissionDeclared": false,
+      "debugSignatureVerified": true,
+      "lintWarningCount": 13,
+      "lintErrors": 0,
+      "composeCustomLintRegistrySkipped": true
+    },
+    "pleos": {
+      "file": "app-pleos-debug.apk",
+      "sha256": "f57afa652f617631ffdbb682ac6dffd4bcb83cb0eed7d96acd18a03977fccc73",
+      "bytes": 46543292,
+      "internetPermissionDeclared": false,
+      "debugSignatureVerified": true,
+      "lintWarningCount": 15,
+      "lintErrors": 0,
+      "composeCustomLintRegistrySkipped": true
+    }
+  },
+  "hostJVM": {
+    "uniqueTests": 56,
+    "executions": 90,
+    "failures": 0
+  },
+  "python": {
+    "tests": 55,
+    "failures": 0
+  },
+  "nativeAppUnits": {
+    "executions": 10,
+    "failures": 0
+  },
+  "nativeFullSuite": {
+    "discovered": 34,
+    "passed": 33,
+    "skipped": 1,
+    "failed": 0,
+    "cases": [
+      {
+        "class": "com.pleos.dearfamily.FamilyCareDebugInteractionProbeTest",
+        "test": "probeNestedCarePanelInteractions",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareDesignContractTest",
+        "test": "themePickerSelectionControlsRemainReachable",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareDesignContractTest",
+        "test": "diagnosticsAreHiddenUntilDebugBadgeIsOpened",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareNativeAcceptanceTest",
+        "test": "passengerFunConversationAndRestStopRestoreState",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareNativeAcceptanceTest",
+        "test": "initialStateExposesExactlyFourSeatZonesAndMockBoundary",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareNativeAcceptanceTest",
+        "test": "tourCanBeCancelledWithoutLeavingRunningState",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareNativeAcceptanceTest",
+        "test": "tourRunsThirtyRealSecondsAndShowsDriverSilentReport",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareNativeAcceptanceTest",
+        "test": "elapsedSliderRearmsOnlyAfterDroppingBelowThreshold",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareNativeAcceptanceTest",
+        "test": "fourManualPresetsTargetTheirZonesAndExposeMockOutput",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareNativeAcceptanceTest",
+        "test": "noiseSliderRearmsOnlyAfterDroppingBelowThreshold",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareOfflineVoiceProbeTest",
+        "test": "probeOfflineVoiceFromRealSafetyState",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCarePlatformAcceptanceTest",
+        "test": "tourStopsAcrossActivityRecreateWithoutAutomaticReplay",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCarePlatformAcceptanceTest",
+        "test": "probeNativeTtsCapabilitiesToFilesDir",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCarePlatformAcceptanceTest",
+        "test": "recordCarUxRestrictionsStateForTwentySeconds",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareReferenceCaptureTest",
+        "test": "captureThreeThemeReferencesAndMetadata",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareShowcaseTest",
+        "test": "journeyAcceptsTouchScrollingWhenItsContentOverflows",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareShowcaseTest",
+        "test": "threeScenesUseRealScenarioCallbacksAndShowBeforeAfter",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareShowcaseTest",
+        "test": "closeAndStopWorkAndDetailsStayWithinCompactPanel",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareSpatialActionsTest",
+        "test": "passengerVentilationIsSetThroughProgressSemantics",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareSpatialActionsTest",
+        "test": "scenarioPillChangesScenarioAndTargetZone",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareSpatialActionsTest",
+        "test": "dockTabsUpdateRealViewModelSelection",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareSpatialActionsTest",
+        "test": "spatialStoryControlTogglesRealState",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareSpatialActionsTest",
+        "test": "parentSeatHeatingTogglesAndMuteUsesSelectedSemantics",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareUiTest",
+        "test": "sleepIsSilentAndResetRestoresBaseline",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareUiTest",
+        "test": "manualScenarioStopsTourAndParentsOfferRest",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareUiTest",
+        "test": "passengerGameAndConversationRestoreAreInteractive",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareUiTest",
+        "test": "unknownStateDoesNotExposeScenarioControls",
+        "code": -4
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareUiTest",
+        "test": "initialCabinShowsFourZonesAndMockBoundary",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareVisualStructureTest",
+        "test": "genesisArtworkAndSeatStructureFillTheRenderedLayout",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareVisualStructureTest",
+        "test": "diagnosticsRemainHiddenUntilDebugBadgeIsClicked",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareWarmActionsTest",
+        "test": "quietCabinStopsStoryAndPlayIsDisabledUntilQuietIsOff",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareWarmActionsTest",
+        "test": "storyIsDisabledDuringKidsSleep",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareWarmActionsTest",
+        "test": "storyPlaybackIsReversibleAndDoesNotChangeCozyMode",
+        "code": 0
+      },
+      {
+        "class": "com.pleos.dearfamily.FamilyCareWarmActionsTest",
+        "test": "cabinWarmthIsIndependentOfCozyModeAndStoryPlayback",
+        "code": 0
+      }
+    ]
+  },
+  "additionalFocusProbe": [
+    {
+      "class": "com.pleos.dearfamily.FamilyCareAudioFocusProbeTest",
+      "test": "platformFocusLossAndAllowanceRevocationStopWithoutAutomaticReplay",
+      "code": 0
+    }
+  ],
+  "optInRecording": [
+    {
+      "class": "com.pleos.dearfamily.FamilyCareShowcaseRecordingTest",
+      "test": "recordThreeScenesWithActualAppSpeechAndSilence",
+      "code": 0
+    }
+  ],
+  "font15Controls": [
+    {
+      "class": "com.pleos.dearfamily.FamilyCareShowcaseTest",
+      "test": "journeyAcceptsTouchScrollingWhenItsContentOverflows",
+      "code": 0
+    },
+    {
+      "class": "com.pleos.dearfamily.FamilyCareShowcaseTest",
+      "test": "threeScenesUseRealScenarioCallbacksAndShowBeforeAfter",
+      "code": 0
+    },
+    {
+      "class": "com.pleos.dearfamily.FamilyCareShowcaseTest",
+      "test": "closeAndStopWorkAndDetailsStayWithinCompactPanel",
+      "code": 0
+    }
+  ],
+  "nativeUniqueAcrossThoseRuns": {
+    "discovered": 36,
+    "passed": 35,
+    "skipped": 1,
+    "notASingleRun": true
+  },
+  "captures": {
+    "baseline": 6,
+    "font15": 6,
+    "scope": "Full native display pixels, including OS chrome"
+  },
+  "actualDigitalAudioCaptured": true,
+  "physicalListeningVerified": false,
+  "temporaryTestFixture": {
+    "ownedAvdLocationDisabledDuringRecoveryTests": true,
+    "originalLocationEnabledTrueRestored": true,
+    "fontScaleRestored": "1.0",
+    "ownedEmulatorStoppedAfterVerification": true
+  },
+  "unverified": [
+    "Real driving/unknown CarUx transition",
+    "Console DDS seat callback roundtrip",
+    "Different/narrow app window and secondary display",
+    "External navigation app audio interoperability",
+    "OEM Suspend / physical vehicle audio and actuator controls",
+    "System Speech Service network-blocked operation",
+    "Release signing and contest submission"
+  ],
+  "knownEnvironmentFailuresPreserved": [
+    "AAOS initial task/window readiness timeouts; successful bounded warmed retries recorded",
+    "GNSS native_stop_nmea watchdog blocked android.fg 69 seconds; no system image fix claimed"
+  ],
+  "legacyAutomaticTourSpeechCompletionSynchronized": false,
+  "gitPublished": false
+}

@@ -7,6 +7,7 @@ import androidx.compose.ui.unit.dp
 import com.pleos.dearfamily.domain.Scenario
 import com.pleos.dearfamily.ui.DearFamilyViewModel
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Rule
@@ -14,6 +15,9 @@ import org.junit.Test
 
 /** Exercises the public care controls through the Warm theme UI. */
 class FamilyCareWarmActionsTest {
+    @Before
+    fun waitForPlatformWindow() { awaitDearFamilyWindow(compose) }
+
     @get:Rule
     val compose = createAndroidComposeRule<MainActivity>()
 

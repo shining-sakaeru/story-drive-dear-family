@@ -66,5 +66,31 @@ class MockPleosSdkManagerTest {
         advanceTimeBy(9_000); runCurrent(); assertFalse(sdk.state.value.tourRunning); assertEquals(30, sdk.state.value.tourElapsedSeconds)
     }
 
+    @Test fun stoppingTourCancelsNarrationAndPendingVolumeWorkWithoutChangingCurrentScenario() = runTest {
+        val sdk = MockPleosSdkManager(this)
+        sdk.startTour()
+        advanceTimeBy(200)
+        runCurrent()
+        val beforeStop = sdk.state.value
+
+        sdk.stopTour()
+        runCurrent()
+        val stopped = sdk.state.value
+        assertFalse(stopped.tourRunning)
+        assertFalse(stopped.storyPlaying)
+        assertEquals("", stopped.flow.gleoTtsScript)
+        assertEquals(beforeStop.eventId + 1, stopped.eventId)
+        assertEquals(beforeStop.selectedScenario, stopped.selectedScenario)
+        assertEquals(beforeStop.flow.activeScenarioTitle, stopped.flow.activeScenarioTitle)
+        assertEquals(beforeStop.seats, stopped.seats)
+
+        advanceTimeBy(1_000)
+        runCurrent()
+        assertEquals(stopped.audio, sdk.state.value.audio)
+        val eventAfterFirstStop = sdk.state.value.eventId
+        sdk.stopTour()
+        assertEquals(eventAfterFirstStop, sdk.state.value.eventId)
+    }
+
     private fun com.pleos.dearfamily.model.FamilyCareUiState.flowTarget(): Scenario? = when (flow.targetZone) { SeatZone.PARENTS_3RD_ROW -> Scenario.PARENTS; SeatZone.PASSENGER_1R -> Scenario.PASSENGER; SeatZone.KIDS_2ND_ROW -> Scenario.KIDS_NOISE; else -> null }
 }
