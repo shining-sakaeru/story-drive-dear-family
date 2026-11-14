@@ -4,7 +4,7 @@
 
 ## 현재 판정
 
-**영상·소스·문서 준비 완료 / 선택 release APK 제출 준비 미완료 / 실제 이메일 미발송.**
+**영상·소스·README·서명 및 설치 검증된 release APK 준비 완료 / 신청서·동의·서명은 사용자 작성 / 실제 이메일 미발송.**
 
 | 항목 | 현재 증거·처리 | 판정 |
 |---|---|---|
@@ -19,13 +19,13 @@
 | 영상 | media/StoryDrive_DearFamily_live_showcase.mp4. 승인된 실제 앱 화면·ON_DEVICE 음성 영상 | 준비 완료 |
 | GitHub 소스 | 기존 main 저장소 사용. 메일에 주소·현재 최종 커밋 기재 | 준비 완료 |
 | 저장소 접근 | GitHub 공개 API에서 private=false 확인. 공개 범위 변경 작업 없음 | 접근 확인 |
-| release APK | unsigned assemble/unit/lint는 성공했으나 사용자 키의 실제 서명·설치 확인 없음 | 차단: 사용자 로컬 서명 필요 |
-| APK 위치·이름 | 서명·설치 검증 후 apk/개인성명_StoryDriveDearFamily_release.apk 형식으로 Pleos 판을 제공. 개인성명은 신청서와 일치시킴 | 업로드 전 확정 |
+| release APK | 사용자 키 서명·v3 검증·실제 설치·해시 대조·핵심 실행 확인 | 완료 |
+| APK 위치·이름 | apk/심찬영_StoryDriveDearFamily_release.apk. 개인 참가자 표기는 사용자 DOCX와 최종 대조 | 확정 |
 | 용량 초과 대안 | 필요 시 GitHub Releases. 현재 debug를 release로 이름만 바꾸지 않음 | 필요 시 적용 |
 | README 앱명·한 줄 소개 | README 첫 부분에 명시 | 충족 |
 | README 실행·필요 설정 | 사용·버전과 도구·대상 장비 절에 명시 | 충족 |
 | README 에뮬레이터·규격 | Pleos Connect 2.1.0/API34/ARM64, 2560×1440px, 앱 창 1682×1210px 및 좁은 835×1210px | 충족 |
-| README APK 경로 | 현재 debug 경로와 release 미준비 상태 구분. release 업로드 후 실제 경로를 갱신해야 함 | release 단계 대기 |
+| README APK 경로 | 서명·설치 검증된 release 경로와 기존 debug 경로 구분 | 충족 |
 | 비공개 저장소 | 현재 이미 Public. 심사 계정 초대·공개 전환 불필요. 11월 23일까지 공개 상태 유지 안내 | 변경 없음 |
 | 숏폼 | 미제출. 본상 가산점으로 기재하지 않음 | 반영 |
 | 개인정보·권리 | 사용자 직접 확인. 서명·권리 보증을 에이전트가 대리 인증하지 않음 | 사용자 확인 |

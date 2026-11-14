@@ -1,6 +1,6 @@
 # 사용자용 release APK 서명키 안내
 
-2026-11-14 · 상태: unsigned release 빌드·unit·lint 성공. 사용자 키 생성·실제 서명·설치 검증 완료는 아직 확인하지 않았다.
+2026-11-14 · 상태: 사용자 로컬 서명 완료. Pleos release의 v3 서명·공식 에뮬레이터 설치·동일 해시·핵심 실행을 확인했다. `RELEASE_VERIFICATION_20261114.md` 참고. 아래 절차는 키 보관 및 향후 업데이트용 안내이며 다시 실행할 필요는 없다.
 
 최신 사용자 결정으로 제출 최종화와 기존 저장소 commit/push·APK 업로드를 승인받았다. 키 생성과 암호 입력은 사용자가 Mac 로컬에서 수행한다. 별도로 전달하는 `prepare-signing.command`는 사용자 대화형 Terminal에서만 키 생성/서명을 진행하며, 에이전트가 실행하거나 암호를 수집하지 않는다. `--check`는 도구·unsigned APK checksum 검사만 수행한다.
 

@@ -10,7 +10,8 @@ Kotlin / Jetpack Compose로 작성한 가족 케어 차량용 앱입니다. **Pl
 
 - 승인된 대표 시연: `media/StoryDrive_DearFamily_live_showcase.mp4` — 실제 앱 화면과 ON_DEVICE 음성으로 아이 소란 → 수면·무음 → 부모님 케어를 보여 줍니다. 새 BGM·대체 내레이션은 넣지 않았습니다. 현재 자동투어와는 별도의 대표 장면 시연입니다.
 - `media/StoryDrive_DearFamily_demo_captioned.mp4`는 과거의 28.5초 무음 기록이며 최신 대표 영상이 아닙니다.
-- 테스트 전용 APK: `apk/StoryDrive_DearFamily_demo_debug.apk`, `apk/StoryDrive_DearFamily_pleos_debug.apk`. debug 파일을 제출용 release로 이름만 바꾸지 않습니다. release 서명·설치 상태는 `docs/SUBMISSION_FINALIZATION.md`를 확인하세요.
+- **제출용 release APK:** `apk/심찬영_StoryDriveDearFamily_release.apk` — 사용자 로컬 서명·apksigner 검증·공식 에뮬레이터 설치·원본/설치본 해시 대조·핵심 실행을 확인했습니다. 상세: `docs/design/RELEASE_VERIFICATION_20261114.md`.
+- 테스트 전용 debug APK: `apk/StoryDrive_DearFamily_demo_debug.apk`, `apk/StoryDrive_DearFamily_pleos_debug.apk`. 제출 APK는 위 release 파일이며 debug 파일과 구분합니다.
 - 개인정보·동의/서명·키 암호는 저장소에 넣지 않습니다. 실제 이메일 접수는 사용자 최종 확인 후 수행하는 별도 단계입니다.
 
 ## 두 실행 경로
@@ -59,7 +60,7 @@ python scripts/verify_local.py
 - `app/build/outputs/apk/demo/debug/app-demo-debug.apk`
 - `app/build/outputs/apk/pleos/debug/app-pleos-debug.apk`
 
-Mac의 검증된 빌드에서 생성한 APK 사본은 `artifacts/app-demo-debug.apk`와 `artifacts/app-pleos-debug.apk`에 있습니다. 둘 다 debug 서명이며 공모전 선택 APK 제출용 release 빌드는 별도 준비해야 합니다.
+제출용 파일은 `apk/심찬영_StoryDriveDearFamily_release.apk`입니다. `adb install -r`로 설치한 뒤 foreground 사용자에서 앱을 열고 정차 상태에서 가족 여정의 소란·수면·부모님을 선택합니다. 기존 debug와 서명이 다르면 소유자 승인 없이 삭제하지 마세요. `artifacts/`는 Git 제외 로컬 경로이며 심사 다운로드 경로가 아닙니다.
 
 ## 대상 장비에서 확인할 사항
 

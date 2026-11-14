@@ -1,0 +1,31 @@
+{
+  "verifiedAtUtc": "2026-11-14T10:48:39.433777+00:00",
+  "apkPath": "apk/심찬영_StoryDriveDearFamily_release.apk",
+  "sha256": "38c5b1619ebdf3c8a2475b7aafe7a7a16646072f0af8c33ae79a85cc1c353615",
+  "bytes": 38898874,
+  "package": "com.pleos.dearfamily",
+  "signatureSchemeV3Verified": true,
+  "debuggable": false,
+  "internetPermission": false,
+  "installed": true,
+  "installedApkHashMatches": true,
+  "emulator": "Pleos Connect 2.1.0/API34/ARM64",
+  "activeUser": 10,
+  "coldLaunchSucceeded": true,
+  "explicitSingleTopForegroundVerified": true,
+  "smoke": {
+    "apkSha256": "38c5b1619ebdf3c8a2475b7aafe7a7a16646072f0af8c33ae79a85cc1c353615",
+    "method": "ADB black-box taps at previously observed UI bounds; screenshots plus PID-filtered callback logs",
+    "sleepNoNewVoice": true,
+    "noiseNewVoiceStartAndDone": true,
+    "parentsNewVoiceStartAndDone": true,
+    "backgroundExplicitResumeNoAutoVoice": true,
+    "sameProcessAlive": true,
+    "physicalListeningVerified": false,
+    "instrumentationRerun": false,
+    "uiDumpLimitation": "uiautomator returned idle error with exit 0; stale XML excluded from behavioral claims"
+  },
+  "debugInstrumentationRerunOnRelease": false,
+  "userApprovedProjectAppReset": true,
+  "privateSigningKeyAccessedByAgent": false
+}

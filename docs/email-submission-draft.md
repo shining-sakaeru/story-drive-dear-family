@@ -16,8 +16,8 @@
 - 본인 동의·서명·날짜 문서: **[미확정 — 사용자 직접 작성·서명·첨부 필요]**
 - 시연 영상: `StoryDrive_DearFamily_live_showcase.mp4` — 승인된 실제 앱 화면·ON_DEVICE 음성 영상. 실제 첨부 여부는 발송 직전 확인합니다.
 - 소스 저장소: `https://github.com/shining-sakaeru/story-drive-dear-family` — 최종 커밋 번호는 push 확인 후 기재합니다.
-- release APK 경로: **[서명·설치 검증 후 확정 — debug/unsigned 경로로 대체하지 않음]**
-- APK 파일: **[선택 / 미확정 — unsigned/debug APK 제출 금지]**
+- release APK 경로: `apk/심찬영_StoryDriveDearFamily_release.apk` — 서명·설치·핵심 실행 검증 완료
+- APK 파일: **선택 제출: 위 GitHub 경로의 검증된 release APK. debug/unsigned 경로로 대체하지 않음**
 
 개발물 서명·설치가 지연될 경우 필수 작성·서명 양식과 승인 영상을 먼저 제출하고, 개발물 준비 후 동일 발신자로 전체 자료를 수정 제출합니다. 실제 발송은 사용자가 수행합니다.
 

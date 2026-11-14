@@ -10,10 +10,10 @@
 - 현재 debug APK 두 종류는 검증 소스 snapshot `0299f8be04b2c1783459a02dcafba079ca3e58b408c6388fb389ca7a2797a5b8`에서 생성했습니다. `apk/README.md`에 해시를 기록합니다.
 - 별도 unsigned release 빌드는 source snapshot `29920450eb4871588e351e7f0b491c25f388140e0772f64c11aea4b1a904ab0d`에서 demo/pleos assemble·unit·lint가 성공했습니다. 두 variant unit 각 10개, lint Error/Fatal 0, debuggable=false, INTERNET 없음을 확인했습니다.
 
-## 아직 완료가 아닌 것
+## 서명·제출 상태와 사용자 확인
 
 - unsigned APK는 서명 검증이 실패하는 미서명 파일입니다. debug/unsigned를 제출용 release로 이름만 바꾸거나 업로드하지 않습니다.
-- 사용자 소유 release 키로 로컬 서명한 뒤, 동일 APK 해시의 서명·설치·핵심 실행을 확인해야 제출용 release 완료입니다. 키·암호는 저장소나 대화로 받지 않습니다.
+- 제출용 release `apk/심찬영_StoryDriveDearFamily_release.apk`는 사용자 로컬 서명·v3 검증·실제 설치·동일 해시 대조·핵심 실행 검증을 완료했습니다. 상세는 `docs/design/RELEASE_VERIFICATION_20261114.md`입니다. 키·암호는 저장소나 대화로 받지 않았습니다.
 - debug 설치본과 release 인증서가 다르면 업데이트가 거부될 수 있습니다. 기존 앱 삭제·데이터 초기화는 자동 수행하지 않습니다.
 - 개인정보·본인 동의/서명·날짜 작성과 실제 이메일 발송은 사용자 담당입니다. 사용자가 작성 중인 신청서 원본은 덮어쓰지 않습니다.
 - 기획서 프로젝트 부분은 별도 private DOCX로 제공하며 공개 저장소에 개인정보 양식이나 서명 이미지를 넣지 않습니다.

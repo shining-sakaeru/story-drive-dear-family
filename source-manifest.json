@@ -46,6 +46,7 @@
     "docs/evidence/server-jvm-rerun.json",
     "docs/evidence/server-unit.log",
     "docs/evidence/verification-result.json",
+    "docs/evidence/release-native.json",
     "docs/evidence/self-followup-native.json",
     "docs/evidence/family-journey-native.json",
     "docs/evidence/ui-fidelity-native.json",
