@@ -1,5 +1,7 @@
 # Story Drive : Dear Family
 
+**한 줄 소개:** 가족의 상황에 맞춰 이야기와 휴식을 안내하는 좌석 중심 차량용 가족 케어 앱입니다.
+
 Kotlin / Jetpack Compose로 작성한 가족 케어 차량용 앱입니다. **Pleos ON_DEVICE 한국어 음성, 가족별 Mock 케어, 실제 음성 완료에 연동한 자동투어를 공식 Pleos Emulator에서 검증했습니다. 실제 차량 제어·물리 청취·공모전 접수 완료를 뜻하지 않습니다.**
 
 최신 기능 검증은 `docs/design/SELF_FOLLOWUP_VERIFICATION_20261113.md`, 요약은 `docs/evidence/self-followup-native.json`을 확인하세요. 기본 native 계측은 **41개 발견 / 39통과 / 2조건부 생략 / 실패 0**이며 호스트 JVM은 고유 71개 / 총 115회 실행, Python은 55개 통과입니다. `docs/submission-progress.json`의 11월 9일 40태스크 집계는 과거 기록으로 현재 완성도 비율이 아닙니다. 확대·장시간 시험은 GNSS system-server Watchdog으로 미완료이며 정상 종료한 기본 시험과 구분합니다.
